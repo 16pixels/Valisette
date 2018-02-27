@@ -57,3 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+# public assets since they meant to be pushed separatly
+public/
+dist/
