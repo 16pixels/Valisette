@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import ExtractTextPlugin from 'extract-text-webpack-plugin'; // warning : you should only import plugins that are used inline otherwise they're called from ./webpack/bundler.js and applied to webpack object for dependency injection
 /**
  * Import modules
@@ -14,6 +15,7 @@ import {
  * Plugin declarations
  * @type {ExtractTextPlugin}
  */
+
 const extractSass = new ExtractTextPlugin({
   filename: `${buildConfig.cssPath + buildConfig.cssMain}`,
   disable: process.env.NODE_ENV === 'development',

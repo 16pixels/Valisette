@@ -22,6 +22,14 @@ const buildConfig = {
     appColor: '#3a74a5',
     themeColor: '#3a74a5',
     appLogo: 'public/images/general/pin.png'
+  },
+  browserSync: { // This implies that you are hosting your code on your machine but you can always set browserSync options -> https://github.com/Va1/browser-sync-webpack-plugin
+    host: 'localhost',
+    port: 3000,
+    proxy: 'http://mydevurl.dev'
+  },
+  performance: {
+    compressionTreshold: 0 // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)
   }
 };
 export {

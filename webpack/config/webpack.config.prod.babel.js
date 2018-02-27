@@ -3,6 +3,7 @@
  * @type {[type]}
  */
 import ExtractTextPlugin from 'extract-text-webpack-plugin'; // warning : you should only import plugins that are used inline otherwise they're called from ./webpack/bundler.js and applied to webpack object for dependency injection
+import chalk from 'chalk';
 import {
   buildConfig
 } from './build-config.js';
@@ -14,7 +15,7 @@ import {
  * Plugin declarations
  * @type {ExtractTextPlugin}
  */
-console.log('testing', `/..${buildConfig.publicPath + buildConfig.cssPath + buildConfig.cssMain}`);
+
 const extractSassProd = new ExtractTextPlugin({
   filename: `/..${buildConfig.publicPath + buildConfig.cssPath + buildConfig.cssMain}`,
   disable: process.env.NODE_ENV === 'development',
@@ -38,7 +39,7 @@ const prodConfig = {
     'main': utils.assets(`${buildConfig.jsPath + buildConfig.jsMain}`)
   },
   performance: {
-    hints: "error"
+    hints: "warning"
   },
   devtool: buildConfig.devtool,
   target: 'web',
@@ -49,7 +50,7 @@ const prodConfig = {
     pathinfo: true
   },
   resolve: {
-    extensions: ['.js', '.ts', '.vue', '.json', '.scss'],
+    extensions: ['.js', '.ts', '.vue', '.json', '.scss', '.sass'],
     alias: {
       sassAssets,
       'vue$': 'vue/dist/vue.esm.js',

@@ -26,7 +26,14 @@ import {
  * Compiler object that initialize webpack's as an object
  * @constant
  */
-const COMPILER = webpack(config);
+let COMPILER = {};
+if (buildConfig.isProduction) {
+  COMPILER = webpack(prodConfig);
+} else {
+  COMPILER = webpack(config);
+}
+
+console.log('> NODE_ENV =>', process.env.NODE_ENV);
 
 /**
  * basics function
@@ -92,7 +99,7 @@ const run = (compilerObject) => {
         )
       );
     }
-    // Logging function
+    // performance logging function
     if (stats) {
       const time = chalk.cyan.bold(stats.endTime - stats.startTime + " ms");
       console.log("> compiled in", time);
@@ -165,12 +172,12 @@ const productionBuild = () => {
       asset: "[path].gz[query]",
       algorithm: "gzip",
       test: /\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
-      threshold: 10240 // Only assets bigger than this size are processed
+      threshold: buildConfig.performance.compressionTreshold // Only assets bigger than this size are processed
     })
   );
 
-  run(COMPILER);
-}
+  return run(COMPILER);
+};
 
 const watch = () => {
   console.log("> bundling assets");
@@ -179,18 +186,25 @@ const watch = () => {
 
   COMPILER.apply(extractSass);
 
-  if (process.env.WATCH) {
-    // build a proxy for your code with hot reload
-    COMPILER.apply(
-      new BrowserSyncPlugin({
-        // browse to http://localhost:3000/ during development,
-        // ./public directory is being served
-        host: "localhost",
-        port: 3000,
-        proxy: "http://16pixels.dev"
-      })
-    );
+  if (!process.env.WATCH) {
+    console.error(chalk.red.bold("\n>>>>>>>>>>>>>>>>>>>>> ! error ! >>>>>>>>>>>>>>>>\n"));
+    console.error(chalk.red.bold(` ! You called watch function but your Node environment is not sending a watch variable in process.env.WATCH ! `));
+    console.error(chalk.red.bold("\n>>>>>>>>>>>>>>>>>>>>> !  END  ! >>>>>>>>>>>>>>>>\n"));
+    return false;
   }
+
+  // build a proxy for your code with hot reload
+  COMPILER.apply(
+    new BrowserSyncPlugin({
+      // browse to http://localhost:3000/ during development,
+      // ./public directory is being served
+      host: buildConfig.browserSync.host,
+      port: buildConfig.browserSync.port,
+      proxy: buildConfig.browserSync.proxy
+    })
+  );
+  
+  // Watch daemon
   const watching = COMPILER.watch({
       aggregateTimeout: 300,
       poll: 1000,
@@ -208,7 +222,7 @@ const watch = () => {
         });
         console.log(
           chalk.red.bold(
-            "\n>>>>>>>>>>>>>>>> ! errors / warnings ! >>>>>>>>>>>>>>>>\n"
+            "\n>>>>>>>>>>>>>>>>>>> ! warnings ! >>>>>>>>>>>>>>>>>>>\n"
           )
         );
         console.log(chalk.green.bold(stats.compilation.errors));
@@ -230,6 +244,7 @@ const watch = () => {
       }
     }
   );
+  return watching;
 }
 
 // Run pre-build tasks to get file system ready and put thread on hold while its not done
