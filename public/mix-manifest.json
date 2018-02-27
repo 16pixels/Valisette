@@ -1,0 +1,4 @@
+{
+  "name": "Build assets manifest",
+  "/public/main.js": "/public/javascript/main.js"
+}

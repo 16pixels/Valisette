@@ -1,0 +1,25 @@
+{
+  "exclude": [
+   "**/*.spec.ts",
+   "tests",
+   "node_modules",
+   "vendor",
+   "public"
+ ],
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "outDir": "./public/",
+    "noImplicitAny": true,
+    "removeComments": false,
+    "allowJs": true,
+    "sourceMap": false,
+    "module": "commonjs",
+    "target": "es5",
+    "moduleResolution": "node",
+    "lib": [
+      "dom",
+      "es5",
+      "es2015.promise"
+    ]
+  }
+}
