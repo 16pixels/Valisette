@@ -194,16 +194,32 @@ const watch = () => {
   }
 
   // build a proxy for your code with hot reload
-  COMPILER.apply(
-    new BrowserSyncPlugin({
-      // browse to http://localhost:3000/ during development,
-      // ./public directory is being served
-      host: buildConfig.browserSync.host,
-      port: buildConfig.browserSync.port,
-      proxy: buildConfig.browserSync.proxy
-    })
-  );
-  
+  if (buildConfig.browserSync.proxy) {
+    COMPILER.apply(
+      new BrowserSyncPlugin({
+        files: `${buildConfig.publicPath}*`,
+        host: buildConfig.browserSync.host,
+        port: buildConfig.browserSync.port,
+        proxy: buildConfig.browserSync.proxy
+      })
+    );
+  } else {
+    COMPILER.apply(
+      new BrowserSyncPlugin({
+        // browse to http://localhost:3000/ during development,
+        // ./public directory is being served
+        files: `${buildConfig.publicPath}*`,
+        host: buildConfig.browserSync.host,
+        port: buildConfig.browserSync.port,
+        server: {
+          baseDir: buildConfig.browserSync.baseDir,
+          index: buildConfig.browserSync.index,
+          directory: buildConfig.publicPath,
+        },
+      })
+    );
+  }
+
   // Watch daemon
   const watching = COMPILER.watch({
       aggregateTimeout: 300,
@@ -255,7 +271,7 @@ const runPreBuildSteps = new Promise(function (resolve, reject) {
   const cleaner = () => {
     console.log("> cleaning assets");
     // Clean css folder
-    return utils.clean(`${buildConfig.publicPath + buildConfig.cssPath}/*` , function () {
+    return utils.clean(`${buildConfig.publicPath + buildConfig.cssPath}/*`, function () {
       // Clean js folder
       utils.clean(`${buildConfig.publicPath + buildConfig.jsPath}/*`, function () {
         goSignal = true;
@@ -270,7 +286,7 @@ const runPreBuildSteps = new Promise(function (resolve, reject) {
 runPreBuildSteps.then(function (result) {
   console.log('> checking env');
   console.log(
-    '-->', 
+    '-->',
     chalk.cyan.bold(`JS source  -`),
     chalk.yellow.bold(`${buildConfig.assetsPath + buildConfig.jsPath + buildConfig.jsMain}`));
   console.log(
@@ -283,10 +299,10 @@ runPreBuildSteps.then(function (result) {
     chalk.cyan.bold('prod       -'),
     chalk.yellow.bold(buildConfig.isProduction));
   console.log(
-    '-->', 
+    '-->',
     chalk.cyan.bold('watch      -'),
     chalk.yellow.bold(buildConfig.watch));
-    
+
   if (buildConfig.isProduction) {
     return productionBuild();
   }

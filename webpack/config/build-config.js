@@ -13,7 +13,7 @@ const buildConfig = {
   scssPath: 'scss/', // scss source folder
   scssMain: 'main.scss', // Main scss file
   cssMain: 'main.css', // Main css file (used in production mode)
-  devtool: isProduction ? '(none)' : 'cheap-eval-source-map', // Sourcemap type declaration
+  devtool: isProduction ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
   isPwa: false, // Turn your app into a Progressive Web App
   pwa: {
     appName: 'Jockpack Boilerplate',
@@ -26,7 +26,10 @@ const buildConfig = {
   browserSync: { // This implies that you are hosting your code on your machine but you can always set browserSync options -> https://github.com/Va1/browser-sync-webpack-plugin
     host: 'localhost',
     port: 3000,
-    proxy: 'http://mydevurl.dev'
+    proxy: false,
+    baseDir: './public',
+    index: './index.html',
+    directory: true,
   },
   performance: {
     compressionTreshold: 0 // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)

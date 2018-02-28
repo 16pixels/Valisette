@@ -1,7 +1,7 @@
 # TODO
 [] Imagemin / mozjpeg support
-[] Lazy load support
-[] Webfont loader support
+[X] Lazy load support
+[X] Webfont loader support
 [] Critical css support
 [] Prepack support
 [] Font loading & compression support
