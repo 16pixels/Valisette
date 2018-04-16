@@ -1,11 +1,12 @@
-import webpack from 'webpack';
-import BrowserSyncPlugin from 'browser-sync-webpack-plugin';
 import CleanObsoleteChunks from 'webpack-clean-obsolete-chunks';
+import BrowserSyncPlugin from 'browser-sync-webpack-plugin';
 import CompressionPlugin from 'compression-webpack-plugin';
+import WebpackPwaManifest from 'webpack-pwa-manifest';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
-import WebpackPwaManifest from 'webpack-pwa-manifest';
+import OfflinePlugin from 'offline-plugin';
 import notifier from 'node-notifier';
+import webpack from 'webpack';
 import chalk from 'chalk';
 import {
   buildConfig
@@ -21,6 +22,12 @@ import {
   prodConfig,
   extractSassProd,
 } from './config/webpack.config.prod.babel';
+
+const swRuntimeConfig = {
+  ServiceWorker: {
+    events: true
+  }
+};
 
 /** 
  * Compiler object that initialize webpack's as an object
@@ -56,6 +63,36 @@ const basics = () => {
   );
   // Apply concatenation strategy to modules contained in webpack chunks
   COMPILER.apply(new webpack.optimize.ModuleConcatenationPlugin());
+};
+
+const makePWA = () => {
+  COMPILER.apply(new OfflinePlugin(swRuntimeConfig));
+  COMPILER.apply(
+    new WebpackPwaManifest({
+      filename: "manifest-pwa.json",
+      orientation: "portrait",
+      display: "standalone",
+      start_url: "/",
+      inject: true,
+      fingerprints: false,
+      ios: false,
+      publicPath: null,
+      name: buildConfig.pwa.appName,
+      short_name: buildConfig.pwa.shortAppName,
+      description: buildConfig.pwa.appDescription,
+      background_color: buildConfig.pwa.appColor,
+      theme_color: buildConfig.pwa.themeColor,
+      icons: [{
+          src: utils.base(buildConfig.pwa.appLogo),
+          sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
+        },
+        {
+          src: utils.base(buildConfig.pwa.appLogo),
+          size: "1024x1024" // you can also use the specifications pattern
+        }
+      ]
+    })
+  );
 };
 
 /**
@@ -129,13 +166,26 @@ const build = () => {
  */
 const productionBuild = () => {
   console.log("> production build");
+  // Desactivate DEV mode globally
+  COMPILER.apply(new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: '"production"'
+    }
+  }));
+  // Run common tasks
   basics();
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin and apply minification
   COMPILER.apply(extractSassProd);
   // Makes a smaller webpack footprint by giving modules hashes based on the relative path of each module
   COMPILER.apply(new webpack.HashedModuleIdsPlugin());
   // Minify JS code
-  COMPILER.apply(new UglifyJSPlugin());
+  COMPILER.apply(new UglifyJSPlugin({
+    uglifyOptions: {
+      safari10: true,
+      ecma: 5,
+      ie8: false
+    }
+  }));
   // Build up a progressive webapp if you've set it to true in build-config
   if (buildConfig.isPwa) {
     COMPILER.apply(

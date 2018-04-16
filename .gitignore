@@ -58,5 +58,5 @@ typings/
 .env
 
 # public assets since they meant to be pushed separatly
-dist/
-public/
+# dist/
+# public/

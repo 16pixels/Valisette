@@ -1,17 +1,17 @@
 module.exports = {
   'extends': 'airbnb-base',
   'globals': {
-    'window': true,
-    'document': true,
-    'pixels': true
+    'window': 1,
+    'document': 1,
+    'pixels': 1
   },
   'rules': {
-    'no-console': false,
+    'no-console': 1,
     'prefer-destructuring': ['error', {
-      'array': false,
-      'object': false
+      'array': 0,
+      'object': 0
     }, {
-      'enforceForRenamedProperties': false
+      'enforceForRenamedProperties': 0
     }]
   }
 };

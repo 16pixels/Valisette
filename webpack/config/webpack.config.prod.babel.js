@@ -3,13 +3,8 @@
  * @type {[type]}
  */
 import ExtractTextPlugin from 'extract-text-webpack-plugin'; // warning : you should only import plugins that are used inline otherwise they're called from ./webpack/bundler.js and applied to webpack object for dependency injection
-import chalk from 'chalk';
-import {
-  buildConfig
-} from './build-config.js';
-import {
-  utils
-} from './build-utils.js';
+import { buildConfig } from './build-config';
+import { utils } from './build-utils';
 
 /**
  * Plugin declarations
@@ -17,10 +12,10 @@ import {
  */
 
 const extractSassProd = new ExtractTextPlugin({
-  filename: `/..${buildConfig.publicPath + buildConfig.cssPath + buildConfig.cssMain}`,
+  filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
   disable: process.env.NODE_ENV === 'development',
   publicPath: buildConfig.publicPath,
-  allChunks: true
+  allChunks: true,
 });
 
 /**
@@ -36,26 +31,26 @@ const EXCLUDE = /node_modules|bower_components/;
  */
 const prodConfig = {
   entry: {
-    'main': utils.assets(`${buildConfig.jsPath + buildConfig.jsMain}`)
+    main: utils.assets(`${buildConfig.jsPath + buildConfig.jsMain}`),
   },
   performance: {
-    hints: "warning"
+    hints: 'warning'
   },
   devtool: buildConfig.devtool,
   target: 'web',
   output: {
-    filename: `${buildConfig.jsPath}[name].js`,
+    filename: `${buildConfig.jsPath + buildConfig.jsMainOutput}`,
     path: utils.base(buildConfig.publicPath),
     hashDigestLength: 8,
-    pathinfo: true
+    pathinfo: true,
   },
   resolve: {
     extensions: ['.js', '.ts', '.vue', '.json', '.scss', '.sass'],
     alias: {
       sassAssets,
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
-    }
+      'vue$': 'vue/dist/vue.esm.js', //eslint-disable-line
+      '@': utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`),
+    },
   },
   module: {
     rules: [
@@ -68,24 +63,24 @@ const prodConfig = {
         use: extractSassProd.extract({
           fallback: 'isomorphic-style-loader',
           use: [{
-              loader: 'css-loader',
-              options: {
-                minimize: true,
-                modules: false,
-                sourceMap: false
-              }
+            loader: 'css-loader',
+            options: {
+              minimize: true,
+              modules: false,
+              sourceMap: false,
             },
-            {
-              loader: 'resolve-url-loader'
-            }
-          ]
-        })
+          },
+          {
+            loader: 'resolve-url-loader',
+          },
+          ],
+        }),
       },
       {
         test: /\.scss$/,
         include: [
-          utils.base('node_modules'), 
-          utils.assets(`${buildConfig.scssPath}`)
+          utils.base('node_modules'),
+          utils.assets(`${buildConfig.scssPath}`),
         ],
         use: extractSassProd.extract({
           fallback: 'isomorphic-style-loader',
@@ -95,32 +90,32 @@ const prodConfig = {
               options: {
                 minimize: true,
                 modules: false,
-                sourceMap: false
-              }
+                sourceMap: false,
+              },
             },
             {
-              loader: 'resolve-url-loader'
+              loader: 'resolve-url-loader',
             },
             {
               loader: 'sass-loader',
               query: {
-                sourceMap: false
-              }
-            }
-          ]
-        })
+                sourceMap: false,
+              },
+            },
+          ],
+        }),
       },
       {
         test: /\.ts$/,
         exclude: /(node_modules)/,
         include: [utils.assets(`${buildConfig.assetsPath + buildConfig.tsPath}`)],
         use: [{
-          loader: 'ts-loader'
-        }]
+          loader: 'ts-loader',
+        }],
       },
       {
         test: /\.js$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules\/(?!(dom7|swiper)\/).*/,
         include: [
           utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
         ],
@@ -128,9 +123,9 @@ const prodConfig = {
           loader: 'babel-loader',
           options: {
             presets: ['env', 'minify'],
-            plugins: ['transform-runtime']
-          }
-        }
+            plugins: ['transform-runtime'],
+          },
+        },
       },
       {
         test: /\.vue$/,
@@ -139,55 +134,52 @@ const prodConfig = {
           loaders: {
             css: ExtractTextPlugin.extract({
               use: 'css-loader?sourceMap',
-              fallback: 'vue-style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm
+              fallback: 'vue-style-loader', // <- this is a dep of vue-loader, so no need to explicitly install if using npm
             }),
             scss: ExtractTextPlugin.extract({
               use: 'css-loader?sourceMap!sass-loader?sourceMap',
-              fallback: 'vue-style-loader'
-            })
-          }
-        }
+              fallback: 'vue-style-loader',
+            }),
+          },
+        },
       },
       {
         test: /\.woff$/,
-        loader: 'url-loader?mimetype=application/font-woff'
+        loader: 'url-loader?mimetype=application/font-woff',
       },
       {
         test: /\.ttf$/,
-        loader: 'url-loader?mimetype=application/font-ttf'
+        loader: 'url-loader?mimetype=application/font-ttf',
       },
       {
         test: /\.eot$/,
-        loader: 'url-loader?mimetype=application/font-eot'
+        loader: 'url-loader?mimetype=application/font-eot',
       },
       {
         test: /\.svg$/,
-        loader: 'url-loader?mimetype=iamge/svg'
+        loader: 'url-loader?mimetype=iamge/svg',
       },
       {
         test: /\.png$/,
-        loader: 'url-loader?mimetype=image/png'
+        loader: 'url-loader?mimetype=image/png',
       },
       {
         test: /\.jpg$/,
-        loader: 'url-loader?mimetype=image/jpg'
+        loader: 'url-loader?mimetype=image/jpg',
       },
       {
         test: /\.gif$/,
-        loader: 'url-loader?mimetype=image/gif'
+        loader: 'url-loader?mimetype=image/gif',
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
         loaders: [
           'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
-          'image-webpack-loader?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}'
-        ]
-      }
-    ]
-  }
+          'image-webpack-loader?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}',
+        ],
+      },
+    ],
+  },
 };
 
-export {
-  prodConfig,
-  extractSassProd
-};
+export { prodConfig, extractSassProd };
