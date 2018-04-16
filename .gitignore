@@ -60,3 +60,5 @@ typings/
 # public assets since they meant to be pushed separatly
 # dist/
 # public/
+
+.DS_Store
