@@ -6,7 +6,9 @@
     "prod": "cross-env NODE_ENV=prod babel-node ./webpack/bundler.js",
     "start": "npm prune && npm i && npm run build",
     "watch": "cross-env NODE_ENV=dev WATCH=true babel-node ./webpack/bundler.js",
-    "ie": "babel --plugins transform-es2015-classes public/javascript/*.js --out-file public/javascript/*.js && minify public/javascript -d public/javascript"
+    "ie": "babel --plugins transform-es2015-classes public/javascript/*.js --out-file public/javascript/*.js && minify public/javascript -d public/javascript",
+    "critical": "cross-env NODE_ENV=prod CRITICAL=true babel-node ./webpack/critical-css.js",
+    "imgmin": "cross-env NODE_ENV=prod babel-node ./webpack/img-compressor.js"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.4",
