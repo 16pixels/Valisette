@@ -6,7 +6,9 @@
     "prod": "cross-env NODE_ENV=prod babel-node ./webpack/bundler.js",
     "start": "npm prune && npm i && npm run build",
     "watch": "cross-env NODE_ENV=dev WATCH=true babel-node ./webpack/bundler.js",
-    "ie": "babel --plugins transform-es2015-classes public/javascript/*.js --out-file public/javascript/*.js && minify public/javascript -d public/javascript"
+    "ie": "babel --plugins transform-es2015-classes public/javascript/*.js --out-file public/javascript/*.js && minify public/javascript -d public/javascript",
+    "critical": "cross-env NODE_ENV=prod CRITICAL=true babel-node ./webpack/critical-css.js",
+    "imgmin": "cross-env NODE_ENV=prod babel-node ./webpack/imgmin.js"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.4",
@@ -30,7 +32,6 @@
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-plugin-import": "^2.7.0",
-    "fs": "0.0.1-security",
     "image-webpack-loader": "^3.6.0",
     "imagemin": "^5.3.1",
     "imagemin-mozjpeg": "^6.0.0",
@@ -38,7 +39,6 @@
     "isomorphic-style-loader": "^4.0.0",
     "mozjpeg": "^4.1.1",
     "node-sass": "^4.5.3",
-    "path": "^0.12.7",
     "penthouse": "^1.4.1",
     "postcss-loader": "^2.0.6",
     "resolve-url-loader": "^2.1.0",
