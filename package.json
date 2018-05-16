@@ -2,7 +2,6 @@
   "private": true,
   "scripts": {
     "build": "cross-env NODE_ENV=dev babel-node ./webpack/bundler.js",
-    "lint-init": "eslint --init",
     "prod": "cross-env NODE_ENV=prod babel-node ./webpack/bundler.js",
     "start": "npm prune && npm i && npm run build",
     "watch": "cross-env NODE_ENV=dev WATCH=true babel-node ./webpack/bundler.js",
