@@ -5,14 +5,17 @@ A webpack 3 build system meant to work with various JS technologies seamlessly.
 
 ## Features
 
+Dev server
 - [X] Browsersync dev server / proxy
 
+App shell generator
 - [X] Service worker generator
 - [X] Critical CSS generator
 - [X] PWA manifest generator
 - [X] App cache generator
 - [X] Sourcemaps generator
 
+Modern Javascript and optimisations
 - [X] ES5 (IE11) backward compatibility transpiler
 - [X] ES6 - ES7+ transpiler
 - [X] VueJS components transpiler
@@ -20,10 +23,12 @@ A webpack 3 build system meant to work with various JS technologies seamlessly.
 - [X] Tree shaking
 - [X] Comments removal
 
+Modern CSS
 - [X] SASS (SCSS) compiler
 - [X] Components styles extraction
 - [X] CSS prefixing
 
+Minification
 - [X] CSS minifier
 - [X] JS Minifier
 - [X] Image minifier
