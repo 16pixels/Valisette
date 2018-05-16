@@ -157,3 +157,6 @@ Generates your critical CSS and outputs it to file in public directory.
 Minifies all your JPEG JPG PNG images and outputs them to a directory called "images" in your public directory.
 
 
+## How do I call my assets 
+
+You have an example layout in index.example.html that you can use to test out Jockpack
