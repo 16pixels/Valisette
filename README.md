@@ -5,28 +5,28 @@ A webpack 3 build system meant to work with various JS technologies seamlessly.
 
 ## Features
 
-[X] Browsersync dev server / proxy
+- [X] Browsersync dev server / proxy
 
-[X] Service worker generator
-[X] Critical CSS generator
-[X] PWA manifest generator
-[X] App cache generator
-[X] Sourcemaps generator
+- [X] Service worker generator
+- [X] Critical CSS generator
+- [X] PWA manifest generator
+- [X] App cache generator
+- [X] Sourcemaps generator
 
-[X] ES5 (IE11) backward compatibility transpiler
-[X] ES6 - ES7+ transpiler
-[X] VueJS components transpiler
-[X] Code splitting
-[X] Tree shaking
-[X] Comments removal
+- [X] ES5 (IE11) backward compatibility transpiler
+- [X] ES6 - ES7+ transpiler
+- [X] VueJS components transpiler
+- [X] Code splitting
+- [X] Tree shaking
+- [X] Comments removal
 
-[X] SASS (SCSS) compiler
-[X] Components styles extraction
-[X] CSS prefixing
+- [X] SASS (SCSS) compiler
+- [X] Components styles extraction
+- [X] CSS prefixing
 
-[X] CSS minifier
-[X] JS Minifier
-[X] Image minifier
+- [X] CSS minifier
+- [X] JS Minifier
+- [X] Image minifier
 
 ## Get started
 
@@ -60,7 +60,7 @@ As a build tool, Jockpack abstracts many redundants tasks and allows you to sole
 
 This file is ```webpack/config/build-config.js``` which is shown below, we'll review each feature afterwards.
 
-```
+```javascript
 // webpack/config/build-config.js
 const isProduction = process.env.NODE_ENV === 'prod' ? true : false;
 const critical = process.env.CRITICAL ? true : false;
