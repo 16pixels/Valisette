@@ -87,7 +87,7 @@ const buildConfig = {
   scssMain: 'main.scss', // Main scss file
   cssMain: 'main.css', // Main css file (used in production mode)
   cssMainOutput: '[name].css', // Main css file (used in production mode)
-  devtool: isProduction ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
+  devtool: isProduction ? '(none)' : 'eval-source-map ', // Sourcemap type declaration => https://webpack.js.org/configuration/devtool/
   isPwa: false, // Turn your app into a Progressive Web App
   critical,
   pwa: { // If isPwa is true, those parameters will configure your App manifest for you
