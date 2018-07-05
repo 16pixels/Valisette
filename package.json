@@ -52,7 +52,6 @@
   },
   "dependencies": {
     "browser-sync-webpack-plugin": "^1.2.0",
-    "bulma": "^0.6.2",
     "chalk": "^2.1.0",
     "compression-webpack-plugin": "^1.0.0",
     "extract-text-webpack-plugin": "^3.0.2",

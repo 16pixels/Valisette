@@ -10,13 +10,13 @@ Dev server
 
 App shell generator
 - [X] Service worker generator
-- [X] Critical CSS generator
+- [X] Critical CSS generator (Documentation in progress || needs more documentation)
 - [X] PWA manifest generator
 - [X] App cache generator
 - [X] Sourcemaps generator
 
 Modern Javascript and optimisations
-- [X] ES5 (IE11) backward compatibility transpiler
+- [X] ES5 (IE11) backward compatibility transpiler (Not automated yet)
 - [X] ES6 - ES7+ transpiler
 - [X] VueJS components transpiler
 - [X] Code splitting
@@ -56,7 +56,9 @@ This command will list all node's version available for installation. From there
 Clone this repo somewhere on your machine and merge any existing file so Jockpack's version prevails
 
 ```
-git clone git@gitlab.16pixels.fr:open-source/Jockpack.git .
+# git clone git@gitlab.16pixels.fr:open-source/Jockpack.git .
+# OR if you're not from our team
+git clone https://github.com/Thibzzz/Jockpack .
 ```
 
 ## Jockpack Configuration
