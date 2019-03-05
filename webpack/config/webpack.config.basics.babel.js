@@ -7,6 +7,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"; // warning : you sh
 import { each } from 'lodash';
 import { buildConfig } from "./build-config";
 import { utils } from "./build-utils";
+import chalk from "chalk";
 
 /**
  * Plugins declarations
@@ -36,18 +37,25 @@ const baseAliasConfig = {
 /**
  * Aliases declarations
  */
-let allAliases = {};
-const sassAssets = utils.assets(
+const sassAssets = {sassAssets: utils.assets(
 `${buildConfig.scssPath + buildConfig.scssMain}`
-);
+)};
 
 /**
  * Merging Aliases
  */
 const aliasesList = [baseAliasConfig, sassAssets];
-each(aliasesList, alias => {
-  return Object.assign(mergedAliases, alias);
-});
+const mergeAliases = (aliasArray) => {
+  let allAliases = {};
+  each(aliasArray, key => {
+    Object.assign(allAliases, key);
+  });
+  console.log('> Injected Aliases : ');
+  each(allAliases, (alias, key) => {
+    console.log(`--> ${chalk.green(chalk.cyan.bold(key))}: `, chalk.yellow.bold(alias));
+  });
+  return allAliases;
+}
 
 /**
  * Config object
@@ -56,7 +64,7 @@ each(aliasesList, alias => {
 const config = {
   entry: utils.jsEntries(buildConfig.jsMain),
   performance: {
-    hints: "warning"
+    hints: "error"
   },
   devtool: buildConfig.devtool,
   target: "web",
@@ -68,7 +76,7 @@ const config = {
   },
   resolve: {
     extensions: [".js", ".ts", ".vue", ".json", ".scss"],
-    alias: allAliases
+    alias: mergeAliases(aliasesList)
   },
   module: {
     rules: [

@@ -5,7 +5,7 @@ const buildConfig = {
   production: isProduction,
   publicPath: '/public/', // Public assets folder path
   publicManifestPath: '/', // Public assets folder path
-  jsPath: 'js/', // Javascript folder name
+  jsPath: 'javascript/', // Javascript folder name
   tsPath: 'typescript/', // Typescript folder name
   cssPath: 'css/', // Css folder name
   assetsPath: 'resources/assets/', // Assets source location
@@ -16,8 +16,8 @@ const buildConfig = {
   jsMainOutput: '[name]-[hash].js', // Main JS file to import / require from
   jsWorker: 'worker.js', // Declares your service worker(s)
   stylesMain: 'styles.js', // Manages lazy loading
-  scssPath: 'sass/', // scss source folder
-  scssMain: 'app.scss', // Main scss file
+  scssPath: 'scss/', // scss source folder
+  scssMain: 'main.scss', // Main scss file
   scssBo: 'bo.scss', // Main scss file
   scssMail: 'mail.scss', // Main scss file
   cssMain: 'main.css', // Main css file (used in production mode)
