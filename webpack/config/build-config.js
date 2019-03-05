@@ -13,7 +13,7 @@ const buildConfig = {
   jsMain: [
     'main.js'
   ], // Main JS file to import / require from
-  jsMainOutput: '[name]-[hash].js', // Main JS file to import / require from
+  jsMainOutput: '[name].js', // Main JS file to import / require from
   jsWorker: 'worker.js', // Declares your service worker(s)
   stylesMain: 'styles.js', // Manages lazy loading
   scssPath: 'scss/', // scss source folder
@@ -21,7 +21,7 @@ const buildConfig = {
   scssBo: 'bo.scss', // Main scss file
   scssMail: 'mail.scss', // Main scss file
   cssMain: 'main.css', // Main css file (used in production mode)
-  cssMainOutput: '[name]-[hash].css', // Main css file (used in production mode)
+  cssMainOutput: '[name].css', // Main css file (used in production mode)
   devtool: isProduction ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
   isPwa: false, // Turn your app into a Progressive Web App
   critical,
