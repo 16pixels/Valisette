@@ -1,4 +1,4 @@
-# Jockpack
+# Valisette
 
 A webpack 3 build system meant to work with various JS technologies seamlessly.
 
