@@ -4,7 +4,7 @@ import ExtractTextPlugin from "extract-text-webpack-plugin"; // warning : you sh
  * Import modules
  * @type {[type]}
  */
-import { each } from 'lodash';
+import { each } from "lodash";
 import { buildConfig } from "./build-config";
 import { utils } from "./build-utils";
 import chalk from "chalk";
@@ -23,7 +23,7 @@ const extractSass = new ExtractTextPlugin({
  * Constants declarations
  * @type {[type]}
  */
-// Declares file bundling exclusions pattern 
+// Declares file bundling exclusions pattern
 const EXCLUDES = /node_modules|bower_components/;
 
 /**
@@ -31,31 +31,34 @@ const EXCLUDES = /node_modules|bower_components/;
  */
 const baseAliasConfig = {
   vue$: "vue/dist/vue.esm.js", //eslint-disable-line
-  "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`),
+  "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
 };
 
 /**
  * Aliases declarations
  */
-const sassAssets = {sassAssets: utils.assets(
-`${buildConfig.scssPath + buildConfig.scssMain}`
-)};
+const sassAssets = {
+  sassAssets: utils.assets(`${buildConfig.scssPath + buildConfig.scssMain}`)
+};
 
 /**
  * Merging Aliases
  */
 const aliasesList = [baseAliasConfig, sassAssets];
-const mergeAliases = (aliasArray) => {
+const mergeAliases = aliasArray => {
   let allAliases = {};
   each(aliasArray, key => {
     Object.assign(allAliases, key);
   });
-  console.log('> Injected Aliases : ');
+  console.log("> Injected Aliases : ");
   each(allAliases, (alias, key) => {
-    console.log(`--> ${chalk.green(chalk.cyan.bold(key))}: `, chalk.yellow.bold(alias));
+    console.log(
+      `--> ${chalk.green(chalk.cyan.bold(key))}: `,
+      chalk.yellow.bold(alias)
+    );
   });
   return allAliases;
-}
+};
 
 /**
  * Config object
