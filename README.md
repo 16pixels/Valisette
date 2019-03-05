@@ -35,9 +35,9 @@ Minification
 
 ## Get started
 
-To use Jockpack one must have a proper node.js configuration setup on it's local machine.
+To use Valisette one must have a proper node.js configuration setup on it's local machine.
 
-*Warning : Jockpack is not meant to be used server side as it's a build system setup. It contains numerous pieces of software that are vulnerabilities if used as such.*
+*Warning : Valisette is not meant to be used server side as it's a build system setup. It contains numerous pieces of software that are vulnerabilities if used as such.*
 
 You can either go to [Node's website](https://nodejs.org/en/) or use Node version manager better known as NVM which can be installed using [this script](https://github.com/creationix/nvm#install-script).
 
@@ -51,19 +51,19 @@ nvm ls-remote
 
 This command will list all node's version available for installation. From there you must pick the "LTS" one which means "Long Term Support (schedule)". This is de facto the most stable version you can use at any point in NodeJS development.
 
-## Install Jockpack
+## Install Valisette
 
-Clone this repo somewhere on your machine and merge any existing file so Jockpack's version prevails
+Clone this repo somewhere on your machine and merge any existing file so Valisette's version prevails
 
 ```
-# git clone git@gitlab.16pixels.fr:open-source/Jockpack.git .
+# git clone git@gitlab.16pixels.fr:open-source/Valisette.git .
 # OR if you're not from our team
-git clone https://github.com/Thibzzz/Jockpack .
+git clone https://github.com/Thibzzz/Valisette .
 ```
 
-## Jockpack Configuration
+## Valisette Configuration
 
-As a build tool, Jockpack abstracts many redundants tasks and allows you to solely rely on a single configuration file.
+As a build tool, Valisette abstracts many redundants tasks and allows you to solely rely on a single configuration file.
 
 This file is ```webpack/config/build-config.js``` which is shown below, we'll review each feature afterwards.
 
@@ -93,9 +93,9 @@ const buildConfig = {
   isPwa: false, // Turn your app into a Progressive Web App
   critical,
   pwa: { // If isPwa is true, those parameters will configure your App manifest for you
-    appName: 'Jockpack',
-    shortAppName: 'Jockpack',
-    appDescription: 'Jockpack',
+    appName: 'Valisette',
+    shortAppName: 'Valisette',
+    appDescription: 'Valisette',
     appColor: '#3a74a5',
     themeColor: '#3a74a5',
     appLogo: 'public/favicon.ico'
@@ -103,7 +103,7 @@ const buildConfig = {
   browserSync: { // This implies that you are hosting your code on your machine but you can always set browserSync options -> https://github.com/Va1/browser-sync-webpack-plugin
     host: 'localhost',
     port: 3000,
-    proxy: false, // If you type an url here ex : 'http://mydevelopmentserver.dev' , Jockpack will not serve your code and simply proxy your dev server url
+    proxy: false, // If you type an url here ex : 'http://mydevelopmentserver.dev' , Valisette will not serve your code and simply proxy your dev server url
     baseDir: './public',
     index: './index.html',
     directory: true,
@@ -161,4 +161,4 @@ Minifies all your JPEG JPG PNG images and outputs them to a directory called "im
 
 ## How do I call my assets 
 
-You have an example layout in index.example.html that you can use to test out Jockpack
+You have an example layout in index.example.html that you can use to test out Valisette
