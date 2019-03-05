@@ -10,6 +10,11 @@ import { utils } from "./build-utils";
 import chalk from "chalk";
 
 /**
+ * Start config setup
+ */
+console.log("> Injecting webpack basic config");
+
+/**
  * Plugins declarations
  * @type {ExtractTextPlugin}
  */
@@ -50,7 +55,7 @@ const mergeAliases = aliasArray => {
   each(aliasArray, key => {
     Object.assign(allAliases, key);
   });
-  console.log("> Injected Aliases : ");
+  console.log("> Injecting Aliases : ");
   each(allAliases, (alias, key) => {
     console.log(
       `--> ${chalk.green(chalk.cyan.bold(key))}: `,

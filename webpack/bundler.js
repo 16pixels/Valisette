@@ -34,13 +34,14 @@ const swRuntimeConfig = {
  * @constant
  */
 let COMPILER = {};
+console.log(`> Compiler boot mode :`);
+console.log(`--> ${chalk.cyan.bold(process.env.NODE_ENV)}`);
 if (buildConfig.isProduction) {
   COMPILER = webpack(prodConfig);
 } else {
   COMPILER = webpack(config);
 }
 
-console.log('> NODE_ENV =>', process.env.NODE_ENV);
 
 /**
  * basics function
@@ -151,7 +152,6 @@ const run = (compilerObject) => {
  * @description Run standard build tasks
  */
 const build = () => {
-  console.log('> development build');
   basics();
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin
   COMPILER.apply(extractSass);
@@ -319,7 +319,7 @@ const runPreBuildSteps = new Promise(function (resolve, reject) {
 
   // Cleans file system synchronously through callbacks
   const cleaner = () => {
-    console.log("> cleaning assets");
+    console.log("> Cleaning assets");
     // Clean css folder
     return utils.clean(`${buildConfig.publicPath + buildConfig.cssPath}/*`, function () {
       // Clean js folder
@@ -334,7 +334,7 @@ const runPreBuildSteps = new Promise(function (resolve, reject) {
 
 // Runs compiler when pre-build tasks are done
 runPreBuildSteps.then(function (result) {
-  console.log('> checking env');
+  console.log('> Loading env');
   console.log(
     '-->',
     chalk.cyan.bold(`JS source  -`),
