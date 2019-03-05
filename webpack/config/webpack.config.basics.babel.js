@@ -72,7 +72,7 @@ const mergeAliases = aliasArray => {
 const config = {
   entry: utils.jsEntries(buildConfig.jsMain),
   performance: {
-    hints: "error"
+    hints: buildConfig.logLevel
   },
   devtool: buildConfig.devtool,
   target: "web",
