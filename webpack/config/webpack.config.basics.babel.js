@@ -42,14 +42,14 @@ const baseAliasConfig = {
 /**
  * Aliases declarations
  */
-const aliasesList = {
-  baseAliasConfig,
+const sassAssets = {
   sassAssets: utils.assets(`${buildConfig.scssPath + buildConfig.scssMain}`)
 };
 
 /**
  * Merging Aliases
  */
+const aliasesList = [baseAliasConfig, sassAssets];
 const mergeAliases = aliasArray => {
   let allAliases = {};
   each(aliasArray, key => {
