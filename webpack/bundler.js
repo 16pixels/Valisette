@@ -8,6 +8,7 @@ import OfflinePlugin from 'offline-plugin';
 import notifier from 'node-notifier';
 import webpack from 'webpack';
 import chalk from 'chalk';
+import { each } from 'lodash';
 import {
   buildConfig
 } from './config/build-config';
@@ -121,28 +122,27 @@ const run = (compilerObject) => {
       });
       console.log(
         chalk.red.bold(
-          "\n>>>>>>>>>>>>>>>>>>>>> ! warnings ! >>>>>>>>>>>>>>>>\n"
+          "\n> Build Warnings\n"
         )
       );
-      console.log(chalk.green.bold(stats.compilation.errors));
-      console.log(
-        chalk.red.bold(
-          "\n>>>>>>>>>>>>>>>>>>>>>>>> END  >>>>>>>>>>>>>>>>>>>>>>\n"
-        )
-      );
+      // console.log();
+      each(stats.compilation.errors, (errorValue, errorKey) => {
+        console.log(chalk.cyan.bold(`> Warning n°${errorKey + 1} \n`));
+        console.log(chalk.green.bold(`--> ${errorValue} \n`));
+      })
     } else {
       console.log(
         chalk.cyan.bold(
-          "\n>>>>>>>>>>>>>>>>> Build complete ! >>>>>>>>>>>>>>>>>\n"
+          "> Build is smooth, good job\n"
         )
       );
     }
     // performance logging function
     if (stats) {
       const time = chalk.cyan.bold(stats.endTime - stats.startTime + " ms");
-      console.log("> compiled in", time);
+      console.log(chalk.cyan.bold("> Built in", time, "\n"));
     }
-    console.log("> COMPILER done");
+    console.log(chalk.cyan.bold("> Build complete\n"));
   });
 };
 
