@@ -1,162 +1,199 @@
-import chalk from 'chalk';
-import ExtractTextPlugin from 'extract-text-webpack-plugin'; // warning : you should only import plugins that are used inline otherwise they're called from ./webpack/bundler.js and applied to webpack object for dependency injection
+import ExtractTextPlugin from "extract-text-webpack-plugin"; // warning : you should only import plugins that are used inline otherwise they're called from ./webpack/bundler.js and applied to webpack object for dependency injection
+
 /**
  * Import modules
  * @type {[type]}
  */
-import { buildConfig } from './build-config';
-import { utils } from './build-utils';
+import { each } from 'lodash';
+import { buildConfig } from "./build-config";
+import { utils } from "./build-utils";
 
 /**
- * Plugin declarations
+ * Plugins declarations
  * @type {ExtractTextPlugin}
  */
-
 const extractSass = new ExtractTextPlugin({
   filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
-  disable: process.env.NODE_ENV === 'development',
-  publicPath: buildConfig.publicPath,
+  disable: process.env.NODE_ENV === "development",
+  publicPath: buildConfig.publicPath
 });
 
 /**
  * Constants declarations
  * @type {[type]}
  */
-const sassAssets = utils.assets(`${buildConfig.scssPath + buildConfig.scssMain}`);
-const EXCLUDE = /node_modules|bower_components/;
+// Declares file bundling exclusions pattern 
+const EXCLUDES = /node_modules|bower_components/;
+
+/**
+ * Aliases base config
+ */
+const baseAliasConfig = {
+  vue$: "vue/dist/vue.esm.js", //eslint-disable-line
+  "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`),
+};
+
+/**
+ * Aliases declarations
+ */
+let allAliases = {};
+const sassAssets = utils.assets(
+`${buildConfig.scssPath + buildConfig.scssMain}`
+);
+
+/**
+ * Merging Aliases
+ */
+const aliasesList = [baseAliasConfig, sassAssets];
+each(aliasesList, alias => {
+  return Object.assign(mergedAliases, alias);
+});
 
 /**
  * Config object
  * @type {Object}
  */
 const config = {
-  entry: {
-    main: utils.assets(`${buildConfig.jsPath + buildConfig.jsMain}`),
-  },
+  entry: utils.jsEntries(buildConfig.jsMain),
   performance: {
-    hints: 'error'
+    hints: "warning"
   },
   devtool: buildConfig.devtool,
-  target: 'web',
+  target: "web",
   output: {
     filename: `${buildConfig.jsPath + buildConfig.jsMainOutput}`,
     path: utils.base(buildConfig.publicPath),
     hashDigestLength: 8,
-    pathinfo: true,
+    pathinfo: true
   },
   resolve: {
-    extensions: ['.js', '.ts', '.vue', '.json', '.scss'],
-    alias: {
-      sassAssets,
-      'vue$': 'vue/dist/vue.esm.js', //eslint-disable-line
-      '@': utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`),
-    },
+    extensions: [".js", ".ts", ".vue", ".json", ".scss"],
+    alias: allAliases
   },
   module: {
     rules: [
       {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]",
+              outputPath: "fonts/"
+            }
+          }
+        ]
+      },
+      {
         test: /\.css$/,
         include: [
-          utils.base('node_modules'),
-          utils.assets(`${buildConfig.assetsPath + buildConfig.cssPath}`),
+          utils.base("node_modules"),
+          utils.assets(`${buildConfig.assetsPath + buildConfig.cssPath}`)
         ],
         use: extractSass.extract({
-          fallback: 'isomorphic-style-loader',
-          use: [{
-            loader: 'css-loader',
-          },
-          {
-            loader: 'resolve-url-loader',
-          },
-          ],
-        }),
+          fallback: "isomorphic-style-loader",
+          use: [
+            {
+              loader: "css-loader"
+            },
+            {
+              loader: "resolve-url-loader"
+            }
+          ]
+        })
       },
       {
         test: /\.scss$/,
         include: [
-          utils.base('node_modules'),
-          utils.assets(`${buildConfig.scssPath}`),
+          utils.base("node_modules"),
+          utils.assets(`${buildConfig.scssPath}`)
         ],
         use: extractSass.extract({
-          fallback: 'isomorphic-style-loader',
+          fallback: "isomorphic-style-loader",
           use: [
             {
-              loader: 'css-loader',
+              loader: "css-loader"
             },
             {
-              loader: 'resolve-url-loader',
+              loader: "resolve-url-loader"
             },
             {
-              loader: 'sass-loader',
+              loader: "sass-loader",
               query: {
-                sourceMap: false,
-              },
-            },
-          ],
-        }),
+                sourceMap: false
+              }
+            }
+          ]
+        })
       },
       {
         test: /\.ts$/,
-        exclude: /(node_modules)/,
-        include: [utils.assets(`${buildConfig.assetsPath + buildConfig.tsPath}`)],
-        use: [{
-          loader: 'ts-loader',
-        }],
+        exclude: EXCLUDES,
+        include: [
+          utils.assets(`${buildConfig.assetsPath + buildConfig.tsPath}`)
+        ],
+        use: [
+          {
+            loader: "ts-loader"
+          }
+        ]
       },
       {
         test: /\.js$/,
-        exclude: /node_modules\/(?!(dom7|swiper)\/).*/,
-        include: [utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)],
+        exclude: EXCLUDES,
+        include: [
+          utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
+        ],
         use: {
-          loader: 'babel-loader',
-        },
+          loader: "babel-loader"
+        }
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        loader: "vue-loader",
         options: {
           loaders: {
             css: ExtractTextPlugin.extract({
-              use: 'css-loader?sourceMap',
-              fallback: 'vue-style-loader' // <- this is a dep of vue-loader, so no need to explicitly install if using npm
+              use: "css-loader?sourceMap",
+              fallback: "vue-style-loader" // <- this is a dep of vue-loader, so no need to explicitly install if using npm
             }),
             scss: ExtractTextPlugin.extract({
-              use: 'css-loader?sourceMap!sass-loader?sourceMap',
-              fallback: 'vue-style-loader',
-            }),
-          },
-        },
+              use: "css-loader?sourceMap!sass-loader?sourceMap",
+              fallback: "vue-style-loader"
+            })
+          }
+        }
       },
       {
         test: /\.woff$/,
-        loader: 'url-loader?mimetype=application/font-woff',
+        loader: "url-loader?mimetype=application/font-woff"
       },
       {
         test: /\.ttf$/,
-        loader: 'url-loader?mimetype=application/font-ttf',
+        loader: "url-loader?mimetype=application/font-ttf"
       },
       {
         test: /\.eot$/,
-        loader: 'url-loader?mimetype=application/font-eot',
+        loader: "url-loader?mimetype=application/font-eot"
       },
       {
         test: /\.svg$/,
-        loader: 'url-loader?mimetype=iamge/svg',
+        loader: "url-loader?mimetype=iamge/svg"
       },
       {
         test: /\.png$/,
-        loader: 'url-loader?mimetype=image/png',
+        loader: "url-loader?mimetype=image/png"
       },
       {
         test: /\.jpg$/,
-        loader: 'url-loader?mimetype=image/jpg',
+        loader: "url-loader?mimetype=image/jpg"
       },
       {
         test: /\.gif$/,
-        loader: 'url-loader?mimetype=image/gif',
-      },
-    ],
-  },
+        loader: "url-loader?mimetype=image/gif"
+      }
+    ]
+  }
 };
 
 export { config, extractSass };

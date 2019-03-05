@@ -5,19 +5,23 @@ const buildConfig = {
   production: isProduction,
   publicPath: '/public/', // Public assets folder path
   publicManifestPath: '/', // Public assets folder path
-  jsPath: 'javascript/', // Javascript folder name
+  jsPath: 'js/', // Javascript folder name
   tsPath: 'typescript/', // Typescript folder name
   cssPath: 'css/', // Css folder name
   assetsPath: 'resources/assets/', // Assets source location
   watch: process.env.WATCH ? process.env.WATCH : false,
-  jsMain: 'main.js', // Main JS file to import / require from
-  jsMainOutput: '[name].js', // Main JS file to import / require from
+  jsMain: [
+    'main.js'
+  ], // Main JS file to import / require from
+  jsMainOutput: '[name]-[hash].js', // Main JS file to import / require from
   jsWorker: 'worker.js', // Declares your service worker(s)
   stylesMain: 'styles.js', // Manages lazy loading
-  scssPath: 'scss/', // scss source folder
-  scssMain: 'main.scss', // Main scss file
+  scssPath: 'sass/', // scss source folder
+  scssMain: 'app.scss', // Main scss file
+  scssBo: 'bo.scss', // Main scss file
+  scssMail: 'mail.scss', // Main scss file
   cssMain: 'main.css', // Main css file (used in production mode)
-  cssMainOutput: '[name].css', // Main css file (used in production mode)
+  cssMainOutput: '[name]-[hash].css', // Main css file (used in production mode)
   devtool: isProduction ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
   isPwa: false, // Turn your app into a Progressive Web App
   critical,
@@ -30,12 +34,7 @@ const buildConfig = {
     appLogo: 'public/favicon.ico'
   },
   browserSync: { // This implies that you are hosting your code on your machine but you can always set browserSync options -> https://github.com/Va1/browser-sync-webpack-plugin
-    host: 'localhost',
-    port: 3000,
-    proxy: false,
-    baseDir: './public',
-    index: './index.html',
-    directory: true,
+    target: "https://csg-website.dev"
   },
   performance: {
     compressionTreshold: 0 // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)
