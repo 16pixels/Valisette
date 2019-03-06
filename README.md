@@ -65,6 +65,10 @@ As a build tool, Valisette abstracts many redundants tasks and allows you to sol
 
 This file is ```webpack/config/build-config.js``` which is shown below, we'll review each feature afterwards.
 
+You can set verbose to true for more infos on your build.
+
+You can set audit to true to analyse your javascript bundles in the browser
+
 ## Commands 
 
 ### Start
