@@ -100,6 +100,7 @@ const config = {
   output: {
     filename: `${buildConfig.jsPath + buildConfig.jsMainOutput}`,
     path: utils.base(buildConfig.publicPath),
+    chunkFilename: '[name].bundle.js',
     hashDigestLength: 8,
     pathinfo: true
   },
