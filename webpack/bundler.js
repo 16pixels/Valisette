@@ -35,7 +35,7 @@ const swRuntimeConfig = {
  * @constant
  */
 let COMPILER = {};
-console.log(`> Compiler boot mode :`);
+console.log(`> Boot mode :`);
 console.log(`--> ${chalk.cyan.bold(process.env.NODE_ENV)}`);
 if (buildConfig.isProduction) {
   COMPILER = webpack(prodConfig);
@@ -51,6 +51,11 @@ if (buildConfig.isProduction) {
  */
 const basics = () => {
   COMPILER.apply(new webpack.ProgressPlugin());
+  COMPILER.apply(new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    // async: true,
+    minChunks: 2,
+  }));
   // Remove useless chunks of code
   COMPILER.apply(new CleanObsoleteChunks());
   // Build an assets manifest so it can be used by back-end
@@ -127,8 +132,8 @@ const run = (compilerObject) => {
       );
       // console.log();
       each(stats.compilation.errors, (errorValue, errorKey) => {
-        console.log(chalk.cyan.bold(`> Warning n°${errorKey + 1} \n`));
-        console.log(chalk.green.bold(`--> ${errorValue} \n`));
+        console.log(chalk.cyan.bold(`--> Warning n°${errorKey + 1} \n`));
+        console.log(chalk.green.bold(`${errorValue} \n`));
       })
     } else {
       console.log(
@@ -139,8 +144,8 @@ const run = (compilerObject) => {
     }
     // performance logging function
     if (stats) {
-      const time = chalk.cyan.bold(stats.endTime - stats.startTime + " ms");
-      console.log(chalk.cyan.bold("> Built in", time, "\n"));
+      const time = chalk.yellow.bold((stats.endTime - stats.startTime) / 1000) + " sec";
+      console.log(chalk.cyan.bold("> Built in", time));
     }
     console.log(chalk.cyan.bold("> Build complete\n"));
   });
@@ -338,11 +343,11 @@ runPreBuildSteps.then(function (result) {
   console.log(
     '-->',
     chalk.cyan.bold(`JS source  -`),
-    chalk.yellow.bold(`${buildConfig.assetsPath + buildConfig.jsPath + buildConfig.jsMain}`));
+    chalk.yellow.bold(`${buildConfig.assetsPath + buildConfig.jsPath} |`, buildConfig.jsMain));
   console.log(
     '-->',
     chalk.cyan.bold(`CSS source -`),
-    chalk.yellow.bold(`${buildConfig.assetsPath + buildConfig.scssPath + buildConfig.scssMain}`)
+    chalk.yellow.bold(`${buildConfig.assetsPath + buildConfig.scssPath} |`,  buildConfig.scssMain)
   );
   console.log(
     '-->',

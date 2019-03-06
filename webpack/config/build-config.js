@@ -12,16 +12,15 @@ const buildConfig = {
   assetsPath: 'resources/assets/', // Assets source location
   watch: process.env.WATCH ? process.env.WATCH : false,
   jsMain: [
-    'main.js'
+    'main.js',
   ], // Main JS file to import / require from
   jsMainOutput: '[name].js', // Main JS file to import / require from
   jsWorker: 'worker.js', // Declares your service worker(s)
   stylesMain: 'styles.js', // Manages lazy loading
   scssPath: 'scss/', // scss source folder
-  scssMain: 'main.scss', // Main scss file
-  scssBo: 'bo.scss', // Main scss file
-  scssMail: 'mail.scss', // Main scss file
-  cssMain: 'main.css', // Main css file (used in production mode)
+  scssMain: [
+    'main.scss',
+  ], // Main scss file
   cssMainOutput: '[name].css', // Main css file (used in production mode)
   devtool: isProduction ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
   isPwa: false, // Turn your app into a Progressive Web App

@@ -1,15 +1,15 @@
 import {
   utils,
-  loadFonts,
-  lazyLoader
+  // loadFonts,
+  // lazyLoader
 } from './modules/';
 import {
   each
 } from 'lodash';
-import config from './config';
+// import config from './config';
 
 // Don't remove this line, it imports css & scss into webpack
-require('sassAssets');
+require('main_css');
 
 // attach app to window object so we can use it in the browser
 window.app = window.app || {};
@@ -36,9 +36,9 @@ const main = () => {
   const privateMethods = {
     globals(options) {
       // Loads fonts asynchronously, go check performance.js
-      loadFonts(options);
+      // loadFonts(options);
       // Lazyloads all images, go check performance.js
-      lazyLoader(options);
+      // lazyLoader(options);
     },
     specificPrivateMethod(options) {
       utils.Log(['specificPrivateMethod launched with =>', options]);
