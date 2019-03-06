@@ -87,4 +87,4 @@ Build your code, minifies it and gzips it. Then outputs it to your public direct
 
 ## How do I call my assets 
 
-You have an boilerplate layout in index.example.html that you can use to test out Valisette
+A boilerplate layout is in index.example.html, use it to test out Valisette
