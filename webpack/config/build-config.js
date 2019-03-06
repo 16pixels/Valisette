@@ -2,8 +2,8 @@ const productionMode = process.env.NODE_ENV === 'prod' ? true : false;
 const critical = process.env.CRITICAL ? true : false;
 const buildConfig = {
   productionMode,
-  verbose : true,
-  audit : true,
+  verbose : false,
+  audit : false,
   logLevel: "error",
   publicPath: '/public/', // Public assets folder path
   publicManifestPath: '/', // Public assets folder path

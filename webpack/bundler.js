@@ -43,7 +43,7 @@ const prettyPrintErrors = (err, stats) => {
       console.log(chalk.green.bold(`${errorValue} \n`));
     });
   } else {
-    console.log(chalk.green.bold("> Build is smooth, good job\n"));
+    console.log(`\n> ${chalk.green.bold("Build is smooth, good job\n")}`);
   }
   // performance logging function
   if (stats) {
@@ -59,8 +59,7 @@ const prettyPrintErrors = (err, stats) => {
  * @constant
  */
 let COMPILER = {};
-console.log(`\n> Build mode :\n`);
-console.log(`--> ${chalk.magenta.bold(process.env.NODE_ENV)}`);
+console.log(`\n> ${chalk.magenta.bold('Build mode')} : ${chalk.yellow.bold(process.env.NODE_ENV)}\n`);
 if (buildConfig.productionMode) {
   COMPILER = webpack(prodConfig);
 } else {
@@ -296,6 +295,7 @@ runPreBuildSteps.then(result => {
   }
 
   if (buildConfig.audit) {
+    console.log(`\n> ${chalk.magenta.bold("Audit mode ")}${chalk.yellow.bold('ON')}\n`);
     new BundleAnalyzerPlugin().apply(COMPILER);
   }
 

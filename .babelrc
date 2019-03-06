@@ -15,7 +15,7 @@
     "stage-2"
   ],
   "plugins": [
-    ["transform-vue-jsx", "transform-runtime"]
+    ["transform-vue-jsx", "transform-runtime", "lodash"]
   ],
   "comments": false,
   "env": {

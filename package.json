@@ -11,12 +11,15 @@
     "imgmin": "cross-env NODE_ENV=prod babel-node ./webpack/imgmin.js"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/preset-env": "^7.3.4",
     "autoprefixer": "^7.1.4",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.0.0",
     "babel-loader": "^7.1.2",
     "babel-minify": "^0.4.0",
+    "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-preset-airbnb": "^2.4.0",
