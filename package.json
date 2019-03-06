@@ -53,6 +53,7 @@
     "vue-loader": "^15.7.0",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.8",
+    "webpack-bundle-analyzer": "^3.1.0",
     "webpack-clean-obsolete-chunks": "^0.4.0"
   },
   "dependencies": {

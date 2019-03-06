@@ -3,6 +3,7 @@ const critical = process.env.CRITICAL ? true : false;
 const buildConfig = {
   productionMode,
   verbose : true,
+  audit : true,
   logLevel: "error",
   publicPath: '/public/', // Public assets folder path
   publicManifestPath: '/', // Public assets folder path

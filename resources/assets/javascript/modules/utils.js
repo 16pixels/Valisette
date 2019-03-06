@@ -1,4 +1,6 @@
-import { each, debounce, once } from 'lodash';
+import each from 'lodash/each';
+import debounce from 'lodash/debounce';
+import once from 'lodash/once';
 import { bus } from './pubsub';
 import config from './../config';
 

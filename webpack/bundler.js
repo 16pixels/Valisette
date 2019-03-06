@@ -5,7 +5,6 @@ import CompressionPlugin from "compression-webpack-plugin";
 import WebpackPwaManifest from "webpack-pwa-manifest";
 import ManifestPlugin from "webpack-manifest-plugin";
 import UglifyJSPlugin from "uglifyjs-webpack-plugin";
-import OfflinePlugin from "offline-plugin";
 import notifier from "node-notifier";
 import webpack from "webpack";
 import chalk from "chalk";
@@ -13,6 +12,7 @@ import { each } from "lodash";
 import { buildConfig } from "./config/build-config";
 import { utils } from "./config/build-utils";
 import { config, extractSass } from "./config/webpack.config.basics.babel";
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import {
   prodConfig,
   extractSassProd
@@ -293,6 +293,10 @@ runPreBuildSteps.then(result => {
     chalk.cyan.bold("watch      -"),
     chalk.yellow.bold(buildConfig.watch)
   );
+  }
+
+  if (buildConfig.audit) {
+    new BundleAnalyzerPlugin().apply(COMPILER);
   }
 
   if (buildConfig.productionMode) {

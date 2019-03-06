@@ -3,9 +3,7 @@ import {
   loadFonts,
   lazyLoader
 } from './modules/';
-import {
-  each
-} from 'lodash';
+import each from 'lodash/each';
 // import config from './config';
 
 // Don't remove this line, it imports css & scss into webpack

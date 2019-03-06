@@ -1,5 +1,6 @@
 import webfontloader from 'webfontloader';
-import { each, delay } from 'lodash';
+import each from 'lodash/each';
+import delay from 'lodash/delay';
 import lazySizes from 'lazysizes';
 import { utils } from './utils';
 
