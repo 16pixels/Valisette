@@ -10,13 +10,13 @@ Dev server
 
 App shell generator
 - [X] Service worker generator
-- [] Critical CSS generator (Documentation in progress || needs more documentation)
+- [ ] Critical CSS generator (Documentation in progress || needs more documentation)
 - [X] PWA manifest generator
 - [X] App cache generator
 - [X] Sourcemaps generator
 
 Modern Javascript and optimisations
-- [] ES5 (IE11) backward compatibility transpiler (Not automated yet)
+- [ ] ES5 (IE11) backward compatibility transpiler (Not automated yet)
 - [X] ES6 - ES7+ transpiler
 - [X] VueJS components transpiler
 - [X] Code splitting
@@ -31,7 +31,7 @@ Modern CSS
 Minification
 - [X] CSS minifier
 - [X] JS Minifier
-- [] Image minifier
+- [ ] Image minifier
 
 ## Get started
 
