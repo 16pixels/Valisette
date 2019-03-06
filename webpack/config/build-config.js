@@ -37,7 +37,7 @@ const buildConfig = {
     target: "https://csg-website.dev"
   },
   performance: {
-    compressionTreshold: 0 // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)
+    compressionTreshold: 10240 // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)
   }
 };
 export {
