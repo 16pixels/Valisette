@@ -93,7 +93,9 @@ const config = {
     concatenateModules: true //ModuleConcatenationPlugin
   },
   performance: {
-    hints: buildConfig.logLevel
+    hints: buildConfig.logLevel,
+    maxEntrypointSize: 320000,
+    maxAssetSize: 320000
   },
   devtool: buildConfig.devtool,
   target: "web",
