@@ -1,4 +1,4 @@
-import ExtractTextPlugin from "extract-text-webpack-plugin"; // warning : you should only import plugins that are used inline otherwise they're called from ./webpack/bundler.js and applied to webpack object for dependency injection
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 /**
  * Import modules
@@ -20,11 +20,13 @@ if (buildConfig.verbose) {
  * Plugins declarations
  * @type {ExtractTextPlugin}
  */
-const extractSassProd = new ExtractTextPlugin({
+const extractSassProd = new MiniCssExtractPlugin({
   filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
   disable: process.env.NODE_ENV === "development",
-  publicPath: buildConfig.publicPath
+  publicPath: buildConfig.publicPath,
+  chunkFilename: "[id].css"
 });
+
 
 /**
  * Constants declarations
@@ -78,8 +80,19 @@ const mergeAliases = aliasArray => {
  * @type {Object}
  */
 const prodConfig = {
+  mode: "production",
   entry: {
     main: utils.assets(`${buildConfig.jsPath + buildConfig.jsMain}`)
+  },
+  optimization: {
+    namedModules: true, // NamedModulesPlugin()
+    splitChunks: {
+      // CommonsChunkPlugin()
+      name: "vendor",
+      minChunks: 2
+    },
+    noEmitOnErrors: true, // NoEmitOnErrorsPlugin
+    concatenateModules: true //ModuleConcatenationPlugin
   },
   performance: {
     hints: "warning"
@@ -104,22 +117,22 @@ const prodConfig = {
           utils.base("node_modules"),
           utils.assets(`${buildConfig.assetsPath + buildConfig.cssPath}`)
         ],
-        use: extractSassProd.extract({
-          fallback: "isomorphic-style-loader",
-          use: [
-            {
-              loader: "css-loader",
-              options: {
-                minimize: true,
-                modules: false,
-                sourceMap: false
-              }
-            },
-            {
-              loader: "resolve-url-loader"
+        use: [
+          process.env.NODE_ENV !== 'production'
+            ? 'vue-style-loader'
+            : MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              minimize: true,
+              modules: false,
+              sourceMap: false
             }
-          ]
-        })
+          },
+          {
+            loader: "resolve-url-loader"
+          },
+        ],
       },
       {
         test: /\.scss$/,
@@ -127,32 +140,37 @@ const prodConfig = {
           utils.base("node_modules"),
           utils.assets(`${buildConfig.scssPath}`)
         ],
-        use: extractSassProd.extract({
-          fallback: "isomorphic-style-loader",
-          use: [
-            {
-              loader: "css-loader",
-              options: {
-                minimize: true,
-                modules: false,
-                sourceMap: false
-              }
-            },
-            {
-              loader: "resolve-url-loader"
-            },
-            {
-              loader: "sass-loader",
-              query: {
-                sourceMap: false
-              }
+        use:[
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              // you can specify a publicPath here
+              // by default it use publicPath in webpackOptions.output
+              publicPath: '../'
             }
-          ]
-        })
+          },
+          {
+            loader: "css-loader",
+            options: {
+              minimize: true,
+              modules: false,
+              sourceMap: false
+            }
+          },
+          {
+            loader: "resolve-url-loader"
+          },
+          {
+            loader: "sass-loader",
+            query: {
+             sourceMap: false
+            }
+          }
+        ],
       },
       {
         test: /\.ts$/,
-        exclude: /(node_modules)/,
+        exclude: EXCLUDES,
         include: [
           utils.assets(`${buildConfig.assetsPath + buildConfig.tsPath}`)
         ],
@@ -164,7 +182,7 @@ const prodConfig = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules\/(?!(dom7|swiper)\/).*/,
+        exclude: EXCLUDES,
         include: [
           utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
         ],
@@ -178,19 +196,7 @@ const prodConfig = {
       },
       {
         test: /\.vue$/,
-        loader: "vue-loader",
-        options: {
-          loaders: {
-            css: ExtractTextPlugin.extract({
-              use: "css-loader?sourceMap",
-              fallback: "vue-style-loader" // <- this is a dep of vue-loader, so no need to explicitly install if using npm
-            }),
-            scss: ExtractTextPlugin.extract({
-              use: "css-loader?sourceMap!sass-loader?sourceMap",
-              fallback: "vue-style-loader"
-            })
-          }
-        }
+        loader: 'vue-loader'
       },
       {
         test: /\.woff$/,

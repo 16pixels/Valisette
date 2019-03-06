@@ -1,4 +1,5 @@
 import CleanObsoleteChunks from "webpack-clean-obsolete-chunks";
+import VueLoaderPlugin from 'vue-loader/lib/plugin';
 import BrowserSyncPlugin from "browser-sync-webpack-plugin";
 import CompressionPlugin from "compression-webpack-plugin";
 import WebpackPwaManifest from "webpack-pwa-manifest";
@@ -72,59 +73,18 @@ if (buildConfig.productionMode) {
  * @description run basic webpack build tasks
  */
 const basics = () => {
-  COMPILER.apply(new webpack.ProgressPlugin());
-  COMPILER.apply(
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",
-      // async: true,
-      minChunks: 2
-    })
-  );
+  new webpack.ProgressPlugin().apply(COMPILER);
   // Remove useless chunks of code
-  COMPILER.apply(new CleanObsoleteChunks());
+  new CleanObsoleteChunks().apply(COMPILER);
+  new VueLoaderPlugin().apply(COMPILER);
   // Build an assets manifest so it can be used by back-end
-  COMPILER.apply(
-    new ManifestPlugin({
-      fileName: "mix-manifest.json",
-      basePath: buildConfig.publicPath,
-      seed: {
-        name: "Build assets manifest"
-      }
-    })
-  );
-  // Apply concatenation strategy to modules contained in webpack chunks
-  COMPILER.apply(new webpack.optimize.ModuleConcatenationPlugin());
-};
-
-const makePWA = () => {
-  COMPILER.apply(new OfflinePlugin(swRuntimeConfig));
-  COMPILER.apply(
-    new WebpackPwaManifest({
-      filename: "manifest-pwa.json",
-      orientation: "portrait",
-      display: "standalone",
-      start_url: "/",
-      inject: true,
-      fingerprints: false,
-      ios: false,
-      publicPath: null,
-      name: buildConfig.pwa.appName,
-      short_name: buildConfig.pwa.shortAppName,
-      description: buildConfig.pwa.appDescription,
-      background_color: buildConfig.pwa.appColor,
-      theme_color: buildConfig.pwa.themeColor,
-      icons: [
-        {
-          src: utils.base(buildConfig.pwa.appLogo),
-          sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
-        },
-        {
-          src: utils.base(buildConfig.pwa.appLogo),
-          size: "1024x1024" // you can also use the specifications pattern
-        }
-      ]
-    })
-  );
+  new ManifestPlugin({
+    fileName: "mix-manifest.json",
+    basePath: buildConfig.publicPath,
+    seed: {
+      name: "Build assets manifest"
+    }
+  }).apply(COMPILER);
 };
 
 /**
@@ -161,7 +121,7 @@ const run = compilerObject => {
 const build = () => {
   basics();
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin
-  COMPILER.apply(extractSass);
+  extractSass.apply(COMPILER);
   // Run COMPILER function
   run(COMPILER);
 };
@@ -174,32 +134,27 @@ const build = () => {
 const productionBuild = () => {
   console.log("\n> Build for production\n");
   // Desactivate DEV mode globally
-  COMPILER.apply(
-    new webpack.DefinePlugin({
-      "process.env": {
-        NODE_ENV: '"production"'
-      }
-    })
-  );
+  new webpack.DefinePlugin({
+    "process.env": {
+      NODE_ENV: '"production"'
+    }
+  }).apply(COMPILER);
   // Run common tasks
   basics();
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin and apply minification
-  COMPILER.apply(extractSassProd);
+  extractSassProd.apply(COMPILER);
   // Makes a smaller webpack footprint by giving modules hashes based on the relative path of each module
-  COMPILER.apply(new webpack.HashedModuleIdsPlugin());
+  new webpack.HashedModuleIdsPlugin().apply(COMPILER);
   // Minify JS code
-  COMPILER.apply(
-    new UglifyJSPlugin({
-      uglifyOptions: {
-        safari10: true,
-        ecma: 5,
-        ie8: false
-      }
-    })
-  );
+  new UglifyJSPlugin({
+    uglifyOptions: {
+      safari10: true,
+      ecma: 5,
+      ie8: false
+    }
+  }).apply(COMPILER);
   // Build up a progressive webapp if you've set it to true in build-config
   if (buildConfig.isPwa) {
-    COMPILER.apply(
       new WebpackPwaManifest({
         filename: "manifest-pwa.json",
         orientation: "portrait",
@@ -224,20 +179,16 @@ const productionBuild = () => {
             size: "1024x1024" // you can also use the specifications pattern
           }
         ]
-      })
-    );
+    }).apply(COMPILER);
   }
 
   // Makes a compressed (gzip) version of assets so you can serve them instead of server side generation
-  COMPILER.apply(
-    new CompressionPlugin({
-      asset: "[path].gz[query]",
-      algorithm: "gzip",
-      test: /\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
-      threshold: buildConfig.performance.compressionTreshold // Only assets bigger than this size are processed
-    })
-  );
-
+  new CompressionPlugin({
+    asset: "[path].gz[query]",
+    algorithm: "gzip",
+    test: /\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
+    threshold: buildConfig.performance.compressionTreshold // Only assets bigger than this size are processed
+  }).apply(COMPILER);
   return run(COMPILER);
 };
 
@@ -246,7 +197,7 @@ const watch = () => {
 
   basics();
 
-  COMPILER.apply(extractSass);
+  extractSass.apply(COMPILER);
 
   if (!process.env.WATCH) {
     console.error(
@@ -264,14 +215,12 @@ const watch = () => {
   }
 
   // build a proxy for your code with hot reload
-  COMPILER.apply(
-    new BrowserSyncPlugin({
-      browser: "google chrome",
-      proxy: {
-        target: buildConfig.browserSync.target,
-      }
-    })
-  );
+  new BrowserSyncPlugin({
+    browser: "google chrome",
+    proxy: {
+      target: buildConfig.browserSync.target,
+    }
+  }).apply(COMPILER);
   
   // Watch daemon
   const watching = COMPILER.watch(
