@@ -54,8 +54,6 @@ This command will list all node's version available for installation. From there
 Clone this repo somewhere on your machine and merge any existing file so Valisette's version prevails
 
 ```
-# git clone git@gitlab.16pixels.fr:open-source/Valisette.git .
-# OR if you're not from our team
 git clone https://github.com/Thibzzz/Valisette .
 ```
 
