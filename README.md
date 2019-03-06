@@ -63,7 +63,7 @@ git clone https://github.com/Thibzzz/Valisette .
 
 As a build tool, Valisette abstracts many redundants tasks and allows you to solely rely on a single configuration file.
 
-This file is ```webpack/config/build-config.js``` which is shown below, we'll review each feature afterwards.
+This file is ```webpack/config/build-config.js```, a breakdown of features is coming soon. It still needs a cleanup.
 
 You can set verbose to true for more infos on your build.
 
