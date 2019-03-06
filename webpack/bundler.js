@@ -36,22 +36,22 @@ const prettyPrintErrors = (err, stats) => {
       title: "Jockpack",
       message: "Warning Build !"
     });
-    console.log(chalk.red.bold("\n> Build Warnings\n"));
+    console.log(`\n> ${chalk.magenta.bold("Build Warnings")}\n`);
     // console.log();
     each(stats.compilation.errors, (errorValue, errorKey) => {
       console.log(chalk.cyan.bold(`--> Warning n°${errorKey + 1} \n`));
       console.log(chalk.green.bold(`${errorValue} \n`));
     });
   } else {
-    console.log(`\n> ${chalk.green.bold("Build is smooth, good job\n")}`);
+    console.log(`> ${chalk.green.bold("No warnings, good job\n")}`);
   }
   // performance logging function
   if (stats) {
     const time =
-      chalk.yellow.bold((stats.endTime - stats.startTime) / 1000) + " sec";
-    console.log("> Built in", time, "\n");
+      chalk.yellow.bold((stats.endTime - stats.startTime) / 1000);
+    console.log(`> ${chalk.magenta.bold('Built in ')}${time} ${chalk.magenta.bold('sec')}\n`);
   }
-  console.log("> Build complete\n");
+  console.log(`> ${chalk.magenta.bold('Build complete')}\n`);
 };
 
 /**
@@ -119,6 +119,7 @@ const run = compilerObject => {
  */
 const build = () => {
   basics();
+  console.log(`\n> ${chalk.magenta.bold('Reminder :')} some warnings are inherent to devtools like sourcemaps.\n`);
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin
   extractSass.apply(COMPILER);
   // Run COMPILER function
