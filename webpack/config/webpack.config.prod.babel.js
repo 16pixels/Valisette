@@ -89,7 +89,8 @@ const prodConfig = {
     splitChunks: {
       // CommonsChunkPlugin()
       name: "vendor",
-      minChunks: 2
+      minChunks: 2,
+      chunks: 'all',
     },
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
     concatenateModules: true //ModuleConcatenationPlugin

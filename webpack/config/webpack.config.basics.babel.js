@@ -86,6 +86,7 @@ const config = {
     splitChunks: {
       // CommonsChunkPlugin()
       name: "vendor",
+      chunks: 'all',
       minChunks: 2
     },
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin

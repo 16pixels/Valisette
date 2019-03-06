@@ -131,7 +131,6 @@ const build = () => {
  * @description run production version of our webpack build
  */
 const productionBuild = () => {
-  console.log("\n> Build for production\n");
   // Desactivate DEV mode globally
   new webpack.DefinePlugin({
     "process.env": {
