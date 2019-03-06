@@ -12,7 +12,9 @@ import chalk from "chalk";
 /**
  * Start config setup
  */
-console.log("> Injecting webpack basic config");
+if (buildConfig.verbose) {
+  console.log("\n> Assembling webpack basic config\n");
+}
 
 /**
  * Plugins declarations
@@ -42,14 +44,13 @@ const baseAliasConfig = {
 /**
  * Aliases declarations
  */
-let cssAssets = {}
+let cssAssets = {};
 each(buildConfig.scssMain, fileName => {
-  const name = `${fileName.split('.')[0]}_css`;
+  const name = `${fileName.split(".")[0]}_css`;
   return Object.assign(cssAssets, {
-    [name] : utils.assets(`${buildConfig.scssPath + fileName}`)
+    [name]: utils.assets(`${buildConfig.scssPath + fileName}`)
   });
 });
-
 
 /**
  * Merging Aliases
@@ -60,13 +61,15 @@ const mergeAliases = aliasArray => {
   each(aliasArray, key => {
     Object.assign(allAliases, key);
   });
-  console.log("> Injecting Aliases : ");
-  each(allAliases, (alias, key) => {
-    console.log(
-      `--> ${chalk.green(chalk.cyan.bold(key))}: `,
-      chalk.yellow.bold(alias)
-    );
-  });
+  if (buildConfig.verbose) {
+    console.log("> Listing Aliases : ");
+    each(allAliases, (alias, key) => {
+      console.log(
+        `--> ${chalk.green(chalk.cyan.bold(key))}: `,
+        chalk.yellow.bold(alias)
+      );
+    });
+  }
   return allAliases;
 };
 

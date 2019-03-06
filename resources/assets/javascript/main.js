@@ -1,7 +1,7 @@
 import {
   utils,
-  // loadFonts,
-  // lazyLoader
+  loadFonts,
+  lazyLoader
 } from './modules/';
 import {
   each
@@ -36,9 +36,9 @@ const main = () => {
   const privateMethods = {
     globals(options) {
       // Loads fonts asynchronously, go check performance.js
-      // loadFonts(options);
+      loadFonts(options);
       // Lazyloads all images, go check performance.js
-      // lazyLoader(options);
+      lazyLoader(options);
     },
     specificPrivateMethod(options) {
       utils.Log(['specificPrivateMethod launched with =>', options]);

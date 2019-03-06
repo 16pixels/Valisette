@@ -1,9 +1,9 @@
-const isProduction = process.env.NODE_ENV === 'prod' ? true : false;
+const productionMode = process.env.NODE_ENV === 'prod' ? true : false;
 const critical = process.env.CRITICAL ? true : false;
 const buildConfig = {
-  isProduction,
+  productionMode,
+  verbose : true,
   logLevel: "error",
-  production: isProduction,
   publicPath: '/public/', // Public assets folder path
   publicManifestPath: '/', // Public assets folder path
   jsPath: 'javascript/', // Javascript folder name
@@ -14,15 +14,15 @@ const buildConfig = {
   jsMain: [
     'main.js',
   ], // Main JS file to import / require from
-  jsMainOutput: '[name].js', // Main JS file to import / require from
+  jsMainOutput: '[name].js', // js file output name pattern
   jsWorker: 'worker.js', // Declares your service worker(s)
   stylesMain: 'styles.js', // Manages lazy loading
   scssPath: 'scss/', // scss source folder
   scssMain: [
     'main.scss',
   ], // Main scss file
-  cssMainOutput: '[name].css', // Main css file (used in production mode)
-  devtool: isProduction ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
+  cssMainOutput: '[name].css', // css file output name pattern (used in production mode)
+  devtool: productionMode ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
   isPwa: false, // Turn your app into a Progressive Web App
   critical,
   pwa: {

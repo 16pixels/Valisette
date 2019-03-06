@@ -14,14 +14,18 @@ const _clean = (param, callback) => {
   var target = path.resolve(__dirname, "./../../" + param);
   var msg1 =
     "--> " + chalk.cyan.bold("cleaning   -") + " " + chalk.yellow.bold(target);
-  console.log(msg1);
+  if (buildConfig.verbose) {
+    console.log(msg1);
+  }
   rimraf(target, function() {
     var msg2 =
       "--> " +
       chalk.cyan.bold("cleaned    -") +
       " " +
       chalk.yellow.bold(target);
-    console.log(msg2);
+    if (buildConfig.verbose) {
+      console.log(msg2);
+    }
     return callback();
   });
 };
@@ -34,13 +38,13 @@ const _buildEntriesObject = (path, entriesArray) => {
   });
   return resultObject;
 };
-const _buildJsEntriesObject = (entriesArray) => {
+const _buildJsEntriesObject = entriesArray => {
   return _buildEntriesObject(buildConfig.jsPath, entriesArray);
-}
+};
 const utils = {
   assets: _assets,
   base: _base,
   clean: _clean,
-  jsEntries: _buildJsEntriesObject,
+  jsEntries: _buildJsEntriesObject
 };
 export { utils };
