@@ -24,18 +24,18 @@ const buildConfig = {
   ], // Main scss file
   cssMainOutput: '[name].css', // css file output name pattern (used in production mode)
   devtool: productionMode ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
-  isPwa: false, // Turn your app into a Progressive Web App
+  pwaMode: true, // Turn your app into a Progressive Web App
   critical,
   pwa: {
-    appName: 'Jockpack',
-    shortAppName: 'Jockpack',
-    appDescription: 'Jockpack',
+    appName: 'Valisette by Thibzzz',
+    shortAppName: 'Valisette',
+    appDescription: 'Valisette :  : a boilerplate for valet & vue users by Thibzzz. https://github.com/thibzzz',
     appColor: '#3a74a5',
     themeColor: '#3a74a5',
-    appLogo: 'public/favicon.ico'
+    appLogo: 'public/valisette-logo.png'
   },
   browserSync: { // This implies that you are hosting your code on your machine but you can always set browserSync options -> https://github.com/Va1/browser-sync-webpack-plugin
-    target: "https://csg-website.dev"
+    target: "https://valisette.dev"
   },
   performance: {
     compressionTreshold: 10240 // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)

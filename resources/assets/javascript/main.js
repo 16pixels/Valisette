@@ -1,10 +1,19 @@
+import * as OfflinePluginRuntime from 'offline-plugin/runtime';
 import {
   utils,
   loadFonts,
   lazyLoader
 } from './modules/';
 import each from 'lodash/each';
+import swRuntime from './sw-runtime';
 // import config from './config';
+
+// Add offline mode
+OfflinePluginRuntime.install();
+setTimeout(() => {
+  swRuntime.init();
+}, 500);
+
 
 // Don't remove this line, it imports css & scss into webpack
 require('main_css');

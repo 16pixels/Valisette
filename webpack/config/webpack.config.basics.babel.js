@@ -95,7 +95,7 @@ const config = {
   performance: {
     hints: buildConfig.logLevel,
     maxEntrypointSize: 320000,
-    maxAssetSize: 320000
+    maxAssetSize: 320000,
   },
   devtool: buildConfig.devtool,
   target: "web",

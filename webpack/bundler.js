@@ -1,5 +1,6 @@
 import CleanObsoleteChunks from "webpack-clean-obsolete-chunks";
-import VueLoaderPlugin from 'vue-loader/lib/plugin';
+import OfflinePlugin from "offline-plugin";
+import VueLoaderPlugin from "vue-loader/lib/plugin";
 import BrowserSyncPlugin from "browser-sync-webpack-plugin";
 import CompressionPlugin from "compression-webpack-plugin";
 import WebpackPwaManifest from "webpack-pwa-manifest";
@@ -12,16 +13,11 @@ import { each } from "lodash";
 import { buildConfig } from "./config/build-config";
 import { utils } from "./config/build-utils";
 import { config, extractSass } from "./config/webpack.config.basics.babel";
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import {
   prodConfig,
   extractSassProd
 } from "./config/webpack.config.prod.babel";
-const swRuntimeConfig = {
-  ServiceWorker: {
-    events: true
-  }
-};
 
 /**
  * Error printing function
@@ -47,11 +43,14 @@ const prettyPrintErrors = (err, stats) => {
   }
   // performance logging function
   if (stats) {
-    const time =
-      chalk.yellow.bold((stats.endTime - stats.startTime) / 1000);
-    console.log(`> ${chalk.magenta.bold('Built in ')}${time} ${chalk.magenta.bold('sec')}\n`);
+    const time = chalk.yellow.bold((stats.endTime - stats.startTime) / 1000);
+    console.log(
+      `> ${chalk.magenta.bold("Built in ")}${time} ${chalk.magenta.bold(
+        "sec"
+      )}\n`
+    );
   }
-  console.log(`> ${chalk.magenta.bold('Build complete')}\n`);
+  console.log(`> ${chalk.magenta.bold("Build complete")}\n`);
 };
 
 /**
@@ -59,7 +58,11 @@ const prettyPrintErrors = (err, stats) => {
  * @constant
  */
 let COMPILER = {};
-console.log(`\n> ${chalk.magenta.bold('Build mode')} : ${chalk.yellow.bold(process.env.NODE_ENV)}\n`);
+console.log(
+  `\n> ${chalk.magenta.bold("Build mode")} : ${chalk.yellow.bold(
+    process.env.NODE_ENV
+  )}\n`
+);
 if (buildConfig.productionMode) {
   COMPILER = webpack(prodConfig);
 } else {
@@ -75,13 +78,46 @@ const basics = () => {
   new webpack.ProgressPlugin().apply(COMPILER);
   // Remove useless chunks of code
   new CleanObsoleteChunks().apply(COMPILER);
+  // add vue loader
   new VueLoaderPlugin().apply(COMPILER);
+};
+
+/**
+ * end of file functions
+ */
+const makeCachedAssetsManifest = () => {
+  const filesList = [];
+  each(buildConfig.jsMain, file => {
+    filesList.push(`${buildConfig.publicPath + buildConfig.jsPath + file}`);
+  });
+  each(buildConfig.scssMain, file => {
+    const fileName = file.split('.')[0];
+    filesList.push(`${buildConfig.publicPath + buildConfig.cssPath + fileName}.css`);
+  });
+  return filesList;
+};
+const endFilePlugins = () => {
   // Build an assets manifest so it can be used by back-end
   new ManifestPlugin({
     fileName: "mix-manifest.json",
     basePath: buildConfig.publicPath,
     seed: {
       name: "Build assets manifest"
+    }
+  }).apply(COMPILER);
+  // add offline mode
+  new OfflinePlugin({
+    safeToUseOptionalCaches: true,
+    caches: {
+      main: makeCachedAssetsManifest(),
+      additional: ["*.woff", "*.woff2"],
+      optional: [":rest:"]
+    },
+    ServiceWorker: {
+      events: true
+    },
+    AppCache: {
+      events: true
     }
   }).apply(COMPILER);
 };
@@ -119,9 +155,15 @@ const run = compilerObject => {
  */
 const build = () => {
   basics();
-  console.log(`\n> ${chalk.magenta.bold('Reminder :')} some warnings are inherent to devtools like sourcemaps.\n`);
+  console.log(
+    `\n> ${chalk.magenta.bold(
+      "Reminder :"
+    )} some warnings are inherent to devtools like sourcemaps.\n`
+  );
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin
   extractSass.apply(COMPILER);
+  // add end of file plugins
+  endFilePlugins();
   // Run COMPILER function
   run(COMPILER);
 };
@@ -153,31 +195,31 @@ const productionBuild = () => {
     }
   }).apply(COMPILER);
   // Build up a progressive webapp if you've set it to true in build-config
-  if (buildConfig.isPwa) {
-      new WebpackPwaManifest({
-        filename: "manifest-pwa.json",
-        orientation: "portrait",
-        display: "standalone",
-        start_url: "/",
-        inject: true,
-        fingerprints: false,
-        ios: false,
-        publicPath: null,
-        name: buildConfig.pwa.appName,
-        short_name: buildConfig.pwa.shortAppName,
-        description: buildConfig.pwa.appDescription,
-        background_color: buildConfig.pwa.appColor,
-        theme_color: buildConfig.pwa.themeColor,
-        icons: [
-          {
-            src: utils.base(buildConfig.pwa.appLogo),
-            sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
-          },
-          {
-            src: utils.base(buildConfig.pwa.appLogo),
-            size: "1024x1024" // you can also use the specifications pattern
-          }
-        ]
+  if (buildConfig.pwaMode) {
+    new WebpackPwaManifest({
+      filename: "manifest-pwa.json",
+      orientation: "portrait",
+      display: "standalone",
+      start_url: "/",
+      inject: true,
+      fingerprints: false,
+      ios: false,
+      publicPath: "/public/",
+      name: buildConfig.pwa.appName,
+      short_name: buildConfig.pwa.shortAppName,
+      description: buildConfig.pwa.appDescription,
+      background_color: buildConfig.pwa.appColor,
+      theme_color: buildConfig.pwa.themeColor,
+      icons: [
+        {
+          src: utils.base(buildConfig.pwa.appLogo),
+          sizes: [96, 128, 192, 256, 384, 512] // multiple sizes
+        },
+        {
+          src: utils.base(buildConfig.pwa.appLogo),
+          size: "1024x1024" // you can also use the specifications pattern
+        }
+      ]
     }).apply(COMPILER);
   }
 
@@ -188,6 +230,7 @@ const productionBuild = () => {
     test: /\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
     threshold: buildConfig.performance.compressionTreshold // Only assets bigger than this size are processed
   }).apply(COMPILER);
+  endFilePlugins();
   return run(COMPILER);
 };
 
@@ -217,10 +260,12 @@ const watch = () => {
   new BrowserSyncPlugin({
     browser: "google chrome",
     proxy: {
-      target: buildConfig.browserSync.target,
+      target: buildConfig.browserSync.target
     }
   }).apply(COMPILER);
-  
+
+  endFilePlugins();
+
   // Watch daemon
   const watching = COMPILER.watch(
     {
@@ -242,7 +287,7 @@ const runPreBuildSteps = new Promise(function(resolve, reject) {
   // Cleans file system synchronously through callbacks
   const cleaner = () => {
     if (buildConfig.verbose) {
-    console.log("\n> Cleaning assets\n");
+      console.log("\n> Cleaning assets\n");
     }
     // Clean css folder
     return utils.clean(
@@ -265,37 +310,39 @@ const runPreBuildSteps = new Promise(function(resolve, reject) {
 // Runs compiler when pre-build tasks are done
 runPreBuildSteps.then(result => {
   if (buildConfig.verbose) {
-  console.log("\n> Loading env\n");
-  console.log(
-    "-->",
-    chalk.cyan.bold(`JS source  -`),
-    chalk.yellow.bold(
-      `${buildConfig.assetsPath + buildConfig.jsPath} |`,
-      buildConfig.jsMain
-    )
-  );
-  console.log(
-    "-->",
-    chalk.cyan.bold(`CSS source -`),
-    chalk.yellow.bold(
-      `${buildConfig.assetsPath + buildConfig.scssPath} |`,
-      buildConfig.scssMain
-    )
-  );
-  console.log(
-    "-->",
-    chalk.cyan.bold("prod       -"),
-    chalk.yellow.bold(buildConfig.productionMode)
-  );
-  console.log(
-    "-->",
-    chalk.cyan.bold("watch      -"),
-    chalk.yellow.bold(buildConfig.watch)
-  );
+    console.log("\n> Loading env\n");
+    console.log(
+      "-->",
+      chalk.cyan.bold(`JS source  -`),
+      chalk.yellow.bold(
+        `${buildConfig.assetsPath + buildConfig.jsPath} |`,
+        buildConfig.jsMain
+      )
+    );
+    console.log(
+      "-->",
+      chalk.cyan.bold(`CSS source -`),
+      chalk.yellow.bold(
+        `${buildConfig.assetsPath + buildConfig.scssPath} |`,
+        buildConfig.scssMain
+      )
+    );
+    console.log(
+      "-->",
+      chalk.cyan.bold("prod       -"),
+      chalk.yellow.bold(buildConfig.productionMode)
+    );
+    console.log(
+      "-->",
+      chalk.cyan.bold("watch      -"),
+      chalk.yellow.bold(buildConfig.watch)
+    );
   }
 
   if (buildConfig.audit) {
-    console.log(`\n> ${chalk.magenta.bold("Audit mode ")}${chalk.yellow.bold('ON')}\n`);
+    console.log(
+      `\n> ${chalk.magenta.bold("Audit mode ")}${chalk.yellow.bold("ON")}\n`
+    );
     new BundleAnalyzerPlugin().apply(COMPILER);
   }
 

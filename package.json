@@ -42,6 +42,7 @@
     "mini-css-extract-plugin": "^0.5.0",
     "mozjpeg": "^6.0.1",
     "node-sass": "^4.11.0",
+    "offline-plugin": "^5.0.6",
     "postcss-loader": "^2.0.6",
     "resolve-url-loader": "^3.0.1",
     "rimraf": "^2.6.2",
@@ -65,12 +66,11 @@
     "lazysizes": "^4.0.0-rc3",
     "lodash": "^4.17.11",
     "node-notifier": "^5.1.2",
-    "offline-plugin": "^5.0.6",
     "uglifyjs-webpack-plugin": "^1.2.2",
     "webfontloader": "^1.6.28",
     "webpack": "^4.29.6",
     "webpack-manifest-plugin": "^2.0.4",
-    "webpack-pwa-manifest": "^3.3.0"
+    "webpack-pwa-manifest": "^4.0.0"
   },
   "name": "jockpack",
   "description": "a webpack based multi tool build",
