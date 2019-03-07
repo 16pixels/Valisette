@@ -13,13 +13,13 @@ const _base = param => {
 const _clean = (param, callback) => {
   var target = path.resolve(__dirname, "./../../" + param);
   var msg1 =
-    "--> " + chalk.cyan.bold("cleaning   -") + " " + chalk.yellow.bold(target);
+    "> " + chalk.cyan.bold("cleaning   -") + " " + chalk.yellow.bold(target);
   if (buildConfig.verbose) {
     console.log(msg1);
   }
   rimraf(target, function() {
     var msg2 =
-      "--> " +
+      "> " +
       chalk.cyan.bold("cleaned    -") +
       " " +
       chalk.yellow.bold(target);

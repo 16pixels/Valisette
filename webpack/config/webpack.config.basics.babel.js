@@ -13,7 +13,7 @@ import chalk from "chalk";
  * Start config setup
  */
 if (buildConfig.verbose) {
-  console.log("\n> Assembling webpack basic config\n");
+  console.log(`\n> ${chalk.magenta.bold('Assembling webpack basics config')}\n`);
 }
 
 /**
@@ -63,10 +63,10 @@ const mergeAliases = aliasArray => {
     Object.assign(allAliases, key);
   });
   if (buildConfig.verbose) {
-    console.log("> Listing Aliases : ");
+    console.log(`> ${chalk.magenta.bold('Listing Aliases :')}`);
     each(allAliases, (alias, key) => {
       console.log(
-        `--> ${chalk.green(chalk.cyan.bold(key))}: `,
+        `> ${chalk.green(chalk.cyan.bold(key))}: `,
         chalk.yellow.bold(alias)
       );
     });
@@ -87,15 +87,15 @@ const config = {
       // CommonsChunkPlugin()
       name: "vendor",
       chunks: 'all',
-      minChunks: 2
+      minChunks: 2,
     },
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
     concatenateModules: true //ModuleConcatenationPlugin
   },
   performance: {
     hints: buildConfig.logLevel,
-    maxEntrypointSize: 320000,
-    maxAssetSize: 320000,
+    maxEntrypointSize: 400000,
+    maxAssetSize: 400000,
   },
   devtool: buildConfig.devtool,
   target: "web",

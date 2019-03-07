@@ -6,6 +6,7 @@ const buildConfig = {
   appShellMode: true,
   verbose : false,
   audit : false,
+  ignoreWarnings: true,
   appUrl: "https://valisette.dev",
   logLevel: "error",
   publicPath: '/public/', // Public assets folder path

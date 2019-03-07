@@ -1,4 +1,7 @@
 import CleanObsoleteChunks from "webpack-clean-obsolete-chunks";
+import CircularDependencyPlugin from "circular-dependency-plugin";
+import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
+import DuplicatePackageCheckerPlugin from "duplicate-package-checker-webpack-plugin";
 import OfflinePlugin from "offline-plugin";
 import VueLoaderPlugin from "vue-loader/lib/plugin";
 import BrowserSyncPlugin from "browser-sync-webpack-plugin";
@@ -9,9 +12,9 @@ import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import notifier from "node-notifier";
 import webpack from "webpack";
 import chalk from "chalk";
-import merge from 'webpack-merge';
-import fs from 'fs';
-import path from 'path';
+import merge from "webpack-merge";
+import fs from "fs";
+import path from "path";
 import { each } from "lodash";
 import { buildConfig } from "./config/build-config";
 import { utils } from "./config/build-utils";
@@ -26,24 +29,32 @@ import {
  * Error printing function
  */
 const prettyPrintErrors = (err, stats) => {
-  if (err) {
-    console.error(err);
-  }
+  let finalStatsLog = "";
   // Notify user if there are errors during compilation
   if (stats.compilation.errors && stats.compilation.errors[0]) {
     notifier.notify({
-      title: "Jockpack",
-      message: "Warning Build !"
+      title: "Valisette",
+      message: `Build has ${stats.compilation.errors.length} error(s) !`
     });
-    console.log(`\n> ${chalk.magenta.bold("Build Warnings")}\n`);
-    // console.log();
-    each(stats.compilation.errors, (errorValue, errorKey) => {
-      console.log('> ' + chalk.cyan.bold(`Warning n°${errorKey + 1} \n`));
-      console.log(chalk.green.bold(`${errorValue} \n`));
-    });
-  } else {
-    console.log(`> ${chalk.green.bold("No warnings, good job\n")}`);
+    finalStatsLog += `\n> ${chalk.magenta.bold(
+      `Build has ${chalk.yellow.bold(stats.compilation.errors.length)} errors`
+    )}\n`;
   }
+  if (stats.compilation.warnings && stats.compilation.warnings[0] && !buildConfig.ignoreWarnings) {
+    notifier.notify({
+      title: "Valisette",
+      message: `Build has ${stats.compilation.warnings.length} warning(s) !`
+    });
+    finalStatsLog += `\n> ${chalk.magenta.bold(
+      `Build has ${chalk.yellow.bold(
+        stats.compilation.warnings.length
+      )} warnings`
+    )}\n`;
+  }
+  if (!stats.compilation.errors || !stats.compilation.warnings || buildConfig.ignoreWarnings) {
+    finalStatsLog = `> ${chalk.green.bold('All good, great job !')}\n`;
+  }
+  console.log(finalStatsLog);
   // performance logging function
   if (stats) {
     const time = chalk.yellow.bold((stats.endTime - stats.startTime) / 1000);
@@ -85,6 +96,37 @@ const basics = () => {
   new CleanObsoleteChunks().apply(COMPILER);
   // add vue loader
   new VueLoaderPlugin().apply(COMPILER);
+  // avoid circular references
+  new CircularDependencyPlugin({
+    // exclude detection of files based on a RegExp
+    exclude: /a\.js|node_modules/,
+    // add errors to webpack instead of warnings
+    failOnError: true,
+    // allow import cycles that include an asyncronous import,
+    // e.g. via import(/* webpackMode: "weak" */ './file.js')
+    allowAsyncCycles: false,
+    // set the current working directory for displaying module paths
+    cwd: process.cwd()
+  }).apply(COMPILER);
+  // remove duplicate plugins
+  new DuplicatePackageCheckerPlugin({
+    verbose: true,
+    emitError: true
+  }).apply(COMPILER);
+  new FriendlyErrorsWebpackPlugin({
+    clearConsole: false,
+    onErrors: function (severity, errors) {
+      // You can listen to errors transformed and prioritized by the plugin
+      // severity can be 'error' or 'warning'
+      if (severity === 'warning' && buildConfig.ignoreWarnings) {
+        each(errors, (key, index) => {
+          if (errors[index].severity === 0) {
+            delete errors[index];
+          }
+        })
+      }
+    },
+  }).apply(COMPILER);
 };
 
 /**
@@ -94,20 +136,26 @@ const makeMainCachedAssetsManifest = () => {
   const filesList = [];
   // load js
   each(buildConfig.jsMain, file => {
-    filesList.push(`${buildConfig.publicPath + buildConfig.jsPath + file}`);
+    filesList.push(`.${buildConfig.publicPath + buildConfig.jsPath + file}`);
   });
   // load css
   each(buildConfig.scssMain, file => {
-    const fileName = file.split('.')[0];
-    filesList.push(`${buildConfig.publicPath + buildConfig.cssPath + fileName}.css`);
+    const fileName = file.split(".")[0];
+    filesList.push(
+      `.${buildConfig.publicPath + buildConfig.cssPath + fileName}.css`
+    );
   });
   // load images
-  const imageFolderUrl = `./${path.resolve(`${buildConfig.publicPath + buildConfig.imagesPath}`)}`;
+  const imageFolderUrl = `.${path.resolve(
+    `${buildConfig.publicPath + buildConfig.imagesPath}`
+  )}`;
   fs.readdirSync(imageFolderUrl).forEach(file => {
-    filesList.push(`${buildConfig.publicPath + buildConfig.imagesPath + file}`);
+    filesList.push(`.${buildConfig.publicPath + buildConfig.imagesPath + file}`);
   });
+  const favicon = `./${buildConfig.pwa.appLogo}`;
+  filesList.push(favicon);
   if (buildConfig.verbose) {
-    console.log(`> ${chalk.magenta.bold('Main cached assets : ')}`);
+    console.log(`> ${chalk.magenta.bold("Main cached assets : ")}`);
     console.table(filesList);
   }
   return filesList;
@@ -127,9 +175,9 @@ const endFilePlugins = () => {
       safeToUseOptionalCaches: true,
       caches: {
         main: makeMainCachedAssetsManifest(),
-        additional: [':rest:'],
-        externals: [':externals:'],
-        optional: ['*.chunk.js']
+        additional: [],
+        externals: [],
+        optional: []
       },
       ServiceWorker: {
         events: true
@@ -177,7 +225,7 @@ const build = () => {
   console.log(
     `\n> ${chalk.magenta.bold(
       "Reminder :"
-    )} some warnings are inherent to devtools like sourcemaps.\n`
+    )} some errors & warnings are inherent to devtools like sourcemaps.\n\n`
   );
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin
   extractSass.apply(COMPILER);
@@ -254,7 +302,7 @@ const productionBuild = () => {
 };
 
 const watch = () => {
-  console.log("\n> Watching assets\n");
+  console.log(`\n> ${chalk.magenta.bold('Watching assets')}\n`);
 
   basics();
 
@@ -306,7 +354,7 @@ const runPreBuildSteps = new Promise(function(resolve, reject) {
   // Cleans file system synchronously through callbacks
   const cleaner = () => {
     if (buildConfig.verbose) {
-      console.log("\n> Cleaning assets\n");
+      console.log(`> ${chalk.magenta.bold('Cleaning assets')}\n`);
     }
     // Clean css folder
     return utils.clean(
@@ -317,7 +365,7 @@ const runPreBuildSteps = new Promise(function(resolve, reject) {
           `${buildConfig.publicPath + buildConfig.jsPath}/*`,
           function() {
             goSignal = true;
-            return resolve("--> folders cleaned");
+            return resolve("> folders cleaned");
           }
         );
       }
@@ -329,9 +377,9 @@ const runPreBuildSteps = new Promise(function(resolve, reject) {
 // Runs compiler when pre-build tasks are done
 runPreBuildSteps.then(result => {
   if (buildConfig.verbose) {
-    console.log("\n> Loading env\n");
+    console.log(`\n> ${chalk.magenta.bold('Loading env')}\n`);
     console.log(
-      "-->",
+      ">",
       chalk.cyan.bold(`JS source  -`),
       chalk.yellow.bold(
         `${buildConfig.assetsPath + buildConfig.jsPath} |`,
@@ -339,7 +387,7 @@ runPreBuildSteps.then(result => {
       )
     );
     console.log(
-      "-->",
+      ">",
       chalk.cyan.bold(`CSS source -`),
       chalk.yellow.bold(
         `${buildConfig.assetsPath + buildConfig.scssPath} |`,
@@ -347,12 +395,12 @@ runPreBuildSteps.then(result => {
       )
     );
     console.log(
-      "-->",
+      ">",
       chalk.cyan.bold("prod       -"),
       chalk.yellow.bold(buildConfig.productionMode)
     );
     console.log(
-      "-->",
+      ">",
       chalk.cyan.bold("watch      -"),
       chalk.yellow.bold(buildConfig.watch)
     );

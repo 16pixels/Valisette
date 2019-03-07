@@ -13,7 +13,7 @@ import chalk from "chalk";
  * Start config setup
  */
 if (buildConfig.verbose) {
-  console.log("\n> Assembling webpack prod config\n");
+  console.log(`\n> ${chalk.magenta.bold('Assembling webpack prod config')}\n`);
 }
 
 /**
@@ -64,10 +64,10 @@ const mergeAliases = aliasArray => {
     Object.assign(allAliases, key);
   });
   if (buildConfig.verbose) {
-    console.log("> Listing Aliases : ");
+    console.log(`> ${chalk.magenta.bold('Listing Aliases :')}`);
     each(allAliases, (alias, key) => {
       console.log(
-        `--> ${chalk.green(chalk.cyan.bold(key))}: `,
+        `> ${chalk.green(chalk.cyan.bold(key))}: `,
         chalk.yellow.bold(alias)
       );
     });
