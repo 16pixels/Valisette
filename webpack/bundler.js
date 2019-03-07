@@ -9,6 +9,8 @@ import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import notifier from "node-notifier";
 import webpack from "webpack";
 import chalk from "chalk";
+import fs from 'fs';
+import path from 'path';
 import { each } from "lodash";
 import { buildConfig } from "./config/build-config";
 import { utils } from "./config/build-utils";
@@ -35,7 +37,7 @@ const prettyPrintErrors = (err, stats) => {
     console.log(`\n> ${chalk.magenta.bold("Build Warnings")}\n`);
     // console.log();
     each(stats.compilation.errors, (errorValue, errorKey) => {
-      console.log(chalk.cyan.bold(`--> Warning n°${errorKey + 1} \n`));
+      console.log('> ' + chalk.cyan.bold(`Warning n°${errorKey + 1} \n`));
       console.log(chalk.green.bold(`${errorValue} \n`));
     });
   } else {
@@ -85,15 +87,26 @@ const basics = () => {
 /**
  * end of file functions
  */
-const makeCachedAssetsManifest = () => {
+const makeMainCachedAssetsManifest = () => {
   const filesList = [];
+  // load js
   each(buildConfig.jsMain, file => {
     filesList.push(`${buildConfig.publicPath + buildConfig.jsPath + file}`);
   });
+  // load css
   each(buildConfig.scssMain, file => {
     const fileName = file.split('.')[0];
     filesList.push(`${buildConfig.publicPath + buildConfig.cssPath + fileName}.css`);
   });
+  // load images
+  const imageFolderUrl = `./${path.resolve(`${buildConfig.publicPath + buildConfig.imagesPath}`)}`;
+  fs.readdirSync(imageFolderUrl).forEach(file => {
+    filesList.push(`${buildConfig.publicPath + buildConfig.imagesPath + file}`);
+  });
+  if (buildConfig.verbose) {
+    console.log(`> ${chalk.magenta.bold('Main cached assets : ')}`);
+    console.table(filesList);
+  }
   return filesList;
 };
 const endFilePlugins = () => {
@@ -106,20 +119,23 @@ const endFilePlugins = () => {
     }
   }).apply(COMPILER);
   // add offline mode
-  new OfflinePlugin({
-    safeToUseOptionalCaches: true,
-    caches: {
-      main: makeCachedAssetsManifest(),
-      additional: ["*.woff", "*.woff2"],
-      optional: [":rest:"]
-    },
-    ServiceWorker: {
-      events: true
-    },
-    AppCache: {
-      events: true
-    }
-  }).apply(COMPILER);
+  if (buildConfig.appShellMode) {
+    new OfflinePlugin({
+      safeToUseOptionalCaches: true,
+      caches: {
+        main: makeMainCachedAssetsManifest(),
+        additional: [':rest:'],
+        externals: [':externals:'],
+        optional: ['*.chunk.js']
+      },
+      ServiceWorker: {
+        events: true
+      },
+      AppCache: {
+        events: true
+      }
+    }).apply(COMPILER);
+  }
 };
 
 /**

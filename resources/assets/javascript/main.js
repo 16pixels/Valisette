@@ -10,9 +10,7 @@ import swRuntime from './sw-runtime';
 
 // Add offline mode
 OfflinePluginRuntime.install();
-setTimeout(() => {
-  swRuntime.init();
-}, 500);
+swRuntime.init();
 
 
 // Don't remove this line, it imports css & scss into webpack
