@@ -158,7 +158,8 @@ const config = {
             }
           },
           {
-            loader: "css-loader"
+            loader: "css-loader",
+            options: {}
           },
           {
             loader: "resolve-url-loader"

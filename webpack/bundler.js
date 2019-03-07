@@ -9,6 +9,7 @@ import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import notifier from "node-notifier";
 import webpack from "webpack";
 import chalk from "chalk";
+import merge from 'webpack-merge';
 import fs from 'fs';
 import path from 'path';
 import { each } from "lodash";
@@ -66,7 +67,9 @@ console.log(
   )}\n`
 );
 if (buildConfig.productionMode) {
-  COMPILER = webpack(prodConfig);
+  // merge both config by using smart merge strategy so that the second object always win
+  const mergedConfig = merge.smart(config, prodConfig);
+  COMPILER = webpack(mergedConfig);
 } else {
   COMPILER = webpack(config);
 }
