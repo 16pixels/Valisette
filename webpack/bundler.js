@@ -16,7 +16,7 @@ import merge from "webpack-merge";
 import fs from "fs";
 import path from "path";
 import { each } from "lodash";
-import { buildConfig } from "./config/build-config";
+import buildConfig from "./config/build-config";
 import { utils } from "./config/build-utils";
 import { config, extractSass } from "./config/webpack.config.basics.babel";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";

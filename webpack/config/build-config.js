@@ -7,7 +7,7 @@ const buildConfig = {
   verbose : false,
   audit : false,
   ignoreWarnings: true,
-  appUrl: "https://valisette.dev",
+  appUrl: "https://valisette.app",
   logLevel: "error",
   publicPath: '/public/', // Public assets folder path
   publicManifestPath: '/', // Public assets folder path
@@ -40,12 +40,10 @@ const buildConfig = {
     appLogo: 'public/valisette-logo.png'
   },
   browserSync: { // This implies that you are hosting your code on your machine but you can always set browserSync options -> https://github.com/Va1/browser-sync-webpack-plugin
-    target: "https://valisette.dev"
+    target: "https://valisette.app"
   },
   performance: {
     compressionTreshold: 10240 // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)
   }
 };
-export {
-  buildConfig
-};
+export default buildConfig;

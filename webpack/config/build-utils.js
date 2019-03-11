@@ -2,7 +2,7 @@ import rimraf from "rimraf";
 import path from "path";
 import chalk from "chalk";
 import { each } from "lodash";
-import { buildConfig } from "./build-config.js";
+import buildConfig from "./build-config.js";
 
 const _assets = param => {
   return path.resolve(__dirname, `./../../${buildConfig.assetsPath}${param}`);

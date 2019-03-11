@@ -1,6 +1,6 @@
 const runtime = require('offline-plugin/runtime');
 const swRuntime = {
-  init() {
+  init: () => {
     return runtime.install({
       onUpdating: () => {
         console.log('SW Event:', 'onUpdating');
@@ -15,7 +15,6 @@ const swRuntime = {
         // Reload the webpage to load into the new version
         window.location.reload();
       },
-    
       onUpdateFailed: () => {
         console.log('SW Event:', 'onUpdateFailed');
       }

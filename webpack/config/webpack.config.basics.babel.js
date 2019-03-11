@@ -5,7 +5,7 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
  * @type {[type]}
  */
 import { each } from "lodash";
-import { buildConfig } from "./build-config";
+import buildConfig from "./build-config";
 import { utils } from "./build-utils";
 import chalk from "chalk";
 
