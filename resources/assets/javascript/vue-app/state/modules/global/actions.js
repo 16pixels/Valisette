@@ -9,16 +9,16 @@
 // Their names should most possibly be unique and in simple way says what specific action is doing. Almost every action should return promise
 
 // Good examples:
-// fetchProduct - gets product by id from server or cache, sets it in products map and returns it by getter
-// findProducts - fetches products by specific query, sets them in products map and returns them as array
-// setCurrentProduct - param could be id, it could dispatch fetchProduct, mutate it to productsMap and mutate its id to currentProductId. Also if productId is null then it removes currentProduct.
-// addCartItem
-// toggleMicrocart
+// fetchProduct() - gets product by id from server or cache, sets it in products map and returns it by getter
+// findProducts() - fetches products by specific query, sets them in products map and returns them as array
+// setCurrentProduct() - param could be id, it could dispatch fetchProduct, mutate it to productsMap and mutate its id to currentProductId. Also if productId is null then it removes currentProduct.
+// addCartItem()
+// toggleMicrocart()
 
 // Bad examples:
-// list
-// products
-// reset
+// list()
+// products()
+// reset()
 
 
 const actions = {

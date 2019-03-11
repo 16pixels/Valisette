@@ -5,9 +5,11 @@
 // In most cases it should be only a single action which invokes specific mutation.
 
 // Types of mutation:
-// SET_ - it’s the most common type of mutation. It can set an object (or whole array), set default value of object (or maybe clean array),
-// ADD_ - it can add new element to state property which is an array or add new element to Map
-// REMOVE_ - an opposite to ADD. It can remove map element or array element by index (or by finding object which is not recommended way on big arrays, then mutation could be slow)
+// SET_NAME - it’s the most common type of mutation. It can set an object (or whole array), set default value of object (or maybe clean array),
+// ADD_NAME - it can add new element to state property which is an array or add new element to Map
+// REMOVE_NAME - an opposite to ADD. 
+// It can remove map element or array element by index (or by finding object which is not recommended way on big arrays, 
+// then mutation could be slow)
 
 const mutations = {
 }
