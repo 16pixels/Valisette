@@ -3,20 +3,20 @@ const critical = process.env.CRITICAL ? true : false;
 const buildConfig = {
   productionMode,
   pwaMode: true, // Turn your app into a Progressive Web App
-  appShellMode: true,
-  verbose : false,
-  audit : false,
+  appShellMode: true, // Add an html file to follow app shell pattern
+  verbose : false, // log extra info during build
+  audit : false, // audit bundled code composition
   ignoreWarnings: true,
   appUrl: "https://valisette.app",
   logLevel: "error",
   publicPath: '/public/', // Public assets folder path
-  publicManifestPath: '/', // Public assets folder path
+  publicManifestPath: '/', // Public assets manifest location
   jsPath: 'javascript/', // Javascript folder name
   tsPath: 'typescript/', // Typescript folder name
   cssPath: 'css/', // Css folder name
   imagesPath: 'images/',
-  fontsPath: 'images/',
-  assetsPath: 'resources/assets/', // Assets source location
+  fontsPath: 'fonts/',
+  assetsPath: 'resources/assets/', // source assets files location
   watch: process.env.WATCH ? process.env.WATCH : false,
   jsMain: [
     'main.js',

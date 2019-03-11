@@ -3,7 +3,7 @@ import utils from "./modules/utils";
 import { loadFonts, lazyLoader } from "./modules/performance";
 import each from "lodash/each";
 import swRuntime from "./sw-runtime";
-// import config from './config';
+import VueApp from "./vue-app";
 
 // Add offline mode
 OfflinePluginRuntime.install();
@@ -39,6 +39,7 @@ const main = () => {
       if (options.lazyLoad) {
         lazyLoader(options);
       }
+      VueApp.init();
     },
   };
 
