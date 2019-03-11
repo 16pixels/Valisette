@@ -6,7 +6,6 @@ yarn-debug.log*
 yarn-error.log*
 
 index.html
-public/appcache/**/*
 
 # Runtime data
 pids
