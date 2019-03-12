@@ -1,22 +1,29 @@
-const runtime = require('offline-plugin/runtime');
+import runtime from "offline-plugin/runtime";
+import utils from "./modules/utils";
+
 const swRuntime = {
   init: () => {
     return runtime.install({
       onUpdating: () => {
-        console.log('SW Event:', 'onUpdating');
+        utils.Debug("SW Event:", "onUpdating");
       },
       onUpdateReady: () => {
-        console.log('SW Event:', 'onUpdateReady');
+        utils.Debug("SW Event:", "onUpdateReady");
         // Tells to new SW to take control immediately
         runtime.applyUpdate();
       },
       onUpdated: () => {
-        console.log('SW Event:', 'onUpdated');
+        utils.Debug("SW Event:", "onUpdated");
         // Reload the webpage to load into the new version
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+          for (let registrationIndex = 0; registrationIndex < registrations.length; registrationIndex += 1) {
+            registrations[registrationIndex].unregister();
+          }
+        });
         window.location.reload();
       },
       onUpdateFailed: () => {
-        console.log('SW Event:', 'onUpdateFailed');
+        utils.Debug("SW Event:", "onUpdateFailed");
       }
     });
   }
