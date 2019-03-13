@@ -122,9 +122,10 @@ const prodConfig = {
           utils.assets(`${buildConfig.assetsPath + buildConfig.cssPath}`)
         ],
         use: [
-          process.env.NODE_ENV !== 'production'
-            ? 'vue-style-loader'
-            : MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {}
+          },
           {
             loader: "css-loader",
             options: {
@@ -143,16 +144,12 @@ const prodConfig = {
         test: /\.scss$/,
         include: [
           utils.base("node_modules"),
-          utils.assets(`${buildConfig.scssPath}`)
+          utils.assets(`${buildConfig.assetsPath + buildConfig.scssPath}`)
         ],
         use:[
           {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-              // you can specify a publicPath here
-              // by default it use publicPath in webpackOptions.output
-              publicPath: '../'
-            }
+            options: {}
           },
           {
             loader: "css-loader",

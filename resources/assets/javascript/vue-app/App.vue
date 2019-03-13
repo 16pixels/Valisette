@@ -12,12 +12,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-#router-wrapper {
-  position: relative;
-  overflow: hidden;
-  max-width: 100vw; 
-  width: 100vw; 
-}
-</style>

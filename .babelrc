@@ -15,7 +15,12 @@
     "stage-2"
   ],
   "plugins": [
-    ["transform-vue-jsx", "transform-runtime", "lodash", "@babel/plugin-transform-regenerator"]
+    [
+      "transform-vue-jsx",
+      "transform-runtime",
+      "@babel/plugin-transform-runtime",
+      "lodash",
+      "@babel/plugin-transform-regenerator"]
   ],
   "comments": false,
   "env": {
