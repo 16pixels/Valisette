@@ -1,6 +1,6 @@
 module.exports = {
   extends: ["airbnb-base", "prettier", "plugin:vue/recommended"],
-  parser: 'vue-eslint-parser',
+  parser: ['vue-eslint-parser', 'babel-eslint'],
   globals: {
     window: 1,
     document: 1,
