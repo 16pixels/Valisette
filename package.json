@@ -25,7 +25,6 @@
     "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-preset-airbnb": "^2.4.0",
     "babel-preset-env": "^1.7.0",
-    "babel-preset-latest": "^6.24.1",
     "babel-preset-minify": "^0.2.0",
     "babel-preset-stage-2": "^6.24.1",
     "browser-sync": "^2.26.3",
