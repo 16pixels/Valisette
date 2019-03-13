@@ -2,49 +2,46 @@ import rimraf from "rimraf";
 import path from "path";
 import chalk from "chalk";
 import { each } from "lodash";
-import buildConfig from "./build-config.js";
+import buildConfig from "./build-config";
 
-const _assets = param => {
+const assets = param => {
   return path.resolve(__dirname, `./../../${buildConfig.assetsPath}${param}`);
 };
-const _base = param => {
-  return path.resolve(__dirname, "./../../" + param);
+const base = param => {
+  return path.resolve(__dirname, `./../../${param}`);
 };
-const _clean = (param, callback) => {
-  var target = path.resolve(__dirname, "./../../" + param);
-  var msg1 =
-    "> " + chalk.cyan.bold("cleaning   -") + " " + chalk.yellow.bold(target);
+const clean = (param, callback) => {
+  const target = path.resolve(__dirname, `./../../${param}`);
+  const msg1 =
+    `> ${chalk.cyan.bold("cleaning   -")} ${chalk.yellow.bold(target)}`;
   if (buildConfig.verbose) {
     console.log(msg1);
   }
-  rimraf(target, function() {
-    var msg2 =
-      "> " +
-      chalk.cyan.bold("cleaned    -") +
-      " " +
-      chalk.yellow.bold(target);
+  rimraf(target, () => {
+    const msg2 =
+    `> ${chalk.cyan.bold("cleaning   -")} ${chalk.yellow.bold(target)}`;
     if (buildConfig.verbose) {
       console.log(msg2);
     }
     return callback();
   });
 };
-const _buildEntriesObject = (path, entriesArray) => {
+const buildEntriesObject = (pathString, entriesArray) => {
   const resultObject = {};
-  each(entriesArray, (key, value) => {
-    const finalString = _assets(`${path + key}`);
+  each(entriesArray, (key) => {
+    const finalString = assets(`${pathString + key}`);
     const finalKey = key.split(".")[0];
     resultObject[finalKey] = finalString;
   });
   return resultObject;
 };
-const _buildJsEntriesObject = entriesArray => {
-  return _buildEntriesObject(buildConfig.jsPath, entriesArray);
+const buildJsEntriesObject = entriesArray => {
+  return buildEntriesObject(buildConfig.jsPath, entriesArray);
 };
 const utils = {
-  assets: _assets,
-  base: _base,
-  clean: _clean,
-  jsEntries: _buildJsEntriesObject
+  assets,
+  base,
+  clean,
+  jsEntries: buildJsEntriesObject
 };
-export { utils };
+export default utils;

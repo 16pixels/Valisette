@@ -5,6 +5,8 @@ import DuplicatePackageCheckerPlugin from "duplicate-package-checker-webpack-plu
 import OfflinePlugin from "offline-plugin";
 import VueLoaderPlugin from "vue-loader/lib/plugin";
 import BrowserSyncPlugin from "browser-sync-webpack-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import merge from "webpack-merge";
 import CompressionPlugin from "compression-webpack-plugin";
 import WebpackPwaManifest from "webpack-pwa-manifest";
 import ManifestPlugin from "webpack-manifest-plugin";
@@ -12,14 +14,12 @@ import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import notifier from "node-notifier";
 import webpack from "webpack";
 import chalk from "chalk";
-import merge from "webpack-merge";
 import fs from "fs";
 import path from "path";
 import { each } from "lodash";
 import buildConfig from "./config/build-config";
-import { utils } from "./config/build-utils";
+import utils from "./config/build-utils";
 import { config, extractSass } from "./config/webpack.config.basics.babel";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import {
   prodConfig,
   extractSassProd
@@ -115,13 +115,14 @@ const basics = () => {
   }).apply(COMPILER);
   new FriendlyErrorsWebpackPlugin({
     clearConsole: false,
-    onErrors: function (severity, errors) {
+    onErrors: (severity, errors) => {
+      const errorsList = errors;
       // You can listen to errors transformed and prioritized by the plugin
       // severity can be 'error' or 'warning'
       if (severity === 'warning' && buildConfig.ignoreWarnings) {
         each(errors, (key, index) => {
           if (errors[index].severity === 0) {
-            delete errors[index];
+            delete errorsList[index];
           }
         })
       }

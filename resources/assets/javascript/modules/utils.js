@@ -100,14 +100,13 @@ const utils = {
     });
   },
   DOMReady: callback => {
-    var calls = [];
+    const calls = [];
     if (!callback) {
       utils.Err("DOMLoad has no callback");
       return false;
-    } else {
-      calls.push(callback);
-    }
-    utils.bus.on("statechange", event => {
+    } 
+    calls.push(callback);
+    return utils.bus.on("statechange", event => {
       if (event === "complete") {
         window.requestAnimationFrame(() => {
           each(calls, callBack => {
@@ -135,7 +134,7 @@ const utils = {
     return false;
   },
   autoReflower: callback => {
-    var timeout = 0; // holder for timeout id
+    let timeout = 0; // holder for timeout id
     const delay = 100; // delay after event is "complete" to run callback
     window.addEventListener(
       "resize",
@@ -147,6 +146,7 @@ const utils = {
             if (callback) {
               return callback();
             }
+            return true;
           }, delay);
         });
       },

@@ -1,8 +1,9 @@
-const productionMode = process.env.NODE_ENV === 'prod' ? true : false;
-const critical = process.env.CRITICAL ? true : false;
+const productionMode = process.env.NODE_ENV === 'prod';
+const critical = process.env.CRITICAL === true;
 const buildConfig = {
   productionMode,
   pwaMode: true, // Turn your app into a Progressive Web App
+  vueRuntime: false, // Use vue template inside html files (true) or render app on a mount point (false)
   appShellMode: true, // Add an html file to follow app shell pattern
   verbose : false, // log extra info during build
   audit : false, // audit bundled code composition

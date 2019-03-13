@@ -1,7 +1,7 @@
 import * as OfflinePluginRuntime from "offline-plugin/runtime";
+import each from "lodash/each";
 import utils from "./modules/utils";
 import { loadFonts, lazyLoader } from "./modules/performance";
-import each from "lodash/each";
 import swRuntime from "./sw-runtime";
 import VueApp from "./vue-app";
 
@@ -10,7 +10,7 @@ OfflinePluginRuntime.install();
 swRuntime.init();
 
 // Don't remove this line, it imports css & scss into webpack
-require("main_css");
+require("main_css"); // eslint-disable-line import/no-unresolved
 
 /**
  * @function main
@@ -49,11 +49,11 @@ const main = () => {
    * @return {[type]}                [description]
    */
   const triggerPrivateMethod = method => {
-    if (!method.config) {
-      method.config = {};
-    }
     if (privateMethods[method.name]) {
       utils.Debug(`${method.name} initialized`, method.config);
+      if (!method.config) {
+        return privateMethods[method.name]({});
+      }
       return privateMethods[method.name](method.config);
     }
     utils.ThrowError(`${method.name} does not exist`);
@@ -77,10 +77,15 @@ const main = () => {
 };
 
 /**
+ * Make an app namespace to work from
+ */
+const app = {};
+
+/**
  * Attach app to window (optional)
  */
-window.app = window.app || {};
-const app = window.app;
+window.app = app;
+
 /**
  * Initialize app and pass it's apy to the app object that's been attached
  * to window object previously so we can use the app from the browser

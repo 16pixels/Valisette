@@ -1,5 +1,6 @@
 import Vue from "vue";
 import config from "./../config";
+
 const EventBus = new Vue();
 const bus = {
   on(eventName, fn) {

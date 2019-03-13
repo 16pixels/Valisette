@@ -5,9 +5,9 @@ import MiniCssExtractPlugin from "mini-css-extract-plugin";
  * @type {[type]}
  */
 import { each } from "lodash";
-import buildConfig from "./build-config";
-import { utils } from "./build-utils";
 import chalk from "chalk";
+import buildConfig from "./build-config";
+import utils from "./build-utils";
 
 /**
  * Start config setup
@@ -38,14 +38,16 @@ const EXCLUDES = /node_modules|bower_components/;
  * Aliases base config
  */
 const baseAliasConfig = {
-  vue$: "vue/dist/vue.esm.js", //eslint-disable-line
   "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
 };
+if (buildConfig.vueRuntime) {
+  Object.assign(baseAliasConfig, {vue$: "vue/dist/vue.esm.js"});
+}
 
 /**
  * Aliases declarations
  */
-let cssAssets = {};
+const cssAssets = {};
 each(buildConfig.scssMain, fileName => {
   const name = `${fileName.split(".")[0]}_css`;
   return Object.assign(cssAssets, {
@@ -58,7 +60,7 @@ each(buildConfig.scssMain, fileName => {
  */
 const aliasesList = [baseAliasConfig, cssAssets];
 const mergeAliases = aliasArray => {
-  let allAliases = {};
+  const allAliases = {};
   each(aliasArray, key => {
     Object.assign(allAliases, key);
   });
@@ -90,7 +92,7 @@ const config = {
       minChunks: 2,
     },
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
-    concatenateModules: true //ModuleConcatenationPlugin
+    concatenateModules: true // ModuleConcatenationPlugin
   },
   performance: {
     hints: buildConfig.logLevel,
