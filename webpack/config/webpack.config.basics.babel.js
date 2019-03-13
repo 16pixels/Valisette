@@ -137,7 +137,12 @@ const config = {
             ? 'vue-style-loader'
             : MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader"
+            loader: "css-loader",
+            options: {
+              modules: true,
+              // customize generated class names
+              localIdentName: '[local]_[hash:base64:8]'
+            }
           },
           {
             loader: "resolve-url-loader"

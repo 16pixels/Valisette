@@ -129,7 +129,8 @@ const prodConfig = {
             loader: "css-loader",
             options: {
               minimize: true,
-              modules: false,
+              modules: true,
+              localIdentName: '[local]_[hash:base64:8]',
               sourceMap: false
             }
           },
@@ -157,7 +158,8 @@ const prodConfig = {
             loader: "css-loader",
             options: {
               minimize: true,
-              modules: false,
+              modules: true,
+              localIdentName: '[local]_[hash:base64:8]',
               sourceMap: false
             }
           },

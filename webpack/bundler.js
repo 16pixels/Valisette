@@ -349,8 +349,7 @@ const watch = () => {
 };
 
 // Run pre-build tasks to get file system ready and put thread on hold while its not done
-const runPreBuildSteps = new Promise(function(resolve, reject) {
-  let goSignal = false;
+const runPreBuildSteps = new Promise((resolve) => {
 
   // Cleans file system synchronously through callbacks
   const cleaner = () => {
@@ -364,8 +363,7 @@ const runPreBuildSteps = new Promise(function(resolve, reject) {
         // Clean js folder
         utils.clean(
           `${buildConfig.publicPath + buildConfig.jsPath}/*`,
-          function() {
-            goSignal = true;
+          () => {
             return resolve("> folders cleaned");
           }
         );
@@ -376,7 +374,7 @@ const runPreBuildSteps = new Promise(function(resolve, reject) {
 });
 
 // Runs compiler when pre-build tasks are done
-runPreBuildSteps.then(result => {
+runPreBuildSteps.then(() => {
   if (buildConfig.verbose) {
     console.log(`\n> ${chalk.magenta.bold('Loading env')}\n`);
     console.log(
