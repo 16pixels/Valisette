@@ -1,3 +1,4 @@
+import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import CleanObsoleteChunks from "webpack-clean-obsolete-chunks";
 import CircularDependencyPlugin from "circular-dependency-plugin";
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
@@ -248,6 +249,7 @@ const productionBuild = () => {
       NODE_ENV: '"production"'
     }
   }).apply(COMPILER);
+  new OptimizeCssAssetsPlugin().apply(COMPILER);
   // Run common tasks
   basics();
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin and apply minification
