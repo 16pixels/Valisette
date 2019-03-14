@@ -2,7 +2,7 @@
   "name": "Build assets manifest",
   "/public/main.css": "css/main.css",
   "/public/main.js": "javascript/main.js",
-  "/public/1.bundle.js": "1.bundle.js",
+  "/public/javascript/1.bundle.js": "javascript/1.bundle.js",
   "/public/appcache/manifest.appcache": "appcache/manifest.appcache",
   "/public/appcache/manifest.html": "appcache/manifest.html",
   "/public/icon_1024x1024.png": "icon_1024x1024.png",

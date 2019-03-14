@@ -124,7 +124,7 @@ const prodConfig = {
   output: {
     filename: `${buildConfig.jsPath + buildConfig.jsMainOutput}`,
     path: utils.base(buildConfig.publicPath),
-    chunkFilename: '[name].bundle.js',
+    chunkFilename: `${buildConfig.jsPath}[name].bundle.js`,
     hashDigestLength: 8,
     pathinfo: true
   },
