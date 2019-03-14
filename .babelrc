@@ -1,25 +1,14 @@
 {
-  "presets": [
+  "presets": 
+    // "airbnb",
     [
       "@babel/preset-env",
-      {
-        // "plugins": ["transform-es2015-classes", {
-        //   "loose": true
-        // }]
-      }
-    ],
-    "airbnb",
-    [
-      "@babel/preset-env",
-      {
-        // "targets": {
-        //   "browsers": ["> 1%", "last 2 versions", "not ie <= 8", "ie >= 11"]
-        // },
-        "modules": false
-      }
+      // {
+      //   "useBuiltIns": "entry",
+      //   "modules": false
+      // }
     ]
-    // "stage-2"
-  ],
+  ,
   "plugins": [
     "transform-vue-jsx",
     "@babel/plugin-transform-runtime",
@@ -34,13 +23,4 @@
     ]
   ],
   "comments": false
-  // "env": {
-  //   "test": {
-  //     "presets": ["@babel/preset-env", "stage-2"],
-  //     "plugins": ["istanbul"]
-  //   },
-  //   "production": {
-  //     "presets": ["minify"]
-  //   }
-  // }
 }

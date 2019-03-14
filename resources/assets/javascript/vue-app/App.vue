@@ -13,10 +13,5 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-#router-wrapper {
-  color: blue;
-}
-</style>
 
 
