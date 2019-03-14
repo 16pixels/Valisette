@@ -57,6 +57,25 @@ each(buildConfig.scssMain, fileName => {
 });
 
 /**
+ * Make vue loader config
+ */
+const vueloaderConfig = () => {
+  if (buildConfig.ExtractCss) {
+    return {
+      loader: MiniCssExtractPlugin.loader,
+      options: {}
+    }
+  }
+  return {
+    loader: "vue-style-loader",
+    options: {
+      sourceMap: false,
+      shadowMode: false,
+    }
+  }
+}
+
+/**
  * Merging Aliases
  */
 const aliasesList = [baseAliasConfig, cssAssets];
@@ -122,10 +141,7 @@ const prodConfig = {
           utils.assets(`${buildConfig.assetsPath + buildConfig.cssPath}`)
         ],
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {}
-          },
+          vueloaderConfig(),
           {
             loader: "css-loader",
             options: {
@@ -135,9 +151,9 @@ const prodConfig = {
               sourceMap: false
             }
           },
-          {
-            loader: "resolve-url-loader"
-          },
+          // {
+          //   loader: "resolve-url-loader"
+          // },
         ],
       },
       {
@@ -147,10 +163,7 @@ const prodConfig = {
           utils.assets(`${buildConfig.assetsPath + buildConfig.scssPath}`)
         ],
         use:[
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {}
-          },
+          vueloaderConfig(),
           {
             loader: "css-loader",
             options: {
@@ -160,9 +173,9 @@ const prodConfig = {
               sourceMap: false
             }
           },
-          {
-            loader: "resolve-url-loader"
-          },
+          // {
+          //   loader: "resolve-url-loader"
+          // },
           {
             loader: "sass-loader",
             query: {

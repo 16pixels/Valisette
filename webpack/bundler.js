@@ -78,12 +78,19 @@ console.log(
     process.env.NODE_ENV
   )}\n`
 );
+let mergedConfig = false;
 if (buildConfig.productionMode) {
   // merge both config by using smart merge strategy so that the second object always win
-  const mergedConfig = merge.smart(config, prodConfig);
+  mergedConfig = merge.smart(config, prodConfig);
   COMPILER = webpack(mergedConfig);
 } else {
   COMPILER = webpack(config);
+}
+if (buildConfig.verbose && mergedConfig) {
+  console.log(mergedConfig);
+  each(mergedConfig.module.rules, rule => {
+    console.log(rule);
+  });
 }
 
 /**
@@ -197,7 +204,7 @@ const endFilePlugins = () => {
  * @function run
  * @param {Object} compilerObject
  */
-const run = compilerObject => {
+const run = (compilerObject) => {
   if (typeof compilerObject.run !== "function") {
     console.error(
       chalk.red.bold("\n>>>>>>>>>>>>>>>>>>>>> ! error ! >>>>>>>>>>>>>>>>\n")
@@ -212,7 +219,7 @@ const run = compilerObject => {
     );
     return false;
   }
-  compilerObject.run((err, stats) => {
+  return compilerObject.run((err, stats) => {
     prettyPrintErrors(err, stats);
   });
 };
@@ -230,7 +237,9 @@ const build = () => {
     )} some errors & warnings are inherent to devtools like sourcemaps.\n\n`
   );
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin
-  extractSass.apply(COMPILER);
+  if (buildConfig.ExtractCss) {
+    extractSass.apply(COMPILER);
+  }
   // add end of file plugins
   endFilePlugins();
   // Run COMPILER function
@@ -253,7 +262,9 @@ const productionBuild = () => {
   // Run common tasks
   basics();
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin and apply minification
-  extractSassProd.apply(COMPILER);
+  if (buildConfig.ExtractCss) {
+    extractSassProd.apply(COMPILER);
+  }
   // Makes a smaller webpack footprint by giving modules hashes based on the relative path of each module
   new webpack.HashedModuleIdsPlugin().apply(COMPILER);
   // Minify JS code
@@ -309,7 +320,9 @@ const watch = () => {
 
   basics();
 
-  extractSass.apply(COMPILER);
+  if (buildConfig.ExtractCss) {
+    extractSass.apply(COMPILER);
+  }
 
   if (!process.env.WATCH) {
     console.error(

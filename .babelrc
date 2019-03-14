@@ -1,35 +1,46 @@
 {
   "presets": [
-    ["env", {
-      "plugins": ["transform-es2015-classes", {
-        "loose": true
-      }]
-    }],
-    "airbnb", 
-    ["env", {
-      "targets": {
-        "browsers": ["> 1%", "last 2 versions", "not ie <= 8", "ie >= 11"]
-      },
-      "modules": false
-    }],
-    "stage-2"
+    [
+      "@babel/preset-env",
+      {
+        // "plugins": ["transform-es2015-classes", {
+        //   "loose": true
+        // }]
+      }
+    ],
+    "airbnb",
+    [
+      "@babel/preset-env",
+      {
+        // "targets": {
+        //   "browsers": ["> 1%", "last 2 versions", "not ie <= 8", "ie >= 11"]
+        // },
+        "modules": false
+      }
+    ]
+    // "stage-2"
   ],
   "plugins": [
+    "transform-vue-jsx",
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-syntax-dynamic-import",
+    "lodash",
     [
-      "transform-vue-jsx",
-      "transform-runtime",
-      "@babel/plugin-transform-runtime",
-      "lodash",
-      "@babel/plugin-transform-regenerator"]
+      "@babel/plugin-transform-regenerator",
+      {
+        "polyfill": false,
+        "regenerator": true
+      }
+    ]
   ],
-  "comments": false,
-  "env": {
-    "test": {
-      "presets": ["env", "stage-2"],
-      "plugins": ["istanbul"]
-    },
-    "production": {
-      "presets": ["minify"]
-    }
-  }
+  "comments": false
+  // "env": {
+  //   "test": {
+  //     "presets": ["@babel/preset-env", "stage-2"],
+  //     "plugins": ["istanbul"]
+  //   },
+  //   "production": {
+  //     "presets": ["minify"]
+  //   }
+  // }
 }

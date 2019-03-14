@@ -56,6 +56,22 @@ each(buildConfig.scssMain, fileName => {
 });
 
 /**
+ * Make vue loader config
+ */
+const vueloaderConfig = () => {
+  if (buildConfig.ExtractCss) {
+    return {
+      loader: MiniCssExtractPlugin.loader,
+      options: {}
+    }
+  }
+  return {
+    loader: "vue-style-loader",
+    options: {}
+  }
+}
+
+/**
  * Merging Aliases
  */
 const aliasesList = [baseAliasConfig, cssAssets];
@@ -133,9 +149,7 @@ const config = {
           utils.assets(`${buildConfig.assetsPath + buildConfig.cssPath}`)
         ],
         use: [
-          process.env.NODE_ENV !== 'production'
-            ? 'vue-style-loader'
-            : MiniCssExtractPlugin.loader,
+          vueloaderConfig(),
           {
             loader: "css-loader",
             options: {
@@ -156,21 +170,14 @@ const config = {
           utils.assets(`${buildConfig.scssPath}`)
         ],
         use:[
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              // you can specify a publicPath here
-              // by default it use publicPath in webpackOptions.output
-              publicPath: '../'
-            }
-          },
+          vueloaderConfig(),
           {
             loader: "css-loader",
             options: {}
           },
-          {
-            loader: "resolve-url-loader"
-          },
+          // {
+          //   loader: "resolve-url-loader"
+          // },
           {
             loader: "sass-loader",
             query: {
