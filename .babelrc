@@ -1,14 +1,14 @@
 {
-  "presets": 
-    // "airbnb",
+  "presets": [
     [
       "@babel/preset-env",
-      // {
-      //   "useBuiltIns": "entry",
-      //   "modules": false
-      // }
+      {
+        "targets": "> 0.25%, not dead",
+        "useBuiltIns": "entry",
+        "debug": true
+      }
     ]
-  ,
+  ],
   "plugins": [
     "transform-vue-jsx",
     "@babel/plugin-transform-runtime",

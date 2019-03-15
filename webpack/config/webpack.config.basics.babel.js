@@ -13,7 +13,9 @@ import utils from "./build-utils";
  * Start config setup
  */
 if (buildConfig.verbose) {
-  console.log(`\n> ${chalk.magenta.bold('Assembling webpack basics config')}\n`);
+  console.log(
+    `\n> ${chalk.magenta.bold("Assembling webpack basics config")}\n`
+  );
 }
 
 /**
@@ -22,7 +24,6 @@ if (buildConfig.verbose) {
  */
 const extractSass = new MiniCssExtractPlugin({
   filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
-  disable: process.env.NODE_ENV === "development",
   publicPath: buildConfig.publicPath,
   chunkFilename: "[id].css"
 });
@@ -41,7 +42,7 @@ const baseAliasConfig = {
   "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
 };
 if (buildConfig.vueRuntime) {
-  Object.assign(baseAliasConfig, {vue$: "vue/dist/vue.esm.js"});
+  Object.assign(baseAliasConfig, { vue$: "vue/dist/vue.esm.js" });
 }
 
 /**
@@ -60,16 +61,16 @@ each(buildConfig.scssMain, fileName => {
  */
 const vueloaderConfig = () => {
   if (buildConfig.ExtractCss) {
-    return {
-      loader: MiniCssExtractPlugin.loader,
-      options: {}
-    }
+    return MiniCssExtractPlugin.loader;
   }
   return {
     loader: "vue-style-loader",
-    options: {}
-  }
-}
+    options: {
+      sourceMap: false,
+      shadowMode: false
+    }
+  };
+};
 
 /**
  * Merging Aliases
@@ -81,7 +82,7 @@ const mergeAliases = aliasArray => {
     Object.assign(allAliases, key);
   });
   if (buildConfig.verbose) {
-    console.log(`> ${chalk.magenta.bold('Listing Aliases :')}`);
+    console.log(`> ${chalk.magenta.bold("Listing Aliases :")}`);
     each(allAliases, (alias, key) => {
       console.log(
         `> ${chalk.green(chalk.cyan.bold(key))}: `,
@@ -97,15 +98,15 @@ const mergeAliases = aliasArray => {
  * @type {Object}
  */
 const config = {
-  mode: 'development',
+  mode: "development",
   entry: utils.jsEntries(buildConfig.jsMain),
   optimization: {
     namedModules: true, // NamedModulesPlugin()
     splitChunks: {
       // CommonsChunkPlugin()
       name: "vendor",
-      chunks: 'all',
-      minChunks: 2,
+      chunks: "all",
+      minChunks: 2
     },
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
     concatenateModules: true // ModuleConcatenationPlugin
@@ -113,19 +114,22 @@ const config = {
   performance: {
     hints: buildConfig.logLevel,
     maxEntrypointSize: 400000,
-    maxAssetSize: 400000,
+    maxAssetSize: 400000
   },
   devtool: buildConfig.devtool,
   target: "web",
+  node: {
+    fs: "empty"
+  },
   output: {
     filename: `${buildConfig.jsPath + buildConfig.jsMainOutput}`,
     path: utils.base(buildConfig.publicPath),
-    chunkFilename: '[name].bundle.js',
+    chunkFilename: "[name].bundle.js",
     hashDigestLength: 8,
     pathinfo: true
   },
   resolve: {
-    extensions: [".js", ".ts", ".vue", ".json", ".scss"],
+    extensions: [".js", ".ts", ".json", ".vue", ".scss"],
     alias: mergeAliases(aliasesList)
   },
   module: {
@@ -143,48 +147,31 @@ const config = {
         ]
       },
       {
-        test: /\.css$/,
-        include: [
-          utils.base("node_modules"),
-          utils.assets(`${buildConfig.assetsPath + buildConfig.cssPath}`)
-        ],
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          vueloaderConfig(),
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
+              // sourceMap: false,
+              importLoaders: 2,
               modules: true,
-              // customize generated class names
-              localIdentName: '[local]_[hash:base64:8]'
+              localIdentName: "[name]_[local]_[hash:base64:5]"
             }
           },
           {
-            loader: "resolve-url-loader"
+            loader: "postcss-loader",
+            options: {
+              // sourceMap: false
+            }
           },
-        ],
-      },
-      {
-        test: /\.scss$/,
-        include: [
-          utils.base("node_modules"),
-          utils.assets(`${buildConfig.scssPath}`)
-        ],
-        use:[
-          vueloaderConfig(),
-          {
-            loader: "css-loader",
-            options: {}
-          },
-          // {
-          //   loader: "resolve-url-loader"
-          // },
           {
             loader: "sass-loader",
-            query: {
-             sourceMap: false
+            options: {
+              // sourceMap: false
             }
           }
-        ],
+        ]
       },
       {
         test: /\.ts$/,
@@ -200,17 +187,30 @@ const config = {
       },
       {
         test: /\.js$/,
-        exclude: EXCLUDES,
+        exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file),
         include: [
           utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
         ],
-        use: {
-          loader: "babel-loader"
-        }
+        use: [
+          { loader: "cache-loader" },
+          {
+            loader: "babel-loader"
+          }
+        ]
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        use: [
+          { loader: "cache-loader" },
+          {
+            loader: "vue-loader",
+            options: {
+              compilerOptions: {
+                preserveWhitespace: false
+              }
+            }
+          }
+        ]
       },
       {
         test: /\.woff$/,

@@ -1,15 +1,16 @@
 /* eslint-disable */
-const routes = {
+import home from "./views/home.vue";
+export default {
   routes: [
     {
-      path: '/',
-      component: () => import('./views/home'),
+      path: "/",
+      name: "home",
+      component: home
     },
     {
-      path: '*',
-      redirect: '/',
-    },
+      path: "*",
+      name: "404",
+      redirect: "/"
+    }
   ]
 };
-
-export default routes;

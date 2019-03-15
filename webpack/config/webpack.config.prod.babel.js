@@ -1,5 +1,5 @@
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-
+import path from "path";
 /**
  * Import modules
  * @type {[type]}
@@ -13,7 +13,7 @@ import utils from "./build-utils";
  * Start config setup
  */
 if (buildConfig.verbose) {
-  console.log(`\n> ${chalk.magenta.bold('Assembling webpack prod config')}\n`);
+  console.log(`\n> ${chalk.magenta.bold("Assembling webpack prod config")}\n`);
 }
 
 /**
@@ -27,7 +27,6 @@ const extractSassProd = new MiniCssExtractPlugin({
   chunkFilename: "[id].css"
 });
 
-
 /**
  * Constants declarations
  * @type {[type]}
@@ -39,10 +38,10 @@ const EXCLUDES = /node_modules|bower_components/;
  * Aliases base config
  */
 const baseAliasConfig = {
-  "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`),
+  "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
 };
 if (buildConfig.vueRuntime) {
-  Object.assign(baseAliasConfig, {vue$: "vue/dist/vue.esm.js"});
+  Object.assign(baseAliasConfig, { vue$: "vue/dist/vue.esm.js" });
 }
 
 /**
@@ -61,19 +60,20 @@ each(buildConfig.scssMain, fileName => {
  */
 const vueloaderConfig = () => {
   if (buildConfig.ExtractCss) {
+    // return extractSassProd.loader;
     return {
       loader: MiniCssExtractPlugin.loader,
       options: {}
-    }
+    };
   }
   return {
     loader: "vue-style-loader",
     options: {
       sourceMap: false,
-      shadowMode: false,
+      shadowMode: false
     }
-  }
-}
+  };
+};
 
 /**
  * Merging Aliases
@@ -85,7 +85,7 @@ const mergeAliases = aliasArray => {
     Object.assign(allAliases, key);
   });
   if (buildConfig.verbose) {
-    console.log(`> ${chalk.magenta.bold('Listing Aliases :')}`);
+    console.log(`> ${chalk.magenta.bold("Listing Aliases :")}`);
     each(allAliases, (alias, key) => {
       console.log(
         `> ${chalk.green(chalk.cyan.bold(key))}: `,
@@ -111,7 +111,7 @@ const prodConfig = {
       // CommonsChunkPlugin()
       name: "vendor",
       minChunks: 2,
-      chunks: 'all',
+      chunks: "all"
     },
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
     concatenateModules: true // ModuleConcatenationPlugin
@@ -135,54 +135,31 @@ const prodConfig = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        include: [
-          utils.base("node_modules"),
-          utils.assets(`${buildConfig.assetsPath + buildConfig.cssPath}`)
-        ],
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          vueloaderConfig(),
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
-              minimize: true,
+              sourceMap: false,
+              importLoaders: 2,
               modules: true,
-              localIdentName: '[local]_[hash:base64:8]',
-              sourceMap: false
+              localIdentName: "[name]_[local]_[hash:base64:5]"
             }
           },
-          // {
-          //   loader: "resolve-url-loader"
-          // },
-        ],
-      },
-      {
-        test: /\.scss$/,
-        include: [
-          utils.base("node_modules"),
-          utils.assets(`${buildConfig.assetsPath + buildConfig.scssPath}`)
-        ],
-        use:[
-          vueloaderConfig(),
           {
-            loader: "css-loader",
+            loader: "postcss-loader",
             options: {
-              minimize: true,
-              modules: true,
-              localIdentName: '[local]_[hash:base64:8]',
               sourceMap: false
             }
           },
-          // {
-          //   loader: "resolve-url-loader"
-          // },
           {
             loader: "sass-loader",
-            query: {
-             sourceMap: false
+            options: {
+              sourceMap: false
             }
           }
-        ],
+        ]
       },
       {
         test: /\.ts$/,
@@ -198,21 +175,36 @@ const prodConfig = {
       },
       {
         test: /\.js$/,
-        exclude: EXCLUDES,
+        exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file),
         include: [
           utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
         ],
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["env", "minify"],
-            plugins: ["transform-runtime"]
+        use: [
+          {
+            loader: "cache-loader"
+          },
+          {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env", "minify"],
+              plugins: ["@babel/plugin-transform-runtime"]
+            }
           }
-        }
+        ]
       },
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        use: [
+          { loader: "cache-loader" },
+          {
+            loader: "vue-loader",
+            options: {
+              compilerOptions: {
+                preserveWhitespace: false
+              }
+            }
+          }
+        ]
       },
       {
         test: /\.woff$/,

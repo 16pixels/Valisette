@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import utils from './../../modules/utils';
-import Routes from "./routes";
+import routes from "./routes";
 
 Vue.use(Router);
 
 const moduleName = '[Router] |';
-utils.Debug(`${moduleName} Init`);
-const AppRouter = new Router(Routes);
+utils.Debug(`${moduleName} Init`, routes);
+const AppRouter = new Router(routes);
 /**
  * Middlewares
  */
@@ -21,6 +21,5 @@ const runMiddlewares = () => {
 };
 
 runMiddlewares();
-
 export default AppRouter;
 

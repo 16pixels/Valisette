@@ -1,17 +1,25 @@
+
 <template>
   <div id="router-wrapper">
+    <router-link to="/">Aller a la home</router-link>
     <router-view></router-view>
   </div>
 </template>
 <script>
-import RouterView from "./router";
 export default {
   name: "App",
+  data () {
+    return {
+      msg: 'Hello world!'
+    }
+  },
   components: {
-    "router-view": RouterView
   }
 }
 </script>
+
+
+
 
 
 

@@ -1,10 +1,11 @@
-import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+import OptimizeCssAssetsPlugin from "optimize-css-assets-webpack-plugin";
 import CleanObsoleteChunks from "webpack-clean-obsolete-chunks";
 import CircularDependencyPlugin from "circular-dependency-plugin";
 import FriendlyErrorsWebpackPlugin from "friendly-errors-webpack-plugin";
 import DuplicatePackageCheckerPlugin from "duplicate-package-checker-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import OfflinePlugin from "offline-plugin";
-import VueLoaderPlugin from "vue-loader/lib/plugin";
+import { VueLoaderPlugin } from "vue-loader";
 import BrowserSyncPlugin from "browser-sync-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import merge from "webpack-merge";
@@ -17,7 +18,7 @@ import webpack from "webpack";
 import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import { each } from "lodash";
+import each from "lodash/each";
 import buildConfig from "./config/build-config";
 import utils from "./config/build-utils";
 import { config, extractSass } from "./config/webpack.config.basics.babel";
@@ -41,7 +42,11 @@ const prettyPrintErrors = (err, stats) => {
       `Build has ${chalk.yellow.bold(stats.compilation.errors.length)} errors`
     )}\n`;
   }
-  if (stats.compilation.warnings && stats.compilation.warnings[0] && !buildConfig.ignoreWarnings) {
+  if (
+    stats.compilation.warnings &&
+    stats.compilation.warnings[0] &&
+    !buildConfig.ignoreWarnings
+  ) {
     notifier.notify({
       title: "Valisette",
       message: `Build has ${stats.compilation.warnings.length} warning(s) !`
@@ -52,8 +57,12 @@ const prettyPrintErrors = (err, stats) => {
       )} warnings`
     )}\n`;
   }
-  if (!stats.compilation.errors || !stats.compilation.warnings || buildConfig.ignoreWarnings) {
-    finalStatsLog = `> ${chalk.green.bold('All good, great job !')}\n`;
+  if (
+    !stats.compilation.errors ||
+    !stats.compilation.warnings ||
+    buildConfig.ignoreWarnings
+  ) {
+    finalStatsLog = `> ${chalk.green.bold("All good, great job !")}\n`;
   }
   console.log(finalStatsLog);
   // performance logging function
@@ -78,17 +87,17 @@ console.log(
     process.env.NODE_ENV
   )}\n`
 );
-let mergedConfig = false;
+// let mergedConfig = false;
 if (buildConfig.productionMode) {
   // merge both config by using smart merge strategy so that the second object always win
-  mergedConfig = merge.smart(config, prodConfig);
-  COMPILER = webpack(mergedConfig);
+  // mergedConfig = merge.smart(config, prodConfig);
+  COMPILER = webpack(prodConfig);
 } else {
   COMPILER = webpack(config);
 }
-if (buildConfig.verbose && mergedConfig) {
-  console.log(mergedConfig);
-  each(mergedConfig.module.rules, rule => {
+if (buildConfig.verbose && prodConfig) {
+  console.log(prodConfig);
+  each(prodConfig.module.rules, rule => {
     console.log(rule);
   });
 }
@@ -127,14 +136,14 @@ const basics = () => {
       const errorsList = errors;
       // You can listen to errors transformed and prioritized by the plugin
       // severity can be 'error' or 'warning'
-      if (severity === 'warning' && buildConfig.ignoreWarnings) {
+      if (severity === "warning" && buildConfig.ignoreWarnings) {
         each(errors, (key, index) => {
           if (errors[index].severity === 0) {
             delete errorsList[index];
           }
-        })
+        });
       }
-    },
+    }
   }).apply(COMPILER);
 };
 
@@ -159,7 +168,9 @@ const makeMainCachedAssetsManifest = () => {
     `${buildConfig.publicPath + buildConfig.imagesPath}`
   )}`;
   fs.readdirSync(imageFolderUrl).forEach(file => {
-    filesList.push(`.${buildConfig.publicPath + buildConfig.imagesPath + file}`);
+    filesList.push(
+      `.${buildConfig.publicPath + buildConfig.imagesPath + file}`
+    );
   });
   const favicon = `./${buildConfig.pwa.appLogo}`;
   filesList.push(favicon);
@@ -204,7 +215,7 @@ const endFilePlugins = () => {
  * @function run
  * @param {Object} compilerObject
  */
-const run = (compilerObject) => {
+const run = compilerObject => {
   if (typeof compilerObject.run !== "function") {
     console.error(
       chalk.red.bold("\n>>>>>>>>>>>>>>>>>>>>> ! error ! >>>>>>>>>>>>>>>>\n")
@@ -238,7 +249,11 @@ const build = () => {
   );
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin
   if (buildConfig.ExtractCss) {
-    extractSass.apply(COMPILER);
+    new MiniCssExtractPlugin({
+      filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
+      publicPath: buildConfig.publicPath,
+      chunkFilename: "[id].css"
+    }).apply(COMPILER);
   }
   // add end of file plugins
   endFilePlugins();
@@ -263,7 +278,11 @@ const productionBuild = () => {
   basics();
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin and apply minification
   if (buildConfig.ExtractCss) {
-    extractSassProd.apply(COMPILER);
+    new MiniCssExtractPlugin({
+      filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
+      publicPath: buildConfig.publicPath,
+      chunkFilename: "[id].css"
+    }).apply(COMPILER);
   }
   // Makes a smaller webpack footprint by giving modules hashes based on the relative path of each module
   new webpack.HashedModuleIdsPlugin().apply(COMPILER);
@@ -316,12 +335,16 @@ const productionBuild = () => {
 };
 
 const watch = () => {
-  console.log(`\n> ${chalk.magenta.bold('Watching assets')}\n`);
+  console.log(`\n> ${chalk.magenta.bold("Watching assets")}\n`);
 
   basics();
 
   if (buildConfig.ExtractCss) {
-    extractSass.apply(COMPILER);
+    new MiniCssExtractPlugin({
+      filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
+      publicPath: buildConfig.publicPath,
+      chunkFilename: "[id].css"
+    }).apply(COMPILER);
   }
 
   if (!process.env.WATCH) {
@@ -364,24 +387,20 @@ const watch = () => {
 };
 
 // Run pre-build tasks to get file system ready and put thread on hold while its not done
-const runPreBuildSteps = new Promise((resolve) => {
-
+const runPreBuildSteps = new Promise(resolve => {
   // Cleans file system synchronously through callbacks
   const cleaner = () => {
     if (buildConfig.verbose) {
-      console.log(`> ${chalk.magenta.bold('Cleaning assets')}\n`);
+      console.log(`> ${chalk.magenta.bold("Cleaning assets")}\n`);
     }
     // Clean css folder
     return utils.clean(
       `${buildConfig.publicPath + buildConfig.cssPath}/*`,
       () => {
         // Clean js folder
-        utils.clean(
-          `${buildConfig.publicPath + buildConfig.jsPath}/*`,
-          () => {
-            return resolve("> folders cleaned");
-          }
-        );
+        utils.clean(`${buildConfig.publicPath + buildConfig.jsPath}/*`, () => {
+          return resolve("> folders cleaned");
+        });
       }
     );
   };
@@ -391,7 +410,7 @@ const runPreBuildSteps = new Promise((resolve) => {
 // Runs compiler when pre-build tasks are done
 runPreBuildSteps.then(() => {
   if (buildConfig.verbose) {
-    console.log(`\n> ${chalk.magenta.bold('Loading env')}\n`);
+    console.log(`\n> ${chalk.magenta.bold("Loading env")}\n`);
     console.log(
       ">",
       chalk.cyan.bold(`JS source  -`),
