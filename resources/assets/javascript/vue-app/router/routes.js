@@ -1,11 +1,10 @@
-/* eslint-disable */
-import home from "./views/home.vue";
+// import home from "./views/home.vue";
 export default {
   routes: [
     {
       path: "/",
       name: "home",
-      component: home
+      component: () => import("./views/home.vue")
     },
     {
       path: "*",

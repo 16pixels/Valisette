@@ -13,7 +13,7 @@ var __wpo = {
   "hashesMap": {},
   "strategy": "changed",
   "responseStrategy": "cache-first",
-  "version": "3/15/2019, 12:56:26 PM",
+  "version": "3/18/2019, 12:50:28 PM",
   "name": "webpack-offline",
   "pluginVersion": "5.0.6",
   "relativePaths": true

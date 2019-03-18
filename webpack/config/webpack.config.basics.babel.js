@@ -1,4 +1,5 @@
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import UglifyJsPlugin from "uglifyjs-webpack-plugin";
 
 /**
  * Import modules
@@ -102,6 +103,12 @@ const config = {
   entry: utils.jsEntries(buildConfig.jsMain),
   optimization: {
     namedModules: true, // NamedModulesPlugin()
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+      }),
+    ],
     splitChunks: {
       // CommonsChunkPlugin()
       name: "vendor",

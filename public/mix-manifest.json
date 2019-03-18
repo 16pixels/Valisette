@@ -1,5 +1,7 @@
 {
   "name": "Build assets manifest",
+  "/public/0.css": "0.css",
+  "/public/0.bundle.js": "0.bundle.js",
   "/public/main.css": "css/main.css",
   "/public/main.js": "javascript/main.js",
   "/public/appcache/manifest.appcache": "appcache/manifest.appcache",
