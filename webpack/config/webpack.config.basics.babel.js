@@ -163,7 +163,7 @@ const config = {
               // sourceMap: false,
               importLoaders: 2,
               modules: true,
-              localIdentName: "[name]_[local]_[hash:base64:5]"
+              localIdentName: `[name]_[local]_[hash:base64:5]`
             }
           },
           {

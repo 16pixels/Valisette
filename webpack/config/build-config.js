@@ -8,9 +8,9 @@ const buildConfig = {
   appShellMode: true, // Add an html file to follow app shell pattern
   verbose : false, // log extra info during build
   audit : false, // audit bundled code composition
-  ignoreWarnings: true,
-  appUrl: "https://valisette.app",
-  logLevel: "error",
+  ignoreWarnings: true, // ignore performance recommandations & warnings
+  appUrl: "https://valisette.app", // app url to specify for service workers
+  logLevel: "warning", // set performance hints log level
   publicPath: '/public/', // Public assets folder path
   publicManifestPath: '/', // Public assets manifest location
   jsPath: 'javascript/', // Javascript folder name
