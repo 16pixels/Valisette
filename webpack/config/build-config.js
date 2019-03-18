@@ -1,51 +1,52 @@
-const productionMode = process.env.NODE_ENV === 'prod';
-const critical = process.env.CRITICAL === true;
+import ValisetteConf from "./../../valisette.conf";
+
+require('dotenv').config()
+
+const { env } = process;
+const productionMode = env.NODE_ENV === 'prod'; // grab production mode from node envirionnement (cli)
+
+// console.table(env);
+
 const buildConfig = {
+  jsMain: ValisetteConf.jsMain, // Main JS file to import / require from
+  scssMain: ValisetteConf.scssMain, // Main scss file
   productionMode,
-  pwaMode: true, // Turn your app into a Progressive Web App
-  ExtractCss: true, // Extract css/scss from vuejs components
-  vueRuntime: false, // Use vue template inside html files (true) or render app on a mount point (false)
-  appShellMode: true, // Add an html file to follow app shell pattern
-  verbose : false, // log extra info during build
-  audit : false, // audit bundled code composition
-  ignoreWarnings: true, // ignore performance recommandations & warnings
-  appUrl: "https://valisette.app", // app url to specify for service workers
-  logLevel: "warning", // set performance hints log level
-  publicPath: '/public/', // Public assets folder path
-  publicManifestPath: '/', // Public assets manifest location
-  jsPath: 'javascript/', // Javascript folder name
-  tsPath: 'typescript/', // Typescript folder name
-  cssPath: 'css/', // Css folder name
-  imagesPath: 'images/',
-  fontsPath: 'fonts/',
-  assetsPath: 'resources/assets/', // source assets files location
-  watch: process.env.WATCH ? process.env.WATCH : false,
-  jsMain: [
-    'main.js',
-  ], // Main JS file to import / require from
-  jsMainOutput: '[name].js', // js file output name pattern
-  jsWorker: 'worker.js', // Declares your service worker(s)
-  stylesMain: 'styles.js', // Manages lazy loading
-  scssPath: 'scss/', // scss source folder
-  scssMain: [
-    'main.scss',
-  ], // Main scss file
-  cssMainOutput: '[name].css', // css file output name pattern (used in production mode)
+  pwaMode: ValisetteConf.PWA_MODE, // Turn your app into a Progressive Web App
+  ExtractCss: ValisetteConf.EXTRACT_CSS, // Extract css/scss from vuejs components
+  vueRuntime: ValisetteConf.VUE_RUNTIME, // Use vue template inside html files (true) or render app on a mount point (false)
+  appShellMode: ValisetteConf.APP_SHELL_MODE, // Add an html file to follow app shell pattern
+  verbose : ValisetteConf.VERBOSE, // log extra info during build
+  audit : ValisetteConf.AUDIT, // audit bundled code composition
+  ignoreWarnings: ValisetteConf.IGNORE_WARNINGS, // ignore performance recommandations & warnings
+  appUrl: ValisetteConf.APP_URL, // app url to specify for service workers
+  logLevel: ValisetteConf.PERFORMANCE_LOG_LEVEL, // set performance hints log level
+  publicPath: ValisetteConf.PUBLIC_PATH, // Public assets folder path
+  publicManifestPath: ValisetteConf.PUBLIC_MANIFEST_PATH, // Public assets manifest location
+  jsPath: ValisetteConf.JS_PATH, // Javascript folder name
+  tsPath: ValisetteConf.TS_PATH, // Typescript folder name
+  cssPath: ValisetteConf.CSS_PATH, // Css folder name
+  imagesPath: ValisetteConf.IMAGES_PATH,
+  fontsPath: ValisetteConf.FONTS_PATH,
+  assetsPath: ValisetteConf.ASSETS_PATH, // source assets files location
+  watch: env.WATCH ? env.WATCH : false, // grab watch mode from node (cli)
+  jsMainOutput: ValisetteConf.JS_MAIN_ASSETS, // js file output name pattern
+  scssPath: ValisetteConf.SCSS_PATH, // scss source folder
+  cssMainOutput: ValisetteConf.CSS_MAIN_OUTPUT, // css file output name pattern (used in production mode)
   devtool: productionMode ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
-  critical,
+  critical: ValisetteConf.CRITICAL,
   pwa: {
-    appName: 'Valisette by Thibzzz',
-    shortAppName: 'Valisette',
-    appDescription: 'Valisette :  : a boilerplate for valet & vue users by Thibzzz. https://github.com/thibzzz',
-    appColor: '#3a74a5',
-    themeColor: '#3a74a5',
-    appLogo: 'public/valisette-logo.png'
+    appName: ValisetteConf.APP_NAME,
+    shortAppName: ValisetteConf.SHORT_APP_NAME,
+    appDescription: ValisetteConf.APP_DESCRIPTION,
+    appColor: ValisetteConf.APP_COLOR,
+    themeColor: ValisetteConf.THEME_COLOR,
+    appLogo: ValisetteConf.APP_LOGO
   },
   browserSync: { // This implies that you are hosting your code on your machine but you can always set browserSync options -> https://github.com/Va1/browser-sync-webpack-plugin
-    target: "https://valisette.app"
+    target: ValisetteConf.PROXY_TARGET
   },
   performance: {
-    compressionTreshold: 10240 // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)
+    compressionTreshold: ValisetteConf.COMPRESSION_THRESHOLD // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)
   }
 };
 export default buildConfig;

@@ -8,7 +8,6 @@ import OfflinePlugin from "offline-plugin";
 import { VueLoaderPlugin } from "vue-loader";
 import BrowserSyncPlugin from "browser-sync-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
-import merge from "webpack-merge";
 import CompressionPlugin from "compression-webpack-plugin";
 import WebpackPwaManifest from "webpack-pwa-manifest";
 import ManifestPlugin from "webpack-manifest-plugin";
@@ -21,11 +20,8 @@ import path from "path";
 import each from "lodash/each";
 import buildConfig from "./config/build-config";
 import utils from "./config/build-utils";
-import { config, extractSass } from "./config/webpack.config.basics.babel";
-import {
-  prodConfig,
-  extractSassProd
-} from "./config/webpack.config.prod.babel";
+import { config } from "./config/webpack.config.basics.babel";
+import { prodConfig } from "./config/webpack.config.prod.babel";
 
 /**
  * Error printing function
@@ -251,7 +247,7 @@ const build = () => {
   if (buildConfig.ExtractCss) {
     new MiniCssExtractPlugin({
       filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
-      publicPath: buildConfig.publicPath,
+      publicPath: utils.base(buildConfig.publicPath + buildConfig.cssPath),
       chunkFilename: "[id].css"
     }).apply(COMPILER);
   }
@@ -366,8 +362,15 @@ const watch = () => {
   new BrowserSyncPlugin({
     browser: "google chrome",
     proxy: {
-      target: buildConfig.browserSync.target
-    }
+      target: buildConfig.browserSync.target,
+      ws: true
+    },
+    logConnections: true,
+    logFileChanges: true,
+    open: false,
+    reloadThrottle: 500,
+    cors: false,
+    notify: false
   }).apply(COMPILER);
 
   endFilePlugins();

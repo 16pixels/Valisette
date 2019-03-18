@@ -24,7 +24,7 @@ const extractSassProd = new MiniCssExtractPlugin({
   filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
   disable: process.env.NODE_ENV === "development",
   publicPath: buildConfig.publicPath,
-  chunkFilename: "[id].css"
+  chunkFilename: `${buildConfig.cssPath}[id].css`
 });
 
 /**
@@ -63,7 +63,11 @@ const vueloaderConfig = () => {
     // return extractSassProd.loader;
     return {
       loader: MiniCssExtractPlugin.loader,
-      options: {}
+      options: {
+        filename: "css/[name].css",
+        publicPath: `${utils.base(buildConfig.publicPath + buildConfig.cssPath)}`,
+        chunkFilename: "css/[id].css"
+      }
     };
   }
   return {
@@ -105,6 +109,9 @@ const prodConfig = {
   entry: {
     main: utils.assets(`${buildConfig.jsPath + buildConfig.jsMain}`)
   },
+  node: {
+    fs: 'empty'
+  },
   optimization: {
     namedModules: true, // NamedModulesPlugin()
     minimizer: [
@@ -144,7 +151,7 @@ const prodConfig = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          vueloaderConfig(),
           {
             loader: "css-loader",
             options: {

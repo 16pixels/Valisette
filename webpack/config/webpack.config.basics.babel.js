@@ -62,7 +62,15 @@ each(buildConfig.scssMain, fileName => {
  */
 const vueloaderConfig = () => {
   if (buildConfig.ExtractCss) {
-    return MiniCssExtractPlugin.loader;
+    // return extractSassProd.loader;
+    return {
+      loader: MiniCssExtractPlugin.loader,
+      options: {
+        filename: "css/[name].css",
+        publicPath: `${utils.base(buildConfig.publicPath + buildConfig.cssPath)}`,
+        chunkFilename: "css/[id].css"
+      }
+    };
   }
   return {
     loader: "vue-style-loader",
@@ -156,7 +164,7 @@ const config = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          vueloaderConfig(),
           {
             loader: "css-loader",
             options: {
