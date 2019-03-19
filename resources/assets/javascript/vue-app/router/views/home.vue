@@ -1,9 +1,7 @@
 <template>
   <div class="home">
     <h1>title</h1>
-    <img src="/images/projet_audit.svg" alt="">
-    <img src="/images/forme_triangle.svg" alt="">
-    <img src="/images/SVG logo combined with the W3C logo, set horizontally.svg" alt="">
+    <img src="/images/w3c.svg" alt="">
   </div>
 </template>
 <script>

@@ -276,8 +276,8 @@ const productionBuild = () => {
   if (buildConfig.ExtractCss) {
     new MiniCssExtractPlugin({
       filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
-      publicPath: buildConfig.publicPath,
-      chunkFilename: "[id].css"
+      publicPath: `${utils.base(buildConfig.publicPath + buildConfig.cssPath)}`,
+      chunkFilename: `[id].chunk.css`
     }).apply(COMPILER);
   }
   // Makes a smaller webpack footprint by giving modules hashes based on the relative path of each module
@@ -400,9 +400,15 @@ const runPreBuildSteps = new Promise(resolve => {
     return utils.clean(
       `${buildConfig.publicPath + buildConfig.cssPath}/*`,
       () => {
-        // Clean js folder
-        utils.clean(`${buildConfig.publicPath + buildConfig.jsPath}/*`, () => {
-          return resolve("> folders cleaned");
+        utils.clean(`${buildConfig.publicPath}/*.chunk.*`, () => {
+          // Clean js folder
+          utils.clean(
+            `${buildConfig.publicPath + buildConfig.jsPath}/*`,
+            () => {
+              console.log(`\n> ${chalk.magenta.bold("Assets cleaned")}`);
+              return resolve();
+            }
+          );
         });
       }
     );

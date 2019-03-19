@@ -23,8 +23,8 @@ if (buildConfig.verbose) {
 const extractSassProd = new MiniCssExtractPlugin({
   filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
   disable: process.env.NODE_ENV === "development",
-  publicPath: buildConfig.publicPath,
-  chunkFilename: `${buildConfig.cssPath}[id].css`
+  publicPath: buildConfig.publicPath + buildConfig.cssPath,
+  chunkFilename: `[id].chunk.css`
 });
 
 /**
@@ -66,7 +66,7 @@ const vueloaderConfig = () => {
       options: {
         filename: "css/[name].css",
         publicPath: `${utils.base(buildConfig.publicPath + buildConfig.cssPath)}`,
-        chunkFilename: "css/[id].css"
+        chunkFilename: `[id].chunk.css`
       }
     };
   }
@@ -138,7 +138,7 @@ const prodConfig = {
   output: {
     filename: `${buildConfig.jsPath + buildConfig.jsMainOutput}`,
     path: utils.base(buildConfig.publicPath),
-    chunkFilename: `${buildConfig.jsPath}[name].bundle.js`,
+    chunkFilename: `[name].chunk.js`,
     hashDigestLength: 8,
     pathinfo: true
   },

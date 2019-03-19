@@ -10,7 +10,7 @@ const assets = param => {
 const base = param => {
   return path.resolve(__dirname, `./../../${param}`);
 };
-const clean = (param, callback) => {
+const clean = (param, callback = () => {return true;}) => {
   const target = path.resolve(__dirname, `./../../${param}`);
   const msg1 =
     `> ${chalk.cyan.bold("cleaning   -")} ${chalk.yellow.bold(target)}`;
@@ -19,7 +19,7 @@ const clean = (param, callback) => {
   }
   rimraf(target, () => {
     const msg2 =
-    `> ${chalk.cyan.bold("cleaning   -")} ${chalk.yellow.bold(target)}`;
+    `> ${chalk.cyan.bold("cleaned   -")} ${chalk.yellow.bold(target)}`;
     if (buildConfig.verbose) {
       console.log(msg2);
     }

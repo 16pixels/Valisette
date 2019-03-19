@@ -47,6 +47,10 @@ const minifySVG = async () => {
               }
             },
             {
+              removeUselessDefs: true
+            },
+            
+            {
               removeComments: true
             }
           ]
