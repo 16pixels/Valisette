@@ -31,11 +31,27 @@ const minifyPNG = async () => {
   console.log(`> ${chalk.magenta.bold("PNG Images optimized")}`);
 };
 const minifySVG = async () => {
-  await imageminSvgo(
+  await imagemin(
     [`${buildConfig.assetsPath + buildConfig.imagesPath}**/*.svg`],
     `./${buildConfig.publicPath + buildConfig.imagesPath}`,
     {
-      use: [imageminSvgo()]
+      use: [
+        imageminSvgo({
+          plugins: [
+            { removeViewBox: true },
+            {
+              cleanupAttrs: {
+                newlines: true,
+                trim: true,
+                spaces: true
+              }
+            },
+            {
+              removeComments: true
+            }
+          ]
+        })
+      ]
     }
   );
   console.log(`> ${chalk.magenta.bold("SVG Images optimized")}`);

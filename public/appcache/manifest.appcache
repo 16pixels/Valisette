@@ -1,10 +1,13 @@
 CACHE MANIFEST
-#ver:3/19/2019, 2:48:57 PM
+#ver:3/19/2019, 3:18:04 PM
 #plugin:5.0.6
 
 CACHE:
 ../public/javascript/main.js
 ../public/css/main.css
+../public/images/SVG logo combined with the W3C logo, set horizontally.svg
+../public/images/forme_triangle.svg
+../public/images/projet_audit.svg
 ../public/images/thibaut.jpg
 ../public/images/valisette-logo.png
 ../public/valisette-logo.png
