@@ -7,7 +7,6 @@
     "start": "npm prune && npm i",
     "watch": "cross-env NODE_ENV=dev WATCH=true babel-node ./webpack/bundler.js",
     "ie": "babel --plugins transform-es2015-classes public/javascript/*.js --out-file public/javascript/*.js && minify public/javascript -d public/javascript",
-    "critical": "cross-env NODE_ENV=prod CRITICAL=true babel-node ./webpack/critical-css.js",
     "imgmin": "cross-env NODE_ENV=prod babel-node ./webpack/imgmin.js"
   },
   "devDependencies": {
@@ -61,6 +60,10 @@
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^4.0.2",
     "image-webpack-loader": "^4.6.0",
+    "imagemin": "^6.1.0",
+    "imagemin-mozjpeg": "^8.0.0",
+    "imagemin-optipng": "^6.0.0",
+    "imagemin-svgo": "^7.0.0",
     "isomorphic-style-loader": "^4.0.0",
     "mini-css-extract-plugin": "^0.5.0",
     "mozjpeg": "^6.0.1",
