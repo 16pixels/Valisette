@@ -20,16 +20,6 @@ if (buildConfig.verbose) {
 }
 
 /**
- * Plugins declarations
- * @type {ExtractTextPlugin}
- */
-const extractSass = new MiniCssExtractPlugin({
-  filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
-  publicPath: buildConfig.publicPath,
-  chunkFilename: "[id].css"
-});
-
-/**
  * Constants declarations
  * @type {[type]}
  */
@@ -50,7 +40,7 @@ if (buildConfig.vueRuntime) {
  * Aliases declarations
  */
 const cssAssets = {};
-each(buildConfig.scssMain, fileName => {
+each(buildConfig.SCSS_ENTRIES, fileName => {
   const name = `${fileName.split(".")[0]}_css`;
   return Object.assign(cssAssets, {
     [name]: utils.assets(`${buildConfig.scssPath + fileName}`)
@@ -66,9 +56,9 @@ const vueloaderConfig = () => {
     return {
       loader: MiniCssExtractPlugin.loader,
       options: {
-        filename: "css/[name].css",
-        publicPath: `${utils.base(buildConfig.publicPath + buildConfig.cssPath)}`,
-        chunkFilename: "css/[id].css"
+        filename: buildConfig.cssPath + buildConfig.cssMainOutput,
+        publicPath: buildConfig.publicPath,
+        chunkFilename: buildConfig.cssPath + buildConfig.cssChunkOutput
       }
     };
   }
@@ -108,7 +98,7 @@ const mergeAliases = aliasArray => {
  */
 const config = {
   mode: "development",
-  entry: utils.jsEntries(buildConfig.jsMain),
+  entry: utils.jsEntries(buildConfig.JS_ENTRIES),
   optimization: {
     namedModules: true, // NamedModulesPlugin()
     minimizer: [
@@ -137,9 +127,9 @@ const config = {
     fs: "empty"
   },
   output: {
-    filename: `${buildConfig.jsPath + buildConfig.jsMainOutput}`,
+    filename: buildConfig.jsPath + buildConfig.jsMainOutput,
     path: utils.base(buildConfig.publicPath),
-    chunkFilename: "[name].bundle.js",
+    chunkFilename: buildConfig.jsPath + buildConfig.jsChunkOutput,
     hashDigestLength: 8,
     pathinfo: true
   },
@@ -259,4 +249,4 @@ const config = {
   }
 };
 
-export { config, extractSass };
+export default config;

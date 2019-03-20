@@ -8,8 +8,8 @@ const productionMode = env.NODE_ENV === 'prod'; // grab production mode from nod
 // console.table(env);
 
 const buildConfig = {
-  jsMain: ValisetteConf.jsMain, // Main JS file to import / require from
-  scssMain: ValisetteConf.scssMain, // Main scss file
+  JS_ENTRIES: ValisetteConf.JS_ENTRIES, // Main JS file to import / require from
+  SCSS_ENTRIES: ValisetteConf.SCSS_ENTRIES, // Main scss file
   productionMode,
   pwaMode: ValisetteConf.PWA_MODE, // Turn your app into a Progressive Web App
   ExtractCss: ValisetteConf.EXTRACT_CSS, // Extract css/scss from vuejs components
@@ -29,11 +29,12 @@ const buildConfig = {
   fontsPath: ValisetteConf.FONTS_PATH,
   assetsPath: ValisetteConf.ASSETS_PATH, // source assets files location
   watch: env.WATCH ? env.WATCH : false, // grab watch mode from node (cli)
-  jsMainOutput: ValisetteConf.JS_MAIN_ASSETS, // js file output name pattern
+  jsMainOutput: ValisetteConf.JS_MAIN_OUTPUT, // js file output name pattern
+  jsChunkOutput: ValisetteConf.JS_CHUNK_OUTPUT,
+  cssChunkOutput: ValisetteConf.CSS_CHUNK_OUTPUT,
   scssPath: ValisetteConf.SCSS_PATH, // scss source folder
   cssMainOutput: ValisetteConf.CSS_MAIN_OUTPUT, // css file output name pattern (used in production mode)
   devtool: productionMode ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
-  critical: ValisetteConf.CRITICAL,
   pwa: {
     appName: ValisetteConf.APP_NAME,
     shortAppName: ValisetteConf.SHORT_APP_NAME,

@@ -20,8 +20,8 @@ import path from "path";
 import each from "lodash/each";
 import buildConfig from "./config/build-config";
 import utils from "./config/build-utils";
-import { config } from "./config/webpack.config.basics.babel";
-import { prodConfig } from "./config/webpack.config.prod.babel";
+import config from "./config/webpack.config.basics.babel";
+import prodConfig from "./config/webpack.config.prod.babel";
 
 /**
  * Error printing function
@@ -141,6 +141,14 @@ const basics = () => {
       }
     }
   }).apply(COMPILER);
+  // Retrieve css chunks and loads them into a single file with ExtractTextPlugin
+  if (buildConfig.ExtractCss) {
+    new MiniCssExtractPlugin({
+      filename: buildConfig.cssPath + buildConfig.cssMainOutput,
+      publicPath: buildConfig.publicPath,
+      chunkFilename: buildConfig.cssPath + buildConfig.cssChunkOutput
+    }).apply(COMPILER);
+  }
 };
 
 /**
@@ -243,14 +251,6 @@ const build = () => {
       "Reminder :"
     )} some errors & warnings are inherent to devtools like sourcemaps.\n\n`
   );
-  // Retrieve css chunks and loads them into a single file with ExtractTextPlugin
-  if (buildConfig.ExtractCss) {
-    new MiniCssExtractPlugin({
-      filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
-      publicPath: utils.base(buildConfig.publicPath + buildConfig.cssPath),
-      chunkFilename: "[id].css"
-    }).apply(COMPILER);
-  }
   // add end of file plugins
   endFilePlugins();
   // Run COMPILER function
@@ -272,14 +272,6 @@ const productionBuild = () => {
   new OptimizeCssAssetsPlugin().apply(COMPILER);
   // Run common tasks
   basics();
-  // Retrieve css chunks and loads them into a single file with ExtractTextPlugin and apply minification
-  if (buildConfig.ExtractCss) {
-    new MiniCssExtractPlugin({
-      filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
-      publicPath: `${utils.base(buildConfig.publicPath + buildConfig.cssPath)}`,
-      chunkFilename: `[id].chunk.css`
-    }).apply(COMPILER);
-  }
   // Makes a smaller webpack footprint by giving modules hashes based on the relative path of each module
   new webpack.HashedModuleIdsPlugin().apply(COMPILER);
   // Minify JS code
@@ -334,14 +326,6 @@ const watch = () => {
   console.log(`\n> ${chalk.magenta.bold("Watching assets")}\n`);
 
   basics();
-
-  if (buildConfig.ExtractCss) {
-    new MiniCssExtractPlugin({
-      filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
-      publicPath: buildConfig.publicPath,
-      chunkFilename: "[id].css"
-    }).apply(COMPILER);
-  }
 
   if (!process.env.WATCH) {
     console.error(

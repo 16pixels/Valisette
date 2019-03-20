@@ -1,21 +1,10 @@
 {
   "name": "Build assets manifest",
-  "/public/main.css": "css/main.css",
-  "/public/main.js": "javascript/main.js",
-  "/public/1.chunk.css": "1.chunk.css",
-  "/public/1.chunk.js": "1.chunk.js",
-  "/public/1.chunk.js.gz": "1.chunk.js.gz",
-  "/public/appcache/manifest.appcache": "appcache/manifest.appcache",
-  "/public/appcache/manifest.html": "appcache/manifest.html",
-  "/public/css/main.css.gz": "css/main.css.gz",
-  "/public/icon_1024x1024.png": "icon_1024x1024.png",
-  "/public/icon_128x128.png": "icon_128x128.png",
-  "/public/icon_192x192.png": "icon_192x192.png",
-  "/public/icon_256x256.png": "icon_256x256.png",
-  "/public/icon_384x384.png": "icon_384x384.png",
-  "/public/icon_512x512.png": "icon_512x512.png",
-  "/public/icon_96x96.png": "icon_96x96.png",
-  "/public/javascript/main.js.gz": "javascript/main.js.gz",
-  "/public/manifest-pwa.json": "manifest-pwa.json",
-  "/public/sw.js": "sw.js"
+  "/public/main.css": "css/main-a97f6326.css",
+  "/public/main.js": "javascript/main-3f2866a1.js",
+  "/public/css/1-c47e61bc.chunk.css": "css/1-c47e61bc.chunk.css",
+  "/public/javascript/1-260f9e59.chunk.js": "javascript/1-260f9e59.chunk.js",
+  "/public/css/main-a97f6326.css.gz": "css/main-a97f6326.css.gz",
+  "/public/javascript/1-260f9e59.chunk.js.gz": "javascript/1-260f9e59.chunk.js.gz",
+  "/public/javascript/main-3f2866a1.js.gz": "javascript/main-3f2866a1.js.gz"
 }

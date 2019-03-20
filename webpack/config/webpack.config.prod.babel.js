@@ -17,17 +17,6 @@ if (buildConfig.verbose) {
 }
 
 /**
- * Plugins declarations
- * @type {ExtractTextPlugin}
- */
-const extractSassProd = new MiniCssExtractPlugin({
-  filename: `${buildConfig.cssPath + buildConfig.cssMainOutput}`,
-  disable: process.env.NODE_ENV === "development",
-  publicPath: buildConfig.publicPath + buildConfig.cssPath,
-  chunkFilename: `[id].chunk.css`
-});
-
-/**
  * Constants declarations
  * @type {[type]}
  */
@@ -48,7 +37,7 @@ if (buildConfig.vueRuntime) {
  * Aliases declarations
  */
 const cssAssets = {};
-each(buildConfig.scssMain, fileName => {
+each(buildConfig.SCSS_ENTRIES, fileName => {
   const name = `${fileName.split(".")[0]}_css`;
   return Object.assign(cssAssets, {
     [name]: utils.assets(`${buildConfig.scssPath + fileName}`)
@@ -64,9 +53,9 @@ const vueloaderConfig = () => {
     return {
       loader: MiniCssExtractPlugin.loader,
       options: {
-        filename: "css/[name].css",
-        publicPath: `${utils.base(buildConfig.publicPath + buildConfig.cssPath)}`,
-        chunkFilename: `[id].chunk.css`
+        filename: buildConfig.cssPath + buildConfig.cssMainOutput,
+        publicPath: buildConfig.publicPath,
+        chunkFilename: buildConfig.cssPath + buildConfig.cssChunkOutput
       }
     };
   }
@@ -107,7 +96,7 @@ const mergeAliases = aliasArray => {
 const prodConfig = {
   mode: "production",
   entry: {
-    main: utils.assets(`${buildConfig.jsPath + buildConfig.jsMain}`)
+    main: utils.assets(`${buildConfig.jsPath + buildConfig.JS_ENTRIES}`)
   },
   node: {
     fs: 'empty'
@@ -136,9 +125,9 @@ const prodConfig = {
   devtool: buildConfig.devtool,
   target: "web",
   output: {
-    filename: `${buildConfig.jsPath + buildConfig.jsMainOutput}`,
+    filename: buildConfig.jsPath + buildConfig.jsMainOutput,
     path: utils.base(buildConfig.publicPath),
-    chunkFilename: `[name].chunk.js`,
+    chunkFilename: buildConfig.jsPath + buildConfig.jsChunkOutput,
     hashDigestLength: 8,
     pathinfo: true
   },
@@ -259,4 +248,4 @@ const prodConfig = {
   }
 };
 
-export { prodConfig, extractSassProd };
+export default prodConfig;
