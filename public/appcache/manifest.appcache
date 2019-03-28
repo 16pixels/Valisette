@@ -1,12 +1,16 @@
 CACHE MANIFEST
-#ver:3/20/2019, 3:50:27 PM
+#ver:3/28/2019, 6:59:25 PM
 #plugin:5.0.6
 
 CACHE:
-../public/images/thibaut.jpg
-../public/images/valisette-logo.png
-../public/images/w3c.svg
-../public/valisette-logo.png
+../javascript/0-b2384cad.chunk.js
+../css/main.css
+../javascript/main.js
+../valisette-logo.png
+../
 
 NETWORK:
 *
+
+FALLBACK:
+../ /index.html

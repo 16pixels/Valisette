@@ -26,10 +26,12 @@ const lazyLoader = () => {
 };
 const loadFonts = () => {
   utils.Debug("webfontLoader init");
-  webfontloader.load({
-    google: {
-      families: config.fontsFamilies
-    }
-  });
+  utils.DOMReady(() => {
+    webfontloader.load({
+      google: {
+        families: config.fontsFamilies
+      }
+    });
+  })
 };
 export { loadFonts, lazyLoader };

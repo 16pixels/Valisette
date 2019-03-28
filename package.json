@@ -1,12 +1,12 @@
 {
   "private": true,
   "scripts": {
-    "build-debugger": "cross-env NODE_ENV=dev babel-node ./webpack/bundler.js --trace-deprecation",
-    "build": "cross-env NODE_ENV=dev babel-node ./webpack/bundler.js",
-    "prod": "cross-env NODE_ENV=prod babel-node ./webpack/bundler.js",
+    "build-debugger": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js --trace-deprecation",
+    "build": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js",
+    "prod": "cross-env NODE_ENV=production babel-node ./webpack/bundler.js",
     "start": "npm prune && npm i",
-    "watch": "cross-env NODE_ENV=dev WATCH=true babel-node ./webpack/bundler.js",
-    "imgmin": "cross-env NODE_ENV=prod babel-node ./webpack/imgmin.js"
+    "watch": "npm run build && cross-env NODE_ENV=development WATCH=true babel-node ./webpack/bundler.js",
+    "imgmin": "cross-env NODE_ENV=production babel-node ./webpack/imgmin.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -55,9 +55,11 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-vue": "^5.2.2",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "fast-sass-loader": "^1.4.7",
     "file-loader": "^0.11.2",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^4.0.2",
+    "html-webpack-plugin": "^3.2.0",
     "image-webpack-loader": "^4.6.0",
     "imagemin": "^6.1.0",
     "imagemin-mozjpeg": "^8.0.0",

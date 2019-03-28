@@ -51,6 +51,7 @@ each(buildConfig.SCSS_ENTRIES, fileName => {
  * Make vue loader config
  */
 const vueloaderConfig = () => {
+  // if (buildConfig.ExtractCss) {
   if (buildConfig.ExtractCss) {
     // return extractSassProd.loader;
     return {
@@ -141,6 +142,7 @@ const config = {
     rules: [
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        exclude: EXCLUDES,
         use: [
           {
             loader: "file-loader",
@@ -153,12 +155,13 @@ const config = {
       },
       {
         test: /\.(sa|sc|c)ss$/,
+        exclude: EXCLUDES,
         use: [
           vueloaderConfig(),
           {
             loader: "css-loader",
             options: {
-              // sourceMap: false,
+              sourceMap: true,
               importLoaders: 2,
               modules: true,
               localIdentName: `[name]_[local]_[hash:base64:5]`
@@ -167,13 +170,13 @@ const config = {
           {
             loader: "postcss-loader",
             options: {
-              // sourceMap: false
+              sourceMap: true
             }
           },
           {
-            loader: "sass-loader",
+            loader: "fast-sass-loader",
             options: {
-              // sourceMap: false
+              sourceMap: true
             }
           }
         ]
@@ -205,6 +208,7 @@ const config = {
       },
       {
         test: /\.vue$/,
+        exclude: EXCLUDES,
         use: [
           { loader: "cache-loader" },
           {
@@ -219,30 +223,37 @@ const config = {
       },
       {
         test: /\.woff$/,
+        exclude: EXCLUDES,
         loader: "url-loader?mimetype=application/font-woff"
       },
       {
         test: /\.ttf$/,
+        exclude: EXCLUDES,
         loader: "url-loader?mimetype=application/font-ttf"
       },
       {
         test: /\.eot$/,
+        exclude: EXCLUDES,
         loader: "url-loader?mimetype=application/font-eot"
       },
       {
         test: /\.svg$/,
+        exclude: EXCLUDES,
         loader: "url-loader?mimetype=iamge/svg"
       },
       {
         test: /\.png$/,
+        exclude: EXCLUDES,
         loader: "url-loader?mimetype=image/png"
       },
       {
         test: /\.jpg$/,
+        exclude: EXCLUDES,
         loader: "url-loader?mimetype=image/jpg"
       },
       {
         test: /\.gif$/,
+        exclude: EXCLUDES,
         loader: "url-loader?mimetype=image/gif"
       }
     ]

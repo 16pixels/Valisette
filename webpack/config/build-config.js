@@ -26,6 +26,7 @@ const buildConfig = {
   tsPath: ValisetteConf.TS_PATH, // Typescript folder name
   cssPath: ValisetteConf.CSS_PATH, // Css folder name
   imagesPath: ValisetteConf.IMAGES_PATH,
+  notifications: ValisetteConf.DESKTOP_NOTIFICATIONS,
   fontsPath: ValisetteConf.FONTS_PATH,
   assetsPath: ValisetteConf.ASSETS_PATH, // source assets files location
   watch: env.WATCH ? env.WATCH : false, // grab watch mode from node (cli)
@@ -48,6 +49,8 @@ const buildConfig = {
   },
   performance: {
     compressionTreshold: ValisetteConf.COMPRESSION_THRESHOLD // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)
-  }
+  },
+  HTML_TEMPLATE: ValisetteConf.HTML_TEMPLATE,
+  HTML_OUTPUT_NAME: ValisetteConf.HTML_OUTPUT_NAME
 };
 export default buildConfig;

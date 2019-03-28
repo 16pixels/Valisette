@@ -33,11 +33,11 @@
   <!-- Meta Tags Generated via http://heymeta.com -->
 
   <!-- HTTP2 assets preloading -->
-  <link rel="preload" href="/public/css/main.css" as="style">
-  <link rel="preload" href="/public/javascript/main.js" as="script">
+  <link rel="preload" href="/css/main.css" as="style">
+  <link rel="preload" href="/javascript/main.js" as="script">
 
   <!-- Assets declaration -->
-  <link rel="stylesheet" href="/public/css/main.css" preload>
+  <link rel="stylesheet" href="/css/main.css" preload>
 
   <!-- Inlined critical css -->
   <style>
@@ -47,59 +47,62 @@
 </head>
 
 <body>
-  <div class="logo"></div>
-  <section class="section">
-    <div class="container">
-      <h1 class="title is-1 is-spaced">
-        Valisette
-      </h1>
-      <p class="subtitle">
-        A webpack 4 boilerplate to simplify the use of various
-        <strong>javascript</strong> technologies !
-      </p>
-      <div class="columns">
-        <div class="column is-12 card">
-          <p>
-            So why woud you use it ?
-          </p>
+  <div id="#app">
+    <div class="logo"></div>
+    <section class="section">
+      <div class="container">
+        <h1 class="title is-1 is-spaced">
+          Valisette
+        </h1>
+        <p class="subtitle">
+          A webpack 4 boilerplate to simplify the use of various
+          <strong>javascript</strong> technologies !
+        </p>
+        <div class="columns">
+          <div class="column is-12 card">
+            <p>
+              So why woud you use it ?
+            </p>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-12 card">
+
+              <b>Do you need :</b>
+              <ul>
+                <li>Long term boilerplate stability ?</li>
+                <li>Convention over configuration ?</li>
+                <li>Automated robust performance levels ?</li>
+                <li>To stop depending on frameworks build suites for your build tools ?</li>
+                <li>Easy editor configuration for your teams ?</li>
+                <li>Fast learning curves for juniors ?</li>
+              </ul>
+
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-12 card">
+            <p>
+              If that's the case for any of it, <strong>Welcome !</strong>
+            </p>
+            <a href="https://github.com/Thibzzz/Valisette"  class="button is-info">Github</a>
+            <a href="#docs" class="button is-success">Documentation</a>
+            <a href="/test.html" class="button is-success">Test service worker</a>
+          </div>
         </div>
       </div>
-      <div class="columns">
-        <div class="column is-12 card">
-          <p>
-            <b>Do you need :</b>
-            <ul>
-              <li>Long term boilerplate stability ?</li>
-              <li>Convention over configuration ?</li>
-              <li>Automated robust performance levels ?</li>
-              <li>To stop depending on frameworks build suites for your build tools ?</li>
-              <li>Easy editor configuration for your teams ?</li>
-              <li>Fast learning curves for juniors ?</li>
-            </ul>
-          </p>
+    </section>
+    <section id="doc">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-12">
+            <h2 class="title is-2">Let's get started</h2>
+          </div>
         </div>
       </div>
-      <div class="columns">
-        <div class="column is-12 card">
-          <p>
-            If that's the case for any of it, <strong>Welcome !</strong>
-          </p>
-          <a href="https://github.com/Thibzzz/Valisette"  class="button is-info">Github</a>
-          <a href="#docs" class="button is-success">Documentation</a>
-          <a href="/test.html" class="button is-success">Test service worker</a>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="doc">
-    <div class="container">
-      <div class="columns">
-        <div class="column is-12">
-          <h2 class="title is-2">Let's get started</h2>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>    
+  </div>
+  <div id="app"></div>
   <script src="public/javascript/main.js" async ></script>
   <script>
     /**

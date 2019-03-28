@@ -8,7 +8,6 @@ import utils from "./../modules/utils";
 // Please read & follow Vue.js's convention before coding : https://vuejs.org/v2/style-guide/index.html
 
 const moduleName = "Vue-app";
-window.Vue = require("vue");
 
 const buildApp = selector => {
   utils.Debug(`${moduleName} init with : ${selector}`);

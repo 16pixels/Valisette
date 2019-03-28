@@ -101,6 +101,7 @@ const prodConfig = {
   node: {
     fs: 'empty'
   },
+  externals: utils.loadImagesFolder(),
   optimization: {
     namedModules: true, // NamedModulesPlugin()
     minimizer: [
@@ -111,7 +112,6 @@ const prodConfig = {
       }),
     ],
     splitChunks: {
-      // CommonsChunkPlugin()
       name: "vendor",
       minChunks: 2,
       chunks: "all"
@@ -140,6 +140,7 @@ const prodConfig = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
+          "style-loader",
           vueloaderConfig(),
           {
             loader: "css-loader",
@@ -157,7 +158,7 @@ const prodConfig = {
             }
           },
           {
-            loader: "sass-loader",
+            loader: "fast-sass-loader",
             options: {
               sourceMap: false
             }

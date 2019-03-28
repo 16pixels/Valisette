@@ -1,10 +1,11 @@
 {
   "name": "Build assets manifest",
-  "/public/main.css": "css/main-a97f6326.css",
-  "/public/main.js": "javascript/main-3f2866a1.js",
-  "/public/css/1-c47e61bc.chunk.css": "css/1-c47e61bc.chunk.css",
-  "/public/javascript/1-260f9e59.chunk.js": "javascript/1-260f9e59.chunk.js",
-  "/public/css/main-a97f6326.css.gz": "css/main-a97f6326.css.gz",
-  "/public/javascript/1-260f9e59.chunk.js.gz": "javascript/1-260f9e59.chunk.js.gz",
-  "/public/javascript/main-3f2866a1.js.gz": "javascript/main-3f2866a1.js.gz"
+  "/public/javascript/0-b2384cad.chunk.js": "javascript/0-b2384cad.chunk.js",
+  "/public/main.css": "css/main.css",
+  "/public/main.js": "javascript/main.js",
+  "/public/appcache/manifest.appcache": "appcache/manifest.appcache",
+  "/public/appcache/manifest.html": "appcache/manifest.html",
+  "/public/index.html": "index.html",
+  "/public/sw.js": "sw.js",
+  "/public/valisette-logo.png": "valisette-logo.png"
 }
