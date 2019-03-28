@@ -12,7 +12,8 @@ const buildConfig = {
   SCSS_ENTRIES: ValisetteConf.SCSS_ENTRIES, // Main scss file
   productionMode,
   pwaMode: ValisetteConf.PWA_MODE, // Turn your app into a Progressive Web App
-  ExtractCss: ValisetteConf.EXTRACT_CSS, // Extract css/scss from vuejs components
+  EXTRACT_CSS: ValisetteConf.EXTRACT_CSS, // Extract css/scss from vuejs components
+  GENERATE_HTML: ValisetteConf.GENERATE_HTML,
   vueRuntime: ValisetteConf.VUE_RUNTIME, // Use vue template inside html files (true) or render app on a mount point (false)
   appShellMode: ValisetteConf.APP_SHELL_MODE, // Add an html file to follow app shell pattern
   verbose : ValisetteConf.VERBOSE, // log extra info during build

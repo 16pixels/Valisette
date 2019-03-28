@@ -22,6 +22,7 @@ export default {
    * BUILD FEATURES
    * */
   APP_SHELL_MODE: true, // Loads your assets in a service worker to enable app shell patterns
+  GENERATE_HTML: true,
   PWA_MODE: false, // Turn your app into a Progressive Web App
   EXTRACT_CSS: true, // Extract css/scss from vuejs components
   COMPRESSION_TRESHOLD: 10240,

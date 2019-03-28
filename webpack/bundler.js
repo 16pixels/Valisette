@@ -106,7 +106,7 @@ const basics = () => {
     publicPath: buildConfig.publicPath,
     chunkFilename: buildConfig.cssPath + buildConfig.cssChunkOutput
   }).apply(COMPILER);
-  if (buildConfig.ExtractCss) {
+  if (buildConfig.GENERATE_HTML) {
     if (!process.env.WATCH) {
       new HtmlWebpackPlugin({
         title: buildConfig.pwa.appName,

@@ -48,7 +48,7 @@ each(buildConfig.SCSS_ENTRIES, fileName => {
  * Make vue loader config
  */
 const vueloaderConfig = () => {
-  if (buildConfig.ExtractCss) {
+  if (buildConfig.EXTRACT_CSS) {
     // return extractSassProd.loader;
     return {
       loader: MiniCssExtractPlugin.loader,

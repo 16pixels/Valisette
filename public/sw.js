@@ -14,13 +14,13 @@ var __wpo = {
   "hashesMap": {
     "e3f9b6890840b6760673c274fb3acdac8e6ee8bb": "./javascript/0-b2384cad.chunk.js",
     "cf2b0546bb42498e6de99bcfe3c4a1bb03745b0f": "./css/main.css",
-    "f9225c028cfe65f3123e767fb67f563fc1eb3ec2": "./javascript/main.js",
+    "8f61d8f055506da8d3e46aa7617f3148e7eacbd0": "./javascript/main.js",
     "30747e7601571f8e893c55cd7ac6c166869ae921": "./valisette-logo.png",
-    "1a90622f3253587912c5d878538e8886d90e688c": "./"
+    "a59c9f03718ea9dd5887e8809fe27f2c165021e3": "./"
   },
   "strategy": "changed",
   "responseStrategy": "cache-first",
-  "version": "3/28/2019, 6:59:25 PM",
+  "version": "3/28/2019, 7:02:09 PM",
   "name": "webpack-offline",
   "pluginVersion": "5.0.6",
   "relativePaths": true
