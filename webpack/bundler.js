@@ -44,17 +44,6 @@ if (buildConfig.productionMode) {
     utils.print(`> ${chalk.magenta.bold("Injecting watch flag\n")}`);
     config.watch = true;
   }
-  if (process.env.DEV_SERVER) {
-    utils.print(`> ${chalk.magenta.bold("Injecting dev-server flag\n")}`);
-    config.watch = true;
-    config.devServer = {
-      clientLogLevel: 'info',
-      historyApiFallback: true,
-      contentBase: utils.base('public'),
-      compress: true,
-      port: 9000
-    };
-  }
   COMPILER = webpack(config);
 }
 if (buildConfig.productionMode) {
