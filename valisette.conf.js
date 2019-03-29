@@ -13,8 +13,8 @@ export default {
   /**
    * DEVTOOLS
    * */
-  VERBOSE: true, // log extra info during build
-  DESKTOP_NOTIFICATIONS: false,
+  VERBOSE: false, // log extra info during build
+  DESKTOP_NOTIFICATIONS: true,
   IGNORE_WARNINGS: false, // ignore performance recommandations & warnings
   PERFORMANCE_LOG_LEVEL: "warning", // set performance hints log level
 
@@ -23,7 +23,7 @@ export default {
    * */
   APP_SHELL_MODE: true, // Loads your assets in a service worker to enable app shell patterns
   GENERATE_HTML: true,
-  PWA_MODE: false, // Turn your app into a Progressive Web App
+  PWA_MODE: true, // Turn your app into a Progressive Web App
   EXTRACT_CSS: true, // Extract css/scss from vuejs components
   COMPRESSION_TRESHOLD: 10240,
 

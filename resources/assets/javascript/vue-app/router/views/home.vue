@@ -1,6 +1,6 @@
 <template>
   <div class="home" id="test">
-    <h1>Home.vue</h1>
+    <h1>{{ welcome }}</h1>
     <img v-bind:src=logoUrl alt="">
   </div>
 </template>
@@ -10,6 +10,9 @@ export default {
   computed:{
     logoUrl() {
       return "/images/w3c.svg"
+    },
+    welcome() {
+      return this.$t('message.hello');
     }
   },
   data() {

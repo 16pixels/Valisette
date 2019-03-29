@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import global from "./modules/global"
+import language from "./modules/language"
 
 /**
  * Activate vue state store management (Vuex)
@@ -19,6 +20,7 @@ export default new Vuex.Store({
   actions: {},
   getters: {},
   modules: {
-    global
+    global,
+    language
   },
 });
