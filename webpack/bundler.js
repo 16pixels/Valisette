@@ -15,8 +15,6 @@ import ManifestPlugin from "webpack-manifest-plugin";
 import UglifyJSPlugin from "uglifyjs-webpack-plugin";
 import webpack from "webpack";
 import chalk from "chalk";
-import fs from "fs";
-import path from "path";
 import each from "lodash/each";
 import buildConfig from "./config/build-config";
 import utils from "./config/build-utils";
@@ -34,12 +32,16 @@ utils.print(
   )}\n`
 );
 if (buildConfig.productionMode) {
-  utils.print(`> ${chalk.magenta.bold('Assembling compiler with prod config\n')}`);
+  utils.print(
+    `> ${chalk.magenta.bold("Assembling compiler with prod config\n")}`
+  );
   COMPILER = webpack(prodConfig);
 } else {
-  utils.print(`> ${chalk.magenta.bold('Assembling compiler with dev config\n')}`);
+  utils.print(
+    `> ${chalk.magenta.bold("Assembling compiler with dev config\n")}`
+  );
   if (process.env.WATCH) {
-    utils.print(`> ${chalk.magenta.bold('Injecting watch flag\n')}`);
+    utils.print(`> ${chalk.magenta.bold("Injecting watch flag\n")}`);
     config.watch = true;
   }
   COMPILER = webpack(config);
@@ -116,7 +118,14 @@ const basics = () => {
         inject: "body",
         favicon: `${buildConfig.pwa.appLogo}`,
         meta: {},
-        minify: buildConfig.productionMode,
+        minify: {
+          collapseWhitespace: buildConfig.productionMode,
+          removeComments: buildConfig.productionMode,
+          removeRedundantAttributes: buildConfig.productionMode,
+          removeScriptTypeAttributes: buildConfig.productionMode,
+          removeStyleLinkTypeAttributes: buildConfig.productionMode,
+          useShortDoctype: buildConfig.productionMode
+        },
         hash: true,
         cache: true
       }).apply(COMPILER);
@@ -125,48 +134,8 @@ const basics = () => {
 };
 
 /**
- * end of file functions
+ * Plugins that needs to load in last order are set here
  */
-const makeCachedAssetsManifest = async () => {
-  const filesList = [];
-  // load js
-  const jsFolderUrl = `.${path.resolve(
-    `${buildConfig.publicPath + buildConfig.jsPath}`
-  )}`;
-  fs.readdirSync(jsFolderUrl).forEach(file => {
-    utils.print(file);
-    filesList.push(`/${buildConfig.jsPath + file}`);
-  });
-  // load css
-  const cssFolderUrl = `.${path.resolve(
-    `${buildConfig.publicPath + buildConfig.cssPath}`
-  )}`;
-  await fs.readdirSync(cssFolderUrl).forEach(file => {
-    utils.print(file);
-    filesList.push(`/${buildConfig.cssPath + file}`);
-  });
-  if (buildConfig.verbose) {
-    utils.print(`\n\n> ${chalk.magenta.bold("Main cached assets : ")}`);
-    utils.printTable(filesList);
-  }
-  //   return filesList;
-  // };
-  // const makeImagesCache = () => {
-  //   const filesList = [];
-  // load images
-  const imageFolderUrl = `.${path.resolve(
-    `${buildConfig.publicPath + buildConfig.imagesPath}`
-  )}`;
-  await fs.readdirSync(imageFolderUrl).forEach(file => {
-    filesList.push(`${buildConfig.imagesPath + file}`);
-  });
-  if (buildConfig.verbose) {
-    utils.print(`> ${chalk.magenta.bold("Cached Images : ")}`);
-    utils.printTable(filesList);
-  }
-  filesList.push(":externals:");
-  return filesList;
-};
 const endFilePlugins = () => {
   // Build an assets manifest so it can be used by back-end
   new ManifestPlugin({
@@ -176,6 +145,7 @@ const endFilePlugins = () => {
       name: "Build assets manifest"
     }
   }).apply(COMPILER);
+  new OptimizeCssAssetsPlugin().apply(COMPILER);
   // add offline mode
   if (buildConfig.appShellMode) {
     new OfflinePlugin({
@@ -183,14 +153,8 @@ const endFilePlugins = () => {
       responseStrategy: "cache-first",
       safeToUseOptionalCaches: true,
       caches: {
-        // main: makeMainCachedAssetsManifest(),
-        // main: ["public/css/main.css", "public/javascript/main.js", ":rest:"],
         main: [":rest:"],
-        // additional: [""],
-        // externals: makeCachedAssetsManifest(),
-        externals: [":externals:"],
-        // additional: ,
-        // optional: ["css/*.chunk.css", "javascript/*.chunk.js"]
+        externals: [":externals:"]
       },
       ServiceWorker: {
         events: true
@@ -225,7 +189,6 @@ const run = compilerObject => {
   }
   return compilerObject.run((err, stats) => {
     utils.prettyPrintErrors(err, stats);
-    // return process.exit();
   });
 };
 
@@ -244,11 +207,11 @@ const build = () => {
   // Run shared basic tasks
   basics();
   // warn about performance logs
-  // utils.print(
-  //   `\n> ${chalk.magenta.bold(
-  //     "Reminder :"
-  //   )} some errors & warnings are inherent to devtools like sourcemaps.\n\n`
-  // );
+  utils.print(
+    `\n> ${chalk.magenta.bold(
+      "Reminder :"
+    )} some errors & warnings are inherent to devtools like sourcemaps.\n\n`
+  );
   // add end of file plugins
   endFilePlugins();
   // Run the assembled compiler
@@ -315,7 +278,9 @@ const productionBuild = () => {
     test: /\.js$|\.css$|\.html$|\.eot?.+$|\.ttf?.+$|\.woff?.+$|\.svg?.+$/,
     threshold: buildConfig.performance.compressionTreshold // Only assets bigger than this size are processed
   }).apply(COMPILER);
+
   endFilePlugins();
+
   return run(COMPILER);
 };
 
@@ -324,51 +289,31 @@ const watch = () => {
   basics();
 
   // build a proxy for your code with hot reload
-  // new BrowserSyncPlugin({
-  //   browser: "google chrome",
-  //   logLevel: "info",
-  //   logConnections: true,
-  //   logFileChanges: true,
-  //   logPrefix: "Valisette",
-  //   proxy: {
-  //     target: buildConfig.browserSync.target,
-  //   },
-  //   watchOptions: {
-  //     awaitWriteFinish: true,
-  //     ignoreInitial: true,
-  //     ignored: [
-  //       `./node_modules`,
-  //       `./public`,
-  //       `${buildConfig.publicPath}${buildConfig.cssPath}*.css`,
-  //       `${buildConfig.publicPath}${buildConfig.jsPath}*.js`,
-  //       `${buildConfig.publicPath}*.hmtl`,
-  //     ],
-  //     files: ['./resources']
-  //   },
-  //   open: false,
-  //   reloadThrottle: 1000,
-  //   reloadDebounce: 3000,
-  //   cors: false,
-  //   notify: false
-  // }).apply(COMPILER);
-
-  // new webpack.WatchIgnorePlugin([
-  //   "./public",
-  //   "public/",
-  //   "css/",
-  //   "javascript/",
-  //   /.html/,
-  //   /public/,
-  //   /css/,
-  //   /javascript/,
-  // ]).apply(COMPILER);
+  new BrowserSyncPlugin({
+    browser: "google chrome",
+    logLevel: "info",
+    logConnections: true,
+    logFileChanges: true,
+    logPrefix: "Valisette",
+    proxy: {
+      target: buildConfig.browserSync.target
+    },
+    watchOptions: {
+      awaitWriteFinish: true,
+      files: ["./resources"]
+    },
+    open: false,
+    cors: false,
+    notify: false
+  }).apply(COMPILER);
 
   endFilePlugins();
+
   // Watch daemon
   const watching = COMPILER.watch(
     {
-      aggregateTimeout: 3000,
-      poll: 500,
+      aggregateTimeout: 300,
+      poll: 400
     },
     (err, stats) => {
       // Pass any errors and stats to console

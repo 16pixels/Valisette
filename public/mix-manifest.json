@@ -1,6 +1,7 @@
 {
   "name": "Build assets manifest",
-  "/public/javascript/0-b2384cad.chunk.js": "javascript/0-b2384cad.chunk.js",
+  "/public/css/0-d82a4a3d.chunk.css": "css/0-d82a4a3d.chunk.css",
+  "/public/javascript/0-0d685d9c.chunk.js": "javascript/0-0d685d9c.chunk.js",
   "/public/main.css": "css/main.css",
   "/public/main.js": "javascript/main.js",
   "/public/appcache/manifest.appcache": "appcache/manifest.appcache",

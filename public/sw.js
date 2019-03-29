@@ -1,7 +1,8 @@
 var __wpo = {
   "assets": {
     "main": [
-      "./javascript/0-b2384cad.chunk.js",
+      "./css/0-d82a4a3d.chunk.css",
+      "./javascript/0-0d685d9c.chunk.js",
       "./css/main.css",
       "./javascript/main.js",
       "./valisette-logo.png",
@@ -12,15 +13,16 @@ var __wpo = {
   },
   "externals": [],
   "hashesMap": {
-    "e3f9b6890840b6760673c274fb3acdac8e6ee8bb": "./javascript/0-b2384cad.chunk.js",
-    "cf2b0546bb42498e6de99bcfe3c4a1bb03745b0f": "./css/main.css",
-    "8f61d8f055506da8d3e46aa7617f3148e7eacbd0": "./javascript/main.js",
+    "db0b907d816396c973b5adea1684aa76cef4fe2a": "./css/0-d82a4a3d.chunk.css",
+    "5eccb16b352779159d992571c7c89539070b1995": "./javascript/0-0d685d9c.chunk.js",
+    "ef36a8ab60913037ed462d21d740fe3ce5fbd8fb": "./css/main.css",
+    "2e457d9f49a3ac0aaafa521c753c074d9e7f5762": "./javascript/main.js",
     "30747e7601571f8e893c55cd7ac6c166869ae921": "./valisette-logo.png",
-    "a59c9f03718ea9dd5887e8809fe27f2c165021e3": "./"
+    "2b83b0d0ef7e1617b5f785f4e94b71af50245e6b": "./"
   },
   "strategy": "changed",
   "responseStrategy": "cache-first",
-  "version": "3/28/2019, 7:02:09 PM",
+  "version": "3/29/2019, 11:11:20 AM",
   "name": "webpack-offline",
   "pluginVersion": "5.0.6",
   "relativePaths": true

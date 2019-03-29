@@ -1,9 +1,10 @@
 CACHE MANIFEST
-#ver:3/28/2019, 7:02:10 PM
+#ver:3/29/2019, 11:11:20 AM
 #plugin:5.0.6
 
 CACHE:
-../javascript/0-b2384cad.chunk.js
+../css/0-d82a4a3d.chunk.css
+../javascript/0-0d685d9c.chunk.js
 ../css/main.css
 ../javascript/main.js
 ../valisette-logo.png

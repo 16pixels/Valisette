@@ -39,14 +39,14 @@
   <!-- <link rel="preload" href="/css/main.css" as="style"> -->
   <!-- <link rel="preload" href="/javascript/main.js" as="script"> -->
 
-  <!-- Assets declaration -->
-  <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>" preload>
+  <!-- Load css assets without injection from webpack html plugin -->
+  <!-- <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>" preload> -->
 
   <!-- Inlined critical css -->
 </head>
 
 <body>
-  <div id="#app">
+  <div>
     <div class="logo"></div>
     <section class="section">
       <div class="container">
@@ -102,7 +102,8 @@
     </section>    
   </div>
   <div id="app"></div>
-  <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>" async ></script>
+  <!-- Load js assets without injection from webpack html plugin -->
+  <!-- <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>" ></script> -->
   <!-- <script>
     /**
      * You can call your private methods declared in main.js from the front-end too with the app's launcher just like below.
