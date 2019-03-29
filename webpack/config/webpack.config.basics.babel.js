@@ -162,8 +162,6 @@ const config = {
             options: {
               sourceMap: true,
               importLoaders: 2,
-              modules: true,
-              localIdentName: `[name]_[local]_[hash:base64:5]`
             }
           },
           {

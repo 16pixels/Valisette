@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" id="test">
     <h1>Home.vue</h1>
     <img v-bind:src=logoUrl alt="">
   </div>
@@ -22,8 +22,9 @@ export default {
 <style lang="scss" scoped>
 .home {
   position: relative;
-  max-width: 400px;
-  width: 400px;
+  img {
+    max-width: 200px;
+  }
 }
 </style>
 

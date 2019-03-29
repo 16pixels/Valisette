@@ -1,12 +1,18 @@
 {
   "name": "Build assets manifest",
-  "/public/css/0-d82a4a3d.chunk.css": "css/0-d82a4a3d.chunk.css",
-  "/public/javascript/0-0d685d9c.chunk.js": "javascript/0-0d685d9c.chunk.js",
+  "/public/css/0-a51821a0.chunk.css": "css/0-a51821a0.chunk.css",
+  "/public/javascript/0-591dd84b.chunk.js": "javascript/0-591dd84b.chunk.js",
   "/public/main.css": "css/main.css",
   "/public/main.js": "javascript/main.js",
   "/public/appcache/manifest.appcache": "appcache/manifest.appcache",
   "/public/appcache/manifest.html": "appcache/manifest.html",
   "/public/index.html": "index.html",
   "/public/sw.js": "sw.js",
-  "/public/valisette-logo.png": "valisette-logo.png"
+  "/public/css/0-c038504d.chunk.css": "css/0-c038504d.chunk.css",
+  "/public/javascript/0-eb888474.chunk.js": "javascript/0-eb888474.chunk.js",
+  "/public/css/0-29079d80.chunk.css": "css/0-29079d80.chunk.css",
+  "/public/css/0-b5ae8c70.chunk.css": "css/0-b5ae8c70.chunk.css",
+  "/public/javascript/0-3ba66f42.chunk.js": "javascript/0-3ba66f42.chunk.js",
+  "/public/css/0-38db2d24.chunk.css": "css/0-38db2d24.chunk.css",
+  "/public/javascript/0-7138befa.chunk.js": "javascript/0-7138befa.chunk.js"
 }

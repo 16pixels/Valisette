@@ -44,6 +44,17 @@ if (buildConfig.productionMode) {
     utils.print(`> ${chalk.magenta.bold("Injecting watch flag\n")}`);
     config.watch = true;
   }
+  if (process.env.DEV_SERVER) {
+    utils.print(`> ${chalk.magenta.bold("Injecting dev-server flag\n")}`);
+    config.watch = true;
+    config.devServer = {
+      clientLogLevel: 'info',
+      historyApiFallback: true,
+      contentBase: utils.base('public'),
+      compress: true,
+      port: 9000
+    };
+  }
   COMPILER = webpack(config);
 }
 if (buildConfig.productionMode) {
@@ -101,7 +112,7 @@ const basics = () => {
       return true;
     }
   }).apply(COMPILER);
-  // new OptimizeCssAssetsPlugin().apply(COMPILER);
+  new OptimizeCssAssetsPlugin().apply(COMPILER);
   // Retrieve css chunks and loads them into a single file with ExtractTextPlugin
   new MiniCssExtractPlugin({
     filename: buildConfig.cssPath + buildConfig.cssMainOutput,
@@ -109,27 +120,24 @@ const basics = () => {
     chunkFilename: buildConfig.cssPath + buildConfig.cssChunkOutput
   }).apply(COMPILER);
   if (buildConfig.GENERATE_HTML) {
-    if (!process.env.WATCH) {
-      new HtmlWebpackPlugin({
-        title: buildConfig.pwa.appName,
-        themeColor: `${buildConfig.pwa.themeColor}`,
-        fileName: `${buildConfig.publicPath}${buildConfig.HTML_OUTPUT_NAME}`,
-        template: `${buildConfig.assetsPath}${buildConfig.HTML_TEMPLATE}`,
-        inject: "body",
-        favicon: `${buildConfig.pwa.appLogo}`,
-        meta: {},
-        minify: {
-          collapseWhitespace: buildConfig.productionMode,
-          removeComments: buildConfig.productionMode,
-          removeRedundantAttributes: buildConfig.productionMode,
-          removeScriptTypeAttributes: buildConfig.productionMode,
-          removeStyleLinkTypeAttributes: buildConfig.productionMode,
-          useShortDoctype: buildConfig.productionMode
-        },
-        hash: true,
-        cache: true
-      }).apply(COMPILER);
-    }
+    new HtmlWebpackPlugin({
+      title: buildConfig.pwa.appName,
+      themeColor: `${buildConfig.pwa.themeColor}`,
+      fileName: `${buildConfig.publicPath}${buildConfig.HTML_OUTPUT_NAME}`,
+      template: `${buildConfig.assetsPath}${buildConfig.HTML_TEMPLATE}`,
+      inject: "body",
+      meta: {},
+      minify: {
+        collapseWhitespace: buildConfig.productionMode,
+        removeComments: buildConfig.productionMode,
+        removeRedundantAttributes: buildConfig.productionMode,
+        removeScriptTypeAttributes: buildConfig.productionMode,
+        removeStyleLinkTypeAttributes: buildConfig.productionMode,
+        useShortDoctype: buildConfig.productionMode
+      },
+      hash: true,
+      cache: false
+    }).apply(COMPILER);
   }
 };
 
@@ -145,7 +153,6 @@ const endFilePlugins = () => {
       name: "Build assets manifest"
     }
   }).apply(COMPILER);
-  new OptimizeCssAssetsPlugin().apply(COMPILER);
   // add offline mode
   if (buildConfig.appShellMode) {
     new OfflinePlugin({

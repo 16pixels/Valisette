@@ -13,7 +13,7 @@ export default {
   /**
    * DEVTOOLS
    * */
-  VERBOSE: false, // log extra info during build
+  VERBOSE: true, // log extra info during build
   DESKTOP_NOTIFICATIONS: false,
   IGNORE_WARNINGS: false, // ignore performance recommandations & warnings
   PERFORMANCE_LOG_LEVEL: "warning", // set performance hints log level
