@@ -11,7 +11,13 @@ module.exports = {
     pixels: 1
   },
   rules: {
-    "no-param-reassign": ["error", { "props": false }],
+    "prefer-destructuring": [
+      "error",
+      {
+        array: false
+      }
+    ],
+    "no-param-reassign": ["error", { props: false }],
     "no-console": 0,
     "import/no-extraneous-dependencies": [
       "error",

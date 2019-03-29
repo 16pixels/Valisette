@@ -83,6 +83,12 @@ const utils = {
     }
     return true;
   },
+  Verbose: (msg, payload = "") => {
+    if (config.debug && config.verbose) {
+      return console.log("Debug => ", msg, payload); // eslint-disable-line no-console
+    }
+    return true;
+  },
   ThrowError: (msg, payload = "") => {
     if (config.debug) {
       return console.error("Error => ", msg, payload); // eslint-disable-line no-console

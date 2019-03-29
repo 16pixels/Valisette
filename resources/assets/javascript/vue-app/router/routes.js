@@ -1,4 +1,3 @@
-// import home from "./views/home.vue";
 export default {
   routes: [
     {

@@ -23,9 +23,10 @@ const buildApp = selector => {
     mounted() {
       utils.Debug(`${moduleName} mounted`, [this.$store, this.$router]);
       // vuei18n test new langugage method
-      // setTimeout(() => {
-      //   this.$store.dispatch("language/setActiveLanguage", "fr");
-      // }, 3000);
+      setTimeout(() => {
+        // this.$store.dispatch("language/setActiveLanguage", "fr");
+        this.$store.dispatch("language/setActiveLanguage", "en");
+      }, 1000);
     },
     render: h => h(App)
   }).$mount(String(selector));

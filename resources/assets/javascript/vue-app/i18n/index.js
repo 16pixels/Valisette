@@ -1,20 +1,18 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import axios from 'axios'
-import enTranslations from "./languages/lang-en";
 
 Vue.use(VueI18n)
 
 // Create VueI18n instance with options
 export const i18n = new VueI18n({
-  locale: 'en', // set locale
-  fallbackLocale: 'en',
+  locale: '', // set locale
+  fallbackLocale: '',
   messages : {
-    en: enTranslations
   } // set locale messages
 });
 
-const loadedLanguages = ['en'] // our default language that is preloaded 
+const loadedLanguages = [''] // our default language that is preloaded 
 
 const setI18nLanguage = (lang) => {
   i18n.locale = lang
