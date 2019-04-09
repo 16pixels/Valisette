@@ -8,6 +8,7 @@ const productionMode = env.NODE_ENV === 'production'; // grab production mode fr
 // console.table(env);
 
 const buildConfig = {
+  HARD_CLEANUP: ValisetteConf.HARD_CLEANUP, // USE WITH CAUTION : Purges public folder when generating boilerplate 
   JS_ENTRIES: ValisetteConf.JS_ENTRIES, // Main JS file to import / require from
   SCSS_ENTRIES: ValisetteConf.SCSS_ENTRIES, // Main scss file
   productionMode,

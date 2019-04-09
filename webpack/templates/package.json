@@ -6,10 +6,11 @@
     "prod": "cross-env NODE_ENV=production babel-node ./webpack/bundler.js",
     "watch": "cross-env NODE_ENV=development WATCH=true babel-node ./webpack/bundler.js",
     "imgmin": "cross-env NODE_ENV=production babel-node ./webpack/imgmin.js",
-    "start": "babel-node ./webpack/make-boilerplate.js",
-    "conf": "babel-node ./webpack/generate-conf.js",
-    "reset": "npm run conf && babel-node ./webpack/reset-conf.js && npm run start",
-    "clean-node": "rm -rf node_modules && npm prune && npm i"
+    "start-static": "npm run make-file-oriented-boilerplate",
+    "start-dynamic": "npm run make-webpack-oriented-boilerplate",
+    "clean-node": "rm -fr node_modules && npm prune && npm i",
+    "make-file-oriented-boilerplate": "babel-node ./make-static-boilerplate.js && npm i && npm run build",
+    "make-webpack-oriented-boilerplate": "babel-node ./make-static-boilerplate.js && npm i && npm run build"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -80,7 +81,6 @@
     "resolve-url-loader": "^3.0.1",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.1.0",
-    "shelljs": "^0.8.3",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.3.7",
     "typescript": "^2.5.2",
