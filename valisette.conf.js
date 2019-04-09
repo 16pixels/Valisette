@@ -49,7 +49,7 @@ export default {
   FONTS_PATH: "fonts/",
   ASSETS_PATH: "resources/assets/", // source assets files location
   SCSS_PATH: "scss/", // scss source folder
-  HARD_CLEANUP: true,
+  HARD_CLEANUP: false,
 
   /**
    * NAMING BUILD OUTPUTS

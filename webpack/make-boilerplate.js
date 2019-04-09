@@ -89,6 +89,20 @@ const fileSystem = () => {
   copyAsset("images", buildConfig.imagesPath);
 };
 
+const generateFolders = () => {
+  const publicFolder = buildConfig.publicPath;
+  console.log(
+    chalk.magenta.bold(
+      `> Generating public folders inside : ${chalk.yellow.bold(
+        `.${publicFolder}`
+      )}`
+    )
+  );
+  shx.mkdir(`.${publicFolder}${buildConfig.jsPath}`);
+  shx.mkdir(`.${publicFolder}${buildConfig.cssPath}`);
+  shx.mkdir(`.${publicFolder}${buildConfig.imagesPath}`);
+}
+
 const staticBoilerplate = () => {
   const assetsFolder = buildConfig.publicPath;
   console.log(
@@ -121,6 +135,7 @@ const webpackBoilerplate = () => {
 const main = () => {
   if (buildConfig.HARD_CLEANUP) {
     cleanFS();
+    generateFolders();
   }
   basics();
   fileSystem();
