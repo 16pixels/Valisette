@@ -9,7 +9,9 @@
     "conf": "babel-node ./webpack/generate-conf.js",
     "start": "babel-node ./webpack/make-boilerplate.js",
     "reset": "npm run conf && npm run start && npm run imgmin",
-    "clean-node": "rm -rf node_modules && npm prune && npm i"
+    "clean-node": "rm -rf node_modules && npm prune && npm i",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -88,6 +90,7 @@
     "vue-loader": "^15.7.0",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.6.9",
+    "vuepress": "^0.14.10",
     "webpack": "^4.29.6",
     "webpack-bundle-analyzer": "^3.1.0",
     "webpack-clean-obsolete-chunks": "^0.4.0",
