@@ -11,7 +11,8 @@
     "reset": "npm run conf && npm run start && npm run imgmin",
     "clean-node": "rm -rf node_modules && npm prune && npm i",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "docs:publish": "./deploy.sh"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

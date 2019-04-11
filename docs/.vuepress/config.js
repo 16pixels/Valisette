@@ -1,6 +1,6 @@
 module.exports = {
   title: 'Valisette',
-  base: 'Valisette',
+  base: '/Valisette-documentation/',
   description: "A progressive boilerplate to code performant apps.",
   themeConfig: {
     logo: './valisette-logo.png',
