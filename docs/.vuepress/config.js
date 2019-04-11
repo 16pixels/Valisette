@@ -5,8 +5,8 @@ module.exports = {
   themeConfig: {
     logo: './valisette-logo.png',
     sidebar: [
-      '/',
       ['/guide/', 'Get Started'],
+      ['/summary/', 'Summary'],
     ],
     nav: [
       { text: 'Home', link: '/' },
