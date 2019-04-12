@@ -66,7 +66,7 @@ npm -v && node -v # to test things out, it should print node's & npm's version n
 The main reason which brought us to explain this approach, is that the default NodeJs setup requires ``sudo`` to run certain commands. There are of course ways to configure it so it doesn’t need extra privileges but we don’t appreciate googling the exact “spell” every time we want to set things up.
 :::
 
-### With the official install
+### With the official node installer
 
 Valisette is built on top of [Node.js](https://nodejs.org/en/) so you will also have to install it, you can follow the official site's documentation to install it.
 

@@ -1,3 +1,47 @@
+---
+title: Configuration
+---
+# Configuration
+
+Valisette is entirely configured from a single configuration file written in javascript ``./valisette.conf.js``
+Each as an option that allows to alter the boilerplate itself or the build system output.
+
+You can also configure the Javascript App and the Vue App from their own config files.
+
+## Boilerplate options
+
+### JS_ENTRIES
+
+Webpack is a bundler that also compiles the boilerplate code, it turns everything you require into a module and applies compilers (called loaders) to it. So entries are Javascript files from which you make webpack call your code but also all the assets you might need (that means images, css, fonts, etc...). They are entry points to your code for webpack to compile your app.
+
+#### Single entry example
+
+If I type (which is the default config) :
+
+```js{2}
+export default {
+  JS_ENTRIES: ["main.js"],
+}
+```
+
+Webpack will require everything you called from ``${ASSETS_PATH}/${JS_PATH}/main.js`` and output it to ``${PUBLIC_PATH}/${JS_PATH}/JS_MAIN_OUTPUT``.
+
+#### Multiple entries example
+
+If I type :
+
+```js{2}
+export default {
+  JS_ENTRIES: ["main.js", "another-app.js"],
+}
+```
+Webpack will loop through your entries then for each of them, Webpack will require everything you called from ``${ASSETS_PATH}/${JS_PATH}/JS_ENTRIES[n]`` and output it to ``${PUBLIC_PATH}/${JS_PATH}/JS_MAIN_OUTPUT``.
+
+That is really helpful as it allows you to compile multiple applications at once.
+
+### SCSS_ENTRIES
+
+```js{2}
 export default {
   /**
    * MAIN ENTRY FILES (SCSS | JS)
@@ -77,3 +121,5 @@ export default {
   HTML_TEMPLATE: "index.ejs", // Template from which to generate your html
   HTML_OUTPUT_NAME: "index.html" // Name that will be given to output html file
 };
+```
+
