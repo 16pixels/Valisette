@@ -46,7 +46,6 @@
     "browser-sync-webpack-plugin": "^2.2.2",
     "cache-loader": "^2.0.1",
     "chalk": "^2.1.0",
-    "circular-dependency-plugin": "^5.0.2",
     "clean-webpack-plugin": "^0.1.16",
     "cli-progress": "^2.1.1",
     "compression-webpack-plugin": "^1.0.0",
