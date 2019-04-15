@@ -7,9 +7,9 @@
     "watch": "cross-env NODE_ENV=development WATCH=true babel-node ./webpack/bundler.js",
     "imgmin": "cross-env NODE_ENV=production babel-node ./webpack/imgmin.js",
     "conf": "babel-node ./webpack/generate-conf.js",
-    "start": "babel-node ./webpack/make-boilerplate.js",
-    "reset": "npm run conf && npm run start && npm run imgmin",
-    "clean-node": "rm -rf node_modules && npm prune && npm i",
+    "generate": "babel-node ./webpack/make-boilerplate.js",
+    "reset": "npm run conf && npm run generate && npm run imgmin",
+    "clean-node": "rm -rf node_modules && npm i",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:publish": "./deploy.sh"
@@ -110,7 +110,7 @@
     "vuex": "^3.1.0",
     "webfontloader": "^1.6.28"
   },
-  "name": "valisette",
+  "name": "Valisette",
   "description": "a webpack based boilerplate & multi tool build",
   "version": "1.0.0",
   "main": "./webpack/bundler.js",

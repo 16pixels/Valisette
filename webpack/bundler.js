@@ -130,9 +130,9 @@ const endFilePlugins = () => {
     }
   }).apply(COMPILER);
   // add offline mode
-  if (buildConfig.appShellMode) {
+  if (buildConfig.OFFLINE_MODE) {
     new OfflinePlugin({
-      appShell: "/index.html",
+      appShell: buildConfig.GENERATE_HTML ? buildConfig.HTML_OUTPUT_NAME : false,
       responseStrategy: "cache-first",
       safeToUseOptionalCaches: true,
       caches: {
@@ -226,7 +226,7 @@ const productionBuild = () => {
     }
   }).apply(COMPILER);
   // Build up a progressive webapp if you've set it to true in build-config
-  if (buildConfig.pwaMode) {
+  if (buildConfig.PWA_MODE) {
     new WebpackPwaManifest({
       filename: "manifest-pwa.json",
       orientation: "portrait",
@@ -239,8 +239,8 @@ const productionBuild = () => {
       name: buildConfig.pwa.appName,
       short_name: buildConfig.pwa.shortAppName,
       description: buildConfig.pwa.appDescription,
-      background_color: buildConfig.pwa.appColor,
-      theme_color: buildConfig.pwa.themeColor,
+      background_color: buildConfig.pwa.BACKGROUND_COLOR,
+      theme_color: buildConfig.pwa.THEME_COLOR,
       icons: [
         {
           src: utils.base(buildConfig.pwa.appLogo),

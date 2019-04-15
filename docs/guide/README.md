@@ -24,6 +24,33 @@ The boilerplate default configuration is designed to build you an SPA with zero 
 
 ## Features
 
+Valisette features :
+* Babel 7 transpilation
+* Webpack 4 bundler
+* Plain ES6 App boilerplate
+* Vue.js App boilerplate with Vuex, Vue-router, Vue i18.
+* SPA Generator
+* PWA Generator
+* Service Worker Generator
+* Assets compressor
+* Eslint configuration
+* Vue.js template compilation
+* Typescript template compilation
+* SCSS compilation
+* CSS Prefixing
+* Documentation dev server
+* Documentation deployment script
+* Proxy Server
+* Custom boilerplate assets generator
+* Boilerplate configuration file generator
+
+
+## How to use this documentation
+
+We recommend you to first run an installation. Then read the documentation while you can search though files for what you're reading about.
+
+Don't forget to use the search, the whole configuration is searchable.
+
 ##  Todo
 
 Valisette is still a work in progress. There are a few things that it currently does not support but are planned:

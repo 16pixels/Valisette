@@ -22,13 +22,14 @@ cd Valisette
 
 ## Start DNS Mask
 
-Then you must install make sure valet has started to link the project and run it in https.
+After you've installed DNS Mask ``valet``, make it valet has started to link the project and to run it on https.
 
-```sh{4}
-valet start
+```bash{4}
+# valet install # uncomment this line if you've never run valet before to finish its installation
+valet start # runs valet service
 valet domain app # this allows you to serve the boilerplate at https://valisette.app
-valet link
-valet secure
+valet link # make sure you run this from your project folder to host its contents
+valet secure # turns traffic to https with a self signed cert
 ```
 
 ## Install project dependencies with npm
@@ -37,7 +38,7 @@ Now we will use [Node's package manager](https://npmjs.org) to install ``yarn`` 
 
 [Yarn](https://yarnpkg.com/) performs better than npm but works just the same.
 
-```sh{4} 
+```bash{4} 
 npm i yarn -g
 yarn i
 # OR
@@ -46,7 +47,7 @@ yarn install
 
 ::: tip
 This would work as well with :
-```sh{4}
+```bash{4}
 npm i
 # OR
 npm install
@@ -61,7 +62,7 @@ We use [scripts commands](https://yarnpkg.com/lang/en/docs/package-json/#toc-scr
 
 Let's run your first compilation with :
 
-```sh{4}
+```bash{4}
 yarn run prod
 ```
 
@@ -70,9 +71,9 @@ When the compilation is complete, you should open your browser at ``https://vali
 ::: tip
 On Mac you can also run : 
 
-```sh{4}
+```bash{4}
 open https://valisette.app
 ```
 :::
 
-Congratulations you've finished your first Valisette Installation !
+Congratulations you've finished your first Valisette Installation ! :tada:

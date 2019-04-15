@@ -12,11 +12,11 @@ const buildConfig = {
   JS_ENTRIES: ValisetteConf.JS_ENTRIES, // Main JS file to import / require from
   SCSS_ENTRIES: ValisetteConf.SCSS_ENTRIES, // Main scss file
   productionMode,
-  pwaMode: ValisetteConf.PWA_MODE, // Turn your app into a Progressive Web App
+  PWA_MODE: ValisetteConf.PWA_MODE, // Turn your app into a Progressive Web App
   EXTRACT_CSS: ValisetteConf.EXTRACT_CSS, // Extract css/scss from vuejs components
   GENERATE_HTML: ValisetteConf.GENERATE_HTML,
   vueRuntime: ValisetteConf.VUE_RUNTIME, // Use vue template inside html files (true) or render app on a mount point (false)
-  appShellMode: ValisetteConf.APP_SHELL_MODE, // Add an html file to follow app shell pattern
+  OFFLINE_MODE: ValisetteConf.OFFLINE_MODE, // Add an html file to follow app shell pattern
   verbose : ValisetteConf.VERBOSE, // log extra info during build
   audit : ValisetteConf.AUDIT, // audit bundled code composition
   ignoreWarnings: ValisetteConf.IGNORE_WARNINGS, // ignore performance recommandations & warnings
@@ -42,8 +42,8 @@ const buildConfig = {
     appName: ValisetteConf.APP_NAME,
     shortAppName: ValisetteConf.SHORT_APP_NAME,
     appDescription: ValisetteConf.APP_DESCRIPTION,
-    appColor: ValisetteConf.APP_COLOR,
-    themeColor: ValisetteConf.THEME_COLOR,
+    BACKGROUND_COLOR: ValisetteConf.BACKGROUND_COLOR,
+    THEME_COLOR: ValisetteConf.THEME_COLOR,
     appLogo: ValisetteConf.APP_LOGO
   },
   browserSync: { // This implies that you are hosting your code on your machine but you can always set browserSync options -> https://github.com/Va1/browser-sync-webpack-plugin

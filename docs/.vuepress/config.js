@@ -3,14 +3,16 @@ module.exports = {
   base: '/Valisette-documentation/',
   description: "A progressive boilerplate to code performant apps.",
   themeConfig: {
+    lastUpdated: 'Last Updated',
     logo: './valisette-logo.png',
-    sidebarDepth: 3,
+    sidebarDepth: 2,
     sidebar: [
       ['/guide/', 'Introduction'],
       ['/guide/REQUIREMENTS.md', 'Requirements'],
       ['/guide/START.md', 'Getting Started'],
       ['/guide/CONFIGURATION.md', 'Configuration File'],
-      ['/summary/', 'Summary'],
+      ['/guide/COMMANDS.md', 'Build Commands'],
+      ['/guide/ASSETS.md', 'Handling Assets'],
     ],
     nav: [
       { text: 'Home', link: '/' },
