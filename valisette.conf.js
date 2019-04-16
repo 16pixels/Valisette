@@ -69,7 +69,7 @@ export default {
     "Valisette :  : a boilerplate for valet & vue users by 16 Pixels. https://github.com/16pixels", // PWA public description
   BACKGROUND_COLOR: "#3a74a5",  // PWA Main color
   THEME_COLOR: "#3a74a5", // PWA Theme color
-  APP_LOGO: "public/valisette-logo.png", // PWA public logo
+  APP_LOGO: "./public/valisette-logo.png", // PWA public logo
 
   /**
    * HTML GENERATION

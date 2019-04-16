@@ -12,7 +12,7 @@ Javascript Files are located in ``${ASSETS_PATH}/${JS_PATH}`` Folder.
 
 ### Main
 
-Your main App File (or entry) is ``${ASSETS_PATH}/${JS_PATH}/main.js`` by default.
+Your *Main* App File (or entry) is ``${ASSETS_PATH}/${JS_PATH}/main.js`` by default.
 If you need to build multiple apps you can create other files there and declare them in ``JS_ENTRIES``.
 
 It's where all your application is supposed to be built from. Whether it's a single animation script of an Business-Scale Vue App. It is separated from your Vue code and therefore should be considered as your *Main* file.
@@ -52,7 +52,7 @@ Javascript Files are located in ``${ASSETS_PATH}/${JS_PATH}/vue-app`` Folder. It
 
 ### Vue App Main
 
-Your Vue Main is where you boot your app. We made it in a way to be able to call it when we need it by larger code base instead of running it like an SPA the way most boilerplate are made. It is located in ``${ASSETS_PATH}/${JS_PATH}/vue-app`` and called ``index.js`` by default.
+Your Vue *Main* is where you boot your app. We made it in a way to be able to call it when we need it by larger code base instead of running it like an SPA the way most boilerplate are made. It is located in ``${ASSETS_PATH}/${JS_PATH}/vue-app`` and called ``index.js`` by default.
 
 It binds all your Vue code together in a single app. You may refer to standard [VueJS Documentation](https://vuejs.org/v2/guide/) to use it.
 

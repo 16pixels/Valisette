@@ -98,7 +98,9 @@ const basics = () => {
   if (buildConfig.GENERATE_HTML) {
     new HtmlWebpackPlugin({
       title: buildConfig.pwa.appName,
-      themeColor: `${buildConfig.pwa.themeColor}`,
+      templateParameters: {
+        theme_color: buildConfig.pwa.THEME_COLOR,
+      },
       fileName: `${buildConfig.publicPath}${buildConfig.HTML_OUTPUT_NAME}`,
       template: `${buildConfig.assetsPath}${buildConfig.HTML_TEMPLATE}`,
       inject: "body",
@@ -235,7 +237,7 @@ const productionBuild = () => {
       inject: true,
       fingerprints: false,
       ios: false,
-      publicPath: "/public/",
+      publicPath: buildConfig.productionMode ? "/" : buildConfig.publicPath,
       name: buildConfig.pwa.appName,
       short_name: buildConfig.pwa.shortAppName,
       description: buildConfig.pwa.appDescription,
