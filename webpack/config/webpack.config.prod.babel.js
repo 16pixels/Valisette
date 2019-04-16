@@ -129,7 +129,8 @@ const prodConfig = {
     path: utils.base(buildConfig.publicPath),
     chunkFilename: buildConfig.jsPath + buildConfig.jsChunkOutput,
     hashDigestLength: 8,
-    pathinfo: true
+    pathinfo: true,
+    publicPath: "/"
   },
   resolve: {
     extensions: [".js", ".ts", ".vue", ".json", ".scss", ".sass"],
