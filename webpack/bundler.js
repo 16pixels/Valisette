@@ -104,6 +104,7 @@ const basics = () => {
       fileName: `${buildConfig.publicPath}${buildConfig.HTML_OUTPUT_NAME}`,
       template: `${buildConfig.assetsPath}${buildConfig.HTML_TEMPLATE}`,
       inject: "body",
+      base: buildConfig.productionMode ? "./" : false,
       meta: {},
       minify: {
         collapseWhitespace: buildConfig.productionMode,
@@ -114,7 +115,7 @@ const basics = () => {
         useShortDoctype: buildConfig.productionMode
       },
       hash: true,
-      cache: false
+      cache: true
     }).apply(COMPILER);
   }
 };
