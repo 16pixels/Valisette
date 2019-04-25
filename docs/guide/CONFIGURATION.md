@@ -222,6 +222,10 @@ This section explains how to set most the boilerplate architecture and make it b
 
 Sets assets path relative to project root folder ``./``.
 
+### ASSETS_PUBLIC_PATH
+
+Sets a url prefix for all your static assets, default to ``"/"``. Usefull if you have project subfolders in your public directory.
+
 ### PUBLIC_PATH
 
 Sets your public folder where Valisette will output all production assets.
@@ -341,6 +345,7 @@ Sets output name for your Generated HTML. By default, output will be located in 
 | **AUDIT** | *Boolean* | false |
 | **PERFORMANCE_LOG_LEVEL** | *String* | "warning" |
 | **ASSETS_PATH** | *String* | "resources/assets/" |
+| **ASSETS_PUBLIC_PATH** | *String* | "/" |
 | **PUBLIC_PATH** | *String* | "/public/" |
 | **PUBLIC_MANIFEST_PATH** | *String* | "/" |
 | **JS_PATH** | *String* | "javascript/" |
