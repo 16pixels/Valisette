@@ -41,7 +41,7 @@ export default {
    * FILE SYSTEM
    * */
   ASSETS_PATH: "resources/assets/", // source assets files location
-  ASSETS_PUBLIC_PATH: "/",
+  ASSETS_PUBLIC_PATH: "/test/",
   PUBLIC_PATH: "/public/", // Public assets folder path
   PUBLIC_MANIFEST_PATH: "/", // Public assets manifest location
   JS_PATH: "javascript/", // Javascript folder name
