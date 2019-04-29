@@ -37,6 +37,7 @@ const buildConfig = {
   cssChunkOutput: ValisetteConf.CSS_CHUNK_OUTPUT,
   scssPath: ValisetteConf.SCSS_PATH, // scss source folder
   cssMainOutput: ValisetteConf.CSS_MAIN_OUTPUT, // css file output name pattern (used in production mode)
+  ASSETS_PUBLIC_PATH: ValisetteConf.ASSETS_PUBLIC_PATH,
   devtool: productionMode ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
   pwa: {
     appName: ValisetteConf.APP_NAME,
