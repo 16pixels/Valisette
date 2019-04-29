@@ -62,6 +62,14 @@ const basics = () => {
   new CleanObsoleteChunks().apply(COMPILER);
   // add vue loader
   new VueLoaderPlugin().apply(COMPILER);
+  // Minify JS code
+  new UglifyJSPlugin({
+    uglifyOptions: {
+      safari10: true,
+      ecma: 5,
+      ie8: false
+    }
+  }).apply(COMPILER);
   // remove duplicate plugins
   new DuplicatePackageCheckerPlugin({
     verbose: true,
@@ -220,14 +228,6 @@ const productionBuild = () => {
   basics();
   // Makes a smaller webpack footprint by giving modules hashes based on the relative path of each module
   new webpack.HashedModuleIdsPlugin().apply(COMPILER);
-  // Minify JS code
-  new UglifyJSPlugin({
-    uglifyOptions: {
-      safari10: true,
-      ecma: 5,
-      ie8: false
-    }
-  }).apply(COMPILER);
   // Build up a progressive webapp if you've set it to true in build-config
   if (buildConfig.PWA_MODE) {
     new WebpackPwaManifest({
