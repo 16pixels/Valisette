@@ -62,6 +62,14 @@ const basics = () => {
   new CleanObsoleteChunks().apply(COMPILER);
   // add vue loader
   new VueLoaderPlugin().apply(COMPILER);
+  // Minify JS code
+  new UglifyJSPlugin({
+    uglifyOptions: {
+      safari10: true,
+      ecma: 5,
+      ie8: false
+    }
+  }).apply(COMPILER);
   // remove duplicate plugins
   new DuplicatePackageCheckerPlugin({
     verbose: true,
@@ -100,11 +108,12 @@ const basics = () => {
       title: buildConfig.pwa.appName,
       templateParameters: {
         theme_color: buildConfig.pwa.THEME_COLOR,
+        public_path: buildConfig.ASSETS_PUBLIC_PATH
       },
       fileName: `${buildConfig.publicPath}${buildConfig.HTML_OUTPUT_NAME}`,
       template: `${buildConfig.assetsPath}${buildConfig.HTML_TEMPLATE}`,
       inject: "body",
-      base: buildConfig.productionMode ? "./" : false,
+      base: buildConfig.productionMode ? buildConfig.ASSETS_PUBLIC_PATH : false,
       meta: {},
       minify: {
         collapseWhitespace: buildConfig.productionMode,
@@ -220,14 +229,6 @@ const productionBuild = () => {
   basics();
   // Makes a smaller webpack footprint by giving modules hashes based on the relative path of each module
   new webpack.HashedModuleIdsPlugin().apply(COMPILER);
-  // Minify JS code
-  new UglifyJSPlugin({
-    uglifyOptions: {
-      safari10: true,
-      ecma: 5,
-      ie8: false
-    }
-  }).apply(COMPILER);
   // Build up a progressive webapp if you've set it to true in build-config
   if (buildConfig.PWA_MODE) {
     new WebpackPwaManifest({
@@ -238,7 +239,7 @@ const productionBuild = () => {
       inject: true,
       fingerprints: false,
       ios: false,
-      publicPath: buildConfig.productionMode ? "/" : buildConfig.publicPath,
+      publicPath: buildConfig.ASSETS_PUBLIC_PATH,
       name: buildConfig.pwa.appName,
       short_name: buildConfig.pwa.shortAppName,
       description: buildConfig.pwa.appDescription,
