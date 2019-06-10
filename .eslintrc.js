@@ -5,6 +5,12 @@ module.exports = {
     parser: "babel-eslint",
     sourceType: "module"
   },
+  env: {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
   globals: {
     window: 1,
     document: 1,

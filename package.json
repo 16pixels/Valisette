@@ -12,7 +12,19 @@
     "clean-node": "rm -rf node_modules && npm i",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:publish": "./deploy.sh"
+    "docs:publish": "./deploy.sh",
+    "test": "cross-env NODE_ENV=none jest ./tests/ --notify --detectOpenHandles",
+    "wt": "cross-env NODE_ENV=none jest ./tests/ --notify --watchAll --detectOpenHandles"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    }
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -34,15 +46,19 @@
     "@babel/preset-stage-2": "^7.0.0",
     "@babel/runtime": "^7.3.4",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0-beta.2",
+    "@vue/test-utils": "^1.0.0-beta.29",
     "autoprefixer": "^7.1.4",
+    "axios-mock-adapter": "^1.16.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^9.0.0",
+    "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.5",
     "babel-minify": "^0.4.0",
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-preset-airbnb": "^2.4.0",
     "babel-preset-minify": "^0.2.0",
-    "browser-sync": "^2.26.3",
+    "browser-sync": "^2.26.7",
     "browser-sync-webpack-plugin": "^2.2.2",
     "cache-loader": "^2.0.1",
     "chalk": "^2.1.0",
@@ -59,6 +75,7 @@
     "eslint-friendly-formatter": "^3.0.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-vue": "^5.2.2",
+    "expect": "^24.8.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "fast-sass-loader": "^1.4.7",
     "file-loader": "^0.11.2",
@@ -71,6 +88,8 @@
     "imagemin-optipng": "^6.0.0",
     "imagemin-svgo": "^7.0.0",
     "isomorphic-style-loader": "^4.0.0",
+    "jsdom": "^15.1.1",
+    "jsdom-global": "^3.0.2",
     "mini-css-extract-plugin": "^0.5.0",
     "mozjpeg": "^6.0.1",
     "node-notifier": "^5.1.2",
@@ -90,7 +109,7 @@
     "vue-loader": "^15.7.0",
     "vue-style-loader": "^4.1.0",
     "vue-template-compiler": "^2.6.9",
-    "vuepress": "^0.14.11",
+    "vuepress": "^1.0.1",
     "webpack": "^4.29.6",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-clean-obsolete-chunks": "^0.4.0",
@@ -99,18 +118,20 @@
     "webpack-pwa-manifest": "^4.0.0"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "include-media": "^1.4.9",
+    "jest": "^24.8.0",
     "lazysizes": "^4.0.0-rc3",
     "lodash": "^4.17.11",
     "vue": "^2.6.8",
     "vue-i18n": "^8.10.0",
+    "vue-jest": "^3.0.4",
     "vue-router": "^3.0.2",
     "vue-router-middleware": "^0.2.1",
     "vuex": "^3.1.0",
     "webfontloader": "^1.6.28"
   },
-  "name": "Valisette",
+  "name": "valisette",
   "description": "a webpack based boilerplate & multi tool build",
   "version": "1.0.0",
   "main": "./webpack/bundler.js",

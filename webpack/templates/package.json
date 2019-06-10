@@ -10,7 +10,19 @@
     "start-dynamic": "npm run make-webpack-oriented-boilerplate",
     "clean-node": "rm -fr node_modules && npm prune && npm i",
     "make-file-oriented-boilerplate": "babel-node ./make-static-boilerplate.js && npm i && npm run build",
-    "make-webpack-oriented-boilerplate": "babel-node ./make-static-boilerplate.js && npm i && npm run build"
+    "make-webpack-oriented-boilerplate": "babel-node ./make-static-boilerplate.js && npm i && npm run build",
+    "test": "cross-env NODE_ENV=none jest ./tests/ --notify --detectOpenHandles",
+    "wt": "cross-env NODE_ENV=none jest ./tests/ --notify --watchAll --detectOpenHandles"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    }
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
