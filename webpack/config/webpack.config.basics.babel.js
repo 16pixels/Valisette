@@ -131,7 +131,8 @@ const config = {
     path: utils.base(buildConfig.publicPath),
     chunkFilename: buildConfig.jsPath + buildConfig.jsChunkOutput,
     hashDigestLength: 8,
-    pathinfo: true
+    pathinfo: true,
+    publicPath: buildConfig.publicPath
   },
   resolve: {
     extensions: [".js", ".ts", ".json", ".vue", ".scss"],
@@ -139,19 +140,6 @@ const config = {
   },
   module: {
     rules: [
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        exclude: EXCLUDES,
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              name: "[name].[ext]",
-              outputPath: "fonts/"
-            }
-          }
-        ]
-      },
       {
         test: /\.(sa|sc|c)ss$/,
         exclude: EXCLUDES,
