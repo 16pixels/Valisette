@@ -103,6 +103,8 @@ const prodConfig = {
   },
   externals: utils.loadImagesFolder(),
   optimization: {
+    runtimeChunk: 'single',
+    moduleIds: 'hashed',
     namedModules: true, // NamedModulesPlugin()
     minimizer: [
       new UglifyJsPlugin({
@@ -112,9 +114,13 @@ const prodConfig = {
       }),
     ],
     splitChunks: {
-      name: "vendor",
-      minChunks: 2,
-      chunks: "all"
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
     },
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
     concatenateModules: true // ModuleConcatenationPlugin
