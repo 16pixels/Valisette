@@ -1,4 +1,4 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{U9Q4:
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{U9Q4:
 /*!***********************************************************************!*\
   !*** ./resources/assets/javascript/vue-app/i18n/languages/lang-fr.js ***!
   \***********************************************************************/

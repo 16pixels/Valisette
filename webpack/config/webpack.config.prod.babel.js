@@ -1,5 +1,6 @@
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import UglifyJsPlugin from "uglifyjs-webpack-plugin";
+
 /**
  * Import modules
  * @type {[type]}

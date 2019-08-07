@@ -10,7 +10,7 @@ OfflinePluginRuntime.install();
 swRuntime.init();
 
 // Don't remove this line, it imports css & scss into webpack
-require("main_css"); // eslint-disable-line import/no-unresolved
+import(/* webpackPrefetch: true */ "main_css"); // eslint-disable-line import/no-unresolved
 
 /**
  * @function main

@@ -1,16 +1,17 @@
 CACHE MANIFEST
-#ver:8/7/2019, 1:27:04 PM
+#ver:8/7/2019, 1:42:35 PM
 #plugin:5.0.6
 
 CACHE:
-/javascript/lang-en.js-f7e550f3.chunk.js
-/javascript/lang-fr.js-68984cfb.chunk.js
-/css/main-90df30e2.chunk.css
-/javascript/main-a8a50ee4.chunk.js
+/javascript/vendors-996e8fea.chunk.js
+/javascript/lang-en.js-824095ee.chunk.js
+/javascript/lang-fr.js-97f3fd6b.chunk.js
+/javascript/main-fc8d10cf.chunk.js
 /javascript/runtime.js
-/javascript/vendors-5484151c.chunk.js
 /css/5-35b3b05b.chunk.css
 /javascript/5-dcbb5bda.chunk.js
+/css/6-90df30e2.chunk.css
+/javascript/6-4969a024.chunk.js
 /
 /manifest-pwa.json
 /icon_1024x1024.png

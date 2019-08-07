@@ -1,4 +1,4 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[0],{"r+y8":
+(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{"r+y8":
 /*!***********************************************************************!*\
   !*** ./resources/assets/javascript/vue-app/i18n/languages/lang-en.js ***!
   \***********************************************************************/

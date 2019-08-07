@@ -1,5 +1,6 @@
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ResourceHintWebpackPlugin from 'resource-hints-webpack-plugin';
 import CleanObsoleteChunks from 'webpack-clean-obsolete-chunks';
 import FriendlyErrorsWebpackPlugin from 'friendly-errors-webpack-plugin';
 import DuplicatePackageCheckerPlugin from 'duplicate-package-checker-webpack-plugin';
@@ -117,6 +118,8 @@ const basics = () => {
         theme_color: buildConfig.pwa.THEME_COLOR,
         public_path: buildConfig.ASSETS_PUBLIC_PATH
       },
+      prefetch: ['**/*.*'],
+      preload: ['**/*.*'],
       fileName: `${buildConfig.publicPath}${buildConfig.HTML_OUTPUT_NAME}`,
       template: `${buildConfig.assetsPath}${buildConfig.HTML_TEMPLATE}`,
       inject: 'body',
@@ -133,6 +136,7 @@ const basics = () => {
       hash: true,
       cache: true
     }).apply(COMPILER);
+    new ResourceHintWebpackPlugin().apply(COMPILER);
   }
 };
 
