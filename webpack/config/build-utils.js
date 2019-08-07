@@ -1,31 +1,44 @@
-import notifier from "node-notifier";
-import util from "util";
-import rimraf from "rimraf";
-import fs from "fs";
-import path from "path";
-import chalk from "chalk";
-import { each } from "lodash";
-import buildConfig from "./build-config";
+import notifier from 'node-notifier';
+import rimraf from 'rimraf';
+import fs from 'fs';
+import path from 'path';
+import chalk from 'chalk';
+import { each } from 'lodash';
+import figlet from 'figlet';
+import buildConfig from './build-config';
 
+const printLogo = async () => {
+  console.log(figlet.textSync("Valisette", {
+    font: 'slant',
+    horizontalLayout: 'fitted',
+  }, (err, data) => {
+    if (err) {
+      console.log('Something went wrong...');
+      console.dir(err);
+      return;
+    }
+    console.log(data);
+  }));
+};
 const assets = param => {
   return path.resolve(__dirname, `./../../${buildConfig.assetsPath}${param}`);
 };
 const base = param => {
   return path.resolve(__dirname, `./../../${param}`);
 };
-const printTable = (array) => {
+const printTable = array => {
   if (buildConfig.verbose) {
     const arrayComparator = [];
     if (typeof array === typeof arrayComparator) {
       console.table(array);
       return true;
-    } 
+    }
     console.log(array);
     return true;
   }
   return true;
-}
-const printObject  = (object) => {
+};
+const printObject = object => {
   const objectComparator = {};
   if (buildConfig.verbose) {
     if (typeof object === typeof objectComparator) {
@@ -35,51 +48,57 @@ const printObject  = (object) => {
     console.log(object);
   }
   return true;
-}
+};
 const print = (...msg) => {
   if (buildConfig.verbose) {
-    let msgString = "";
+    let msgString = '';
     each(msg, (value, key) => {
       if (key === 0) {
         msgString += `${value}`;
       } else {
         msgString += ` ${value}`;
       }
-    })
+    });
     return console.log(msgString);
   }
   return true;
 };
 const processInstance = process;
-const printInStream = (msg) => {
+const printInStream = msg => {
   processInstance.stdout.clearLine();
   processInstance.stdout.cursorTo(0);
   return processInstance.stdout.write(msg);
-}
+};
 const endPrintInStream = () => {
-  processInstance.exit()
-}
-const progressHandler = (percentage, message = "Nothing") => {
+  processInstance.exit();
+};
+const progressHandler = (percentage, message = 'Nothing') => {
   let printMsg = message;
-  if (message === "") {
+  if (message === '') {
     printMsg = "I'm Idle";
   }
   // const otherArguments = args;
-  if ((Math.round(percentage * 100)) === 100) {
-    printMsg += "\n\n";
+  if (Math.round(percentage * 100) === 100) {
+    printMsg += '\n\n';
   }
-  return printInStream(`> ${chalk.magenta.bold("Compilation at : ")}${chalk.yellow.bold(Math.round(percentage * 100, 2))} ${chalk.yellow.bold("%")} ${chalk.magenta.bold("|")} ${chalk.magenta.bold('Compiler says :')} ${chalk.yellow.bold(printMsg)}`)
-}
+  return printInStream(
+    `> ${chalk.magenta.bold('Compilation at : ')}${chalk.yellow.bold(
+      Math.round(percentage * 100, 2)
+    )} ${chalk.yellow.bold('%')} ${chalk.magenta.bold(
+      '|'
+    )} ${chalk.magenta.bold('Compiler says :')} ${chalk.yellow.bold(printMsg)}`
+  );
+};
 /**
  * Error printing function
  */
 const prettyPrintErrors = (err, stats) => {
-  let finalStatsLog = "";
+  let finalStatsLog = '';
   // Notify user if there are errors during compilation
   if (stats.compilation.errors && stats.compilation.errors[0]) {
     if (buildConfig.notifications) {
       notifier.notify({
-        title: "Valisette",
+        title: 'Valisette',
         message: `Build has ${stats.compilation.errors.length} error(s) !`
       });
     }
@@ -94,7 +113,7 @@ const prettyPrintErrors = (err, stats) => {
   ) {
     if (buildConfig.notifications) {
       notifier.notify({
-        title: "Valisette",
+        title: 'Valisette',
         message: `Build has ${stats.compilation.warnings.length} warning(s) !`
       });
     }
@@ -109,22 +128,22 @@ const prettyPrintErrors = (err, stats) => {
     !stats.compilation.warnings ||
     buildConfig.ignoreWarnings
   ) {
-    finalStatsLog = `> ${chalk.green.bold("All good, great job !")}\n`;
+    finalStatsLog = `> ${chalk.green.bold('All good, great job !')}\n`;
   }
   console.log(finalStatsLog);
   // performance logging function
   if (stats) {
     const time = chalk.yellow.bold((stats.endTime - stats.startTime) / 1000);
     console.log(
-      `> ${chalk.magenta.bold("Built in ")}${time} ${chalk.magenta.bold(
-        "sec"
+      `> ${chalk.magenta.bold('Built in ')}${time} ${chalk.magenta.bold(
+        'sec'
       )}\n`
     );
   }
   if (process.env.WATCH) {
-    console.log(`> ${chalk.yellow.bold("Watching for changes...")}\n`);
+    console.log(`> ${chalk.yellow.bold('Watching for changes...')}\n`);
   } else {
-    console.log(`> ${chalk.magenta.bold("Build complete")}\n`);
+    console.log(`> ${chalk.magenta.bold('Build complete')}\n`);
   }
   return err;
 };
@@ -135,26 +154,31 @@ const loadImagesFolder = () => {
     `${buildConfig.publicPath + buildConfig.imagesPath}`
   )}`;
   fs.readdirSync(imageFolderUrl).forEach(file => {
-    filesList.push(
-      `/${ buildConfig.imagesPath + file}`
-    );
+    filesList.push(`/${buildConfig.imagesPath + file}`);
   });
   if (buildConfig.verbose) {
-    console.log(`> ${chalk.magenta.bold("Cached Images : ")}`);
+    console.log(`> ${chalk.magenta.bold('Cached Images : ')}`);
     console.table(filesList);
   }
   return filesList;
 };
-const clean = (param, callback = () => {return true;}) => {
+const clean = async (
+  param,
+  callback = () => {
+    return true;
+  }
+) => {
   const target = path.resolve(__dirname, `./../../${param}`);
-  const msg1 =
-    `> ${chalk.cyan.bold("cleaning   -")} ${chalk.yellow.bold(target)}`;
+  const msg1 = `> ${chalk.cyan.bold('cleaning   -')} ${chalk.yellow.bold(
+    target
+  )}`;
   if (buildConfig.verbose) {
     console.log(msg1);
   }
-  rimraf(target, () => {
-    const msg2 =
-    `> ${chalk.cyan.bold("cleaned   -")} ${chalk.yellow.bold(target)}`;
+  await rimraf(target, () => {
+    const msg2 = `> ${chalk.cyan.bold('cleaned   -')} ${chalk.yellow.bold(
+      target
+    )}`;
     if (buildConfig.verbose) {
       console.log(msg2);
     }
@@ -163,9 +187,9 @@ const clean = (param, callback = () => {return true;}) => {
 };
 const buildEntriesObject = (pathString, entriesArray) => {
   const resultObject = {};
-  each(entriesArray, (key) => {
+  each(entriesArray, key => {
     const finalString = assets(`${pathString + key}`);
-    const finalKey = key.split(".")[0];
+    const finalKey = key.split('.')[0];
     resultObject[finalKey] = finalString;
   });
   return resultObject;
@@ -184,6 +208,7 @@ const utils = {
   base,
   clean,
   loadImagesFolder,
-  jsEntries: buildJsEntriesObject
+  jsEntries: buildJsEntriesObject,
+  printLogo
 };
 export default utils;

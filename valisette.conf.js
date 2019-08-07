@@ -4,11 +4,11 @@ export default {
    */
   JS_ENTRIES: ["main.js"], // Main JS file to import / require from
   SCSS_ENTRIES: ["main.scss"], // Main scss file to import / require from
-  
+
   /**
    * PROXY CONFIGURATION
    * */
-  PROXY_TARGET: "https://valisette.app", // The URL that broadcasts your app on your machine which is the name of the root `https://${base_folder}.app` by default 
+  PROXY_TARGET: "https://valisette.app", // The URL that broadcasts your app on your machine which is the name of the root `https://${base_folder}.app` by default
 
   /**
    * DEVTOOLS
@@ -35,7 +35,7 @@ export default {
    * PERFORMANCE
    * */
   AUDIT: false, // enable bundle analyzer to audit your code
-  PERFORMANCE_LOG_LEVEL: "warning", // set performance hints log importance level
+  PERFORMANCE_LOG_LEVEL: false, // set performance hints log importance level
 
   /**
    * FILE SYSTEM
@@ -66,7 +66,7 @@ export default {
   APP_URL: "https://valisette.app", // app url to specify for service workers
   APP_NAME: "Valisette by 16 Pixels", // PWA public name
   SHORT_APP_NAME: "Valisette", // PWA public shot name
-  APP_DESCRIPTION: 
+  APP_DESCRIPTION:
     "Valisette :  : a boilerplate for valet & vue users by 16 Pixels. https://github.com/16pixels", // PWA public description
   BACKGROUND_COLOR: "#3a74a5",  // PWA Main color
   THEME_COLOR: "#3a74a5", // PWA Theme color
