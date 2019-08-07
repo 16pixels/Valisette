@@ -4,4 +4,10 @@
 }
 body {
   background: white;
+  font-family: 'Montserrat', 'sans serif';
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-display: 'auto';
+  src: local('Monserrat') format('woff2');
 }
