@@ -18,8 +18,7 @@ import chalk from 'chalk';
 import each from 'lodash/each';
 import buildConfig from './config/build-config';
 import utils from './config/build-utils';
-// import config from "./config/webpack.config.basics.babel";
-// import prodConfig from "./config/webpack.config.prod.babel";
+
 let config = {};
 let prodConfig = {};
 
@@ -97,8 +96,12 @@ const basics = () => {
         });
       }
       if (severity === 'error') {
-        each(errors, error => {
-          console.log(error.webpackError);
+        each(errors, (key, index) => {
+          console.log(errors[index]);
+          console.log(chalk.bold.redBright(`ERROR ${index} \n`));
+          console.log(chalk.bold.redBright(`Type : ${errors[index].name}`));
+          console.log(`${chalk.bold.redBright(`@ File : `)}${chalk.bold.greenBright(`${errors[index].file}`)}`);
+          console.log(chalk.bold.redBright(`\nOriginal Message : \n`));
         });
       }
       return true;
@@ -119,7 +122,7 @@ const basics = () => {
         public_path: buildConfig.ASSETS_PUBLIC_PATH
       },
       prefetch: ['**/*.*'],
-      preload: ['**/*.*'],
+      // preload: ['**/*.*'],
       fileName: `${buildConfig.publicPath}${buildConfig.HTML_OUTPUT_NAME}`,
       template: `${buildConfig.assetsPath}${buildConfig.HTML_TEMPLATE}`,
       inject: 'body',
@@ -183,15 +186,15 @@ const endFilePlugins = () => {
 const run = compilerObject => {
   if (typeof compilerObject.run !== 'function') {
     console.error(
-      chalk.red.bold('\n>>>>>>>>>>>>>>>>>>>>> ! error ! >>>>>>>>>>>>>>>>\n')
+      chalk.bold.redBright('\n>>>>>>>>>>>>>>>>>>>>> ! error ! >>>>>>>>>>>>>>>>\n')
     );
     console.error(
-      chalk.red.bold(
+      chalk.bold.redBright(
         ` ! Your config is invalid as it has not inherited from webpack methods and it can't run, make sure ./webpack/config/build-config.js is well written ! `
       )
     );
     console.error(
-      chalk.red.bold('\n>>>>>>>>>>>>>>>>>>>>> !  END  ! >>>>>>>>>>>>>>>>\n')
+      chalk.bold.redBright('\n>>>>>>>>>>>>>>>>>>>>> !  END  ! >>>>>>>>>>>>>>>>\n')
     );
     return false;
   }

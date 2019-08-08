@@ -6,10 +6,11 @@ import chalk from 'chalk';
 import { each } from 'lodash';
 import figlet from 'figlet';
 import buildConfig from './build-config';
+import valisetteConf from '../../valisette.conf';
 
 const printLogo = async () => {
   console.log(figlet.textSync("Valisette", {
-    font: 'slant',
+    font: 'Calvin S',
     horizontalLayout: 'fitted',
   }, (err, data) => {
     if (err) {
@@ -132,14 +133,14 @@ const prettyPrintErrors = (err, stats) => {
   }
   console.log(finalStatsLog);
   // performance logging function
-  // if (stats) {
-  //   const time = chalk.yellow.bold((stats.endTime - stats.startTime) / 1000);
-  //   console.log(
-  //     `> ${chalk.magenta.bold('Built in ')}${time} ${chalk.magenta.bold(
-  //       'sec'
-  //     )}\n`
-  //   );
-  // }
+  if (stats && valisetteConf.PERFORMANCE_LOG_LEVEL) {
+    const time = chalk.yellow.bold((stats.endTime - stats.startTime) / 1000);
+    console.log(
+      `> ${chalk.magenta.bold('Built in ')}${time} ${chalk.magenta.bold(
+        'sec'
+      )}\n`
+    );
+  }
   if (process.env.WATCH) {
     console.log(`> ${chalk.yellow.bold('Watching for changes...')}\n`);
   } else {

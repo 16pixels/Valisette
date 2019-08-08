@@ -10,42 +10,44 @@
   <title>Valisette - webpack based multi-tool boilerplate</title>
   <meta name="description" content="Valisette - A webpack 4 boilerplate to work with various JS technologies seamlessly">
 
-  <link rel="manifest" href="<%= public_path %>manifest-pwa.json">
-  <!-- PWA Theme color -->
-  <meta name="theme-color" content="<%= theme_color %>">
+  <link rel="manifest" href="/manifest-pwa.json">
 
   <!-- Google / Search Engine Tags -->
-  <meta itemprop="name" content="16Pixels/Valisette">
+  <meta itemprop="name" content="Thibzzz/Valisette">
   <meta itemprop="description" content="Valisette - A webpack 4 boilerplate to work with various JS technologies seamlessly">
-  <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/23658264?s=200&v=4">
+  <meta itemprop="image" content="http://avatars1.githubusercontent.com/u/23658044?s=400&v=4">
 
   <!-- Facebook Meta Tags -->
-  <meta property="og:url" content="https://github.com/16Pixels/Valisette">
+  <meta property="og:url" content="https://github.com/Thibzzz/Valisette">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="16Pixels/Valisette">
+  <meta property="og:title" content="Thibzzz/Valisette">
   <meta property="og:description" content="Valisette - A webpack 4 boilerplate to work with various JS technologies seamlessly">
-  <meta property="og:image" content="https://avatars3.githubusercontent.com/u/23658264?s=200&v=4">
+  <meta property="og:image" content="http://avatars1.githubusercontent.com/u/23658044?s=400&v=4">
 
   <!-- Twitter Meta Tags -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="16Pixels/Valisette">
+  <meta name="twitter:title" content="Thibzzz/Valisette">
   <meta name="twitter:description" content="Valisette - A webpack 4 boilerplate to work with various JS technologies seamlessly">
-  <meta name="twitter:image" content="https://avatars3.githubusercontent.com/u/23658264?s=200&v=4">
+  <meta name="twitter:image" content="http://avatars1.githubusercontent.com/u/23658044?s=400&v=4">
 
   <!-- Meta Tags Generated via http://heymeta.com -->
 
   <!-- HTTP2 assets preloading -->
-  <!-- <link rel="preload" href="/css/main.css" as="style"> -->
-  <!-- <link rel="preload" href="/javascript/main.js" as="script"> -->
+  <link rel="preload" href="/css/main.css" as="style">
+  <link rel="preload" href="/javascript/main.js" as="script">
 
-  <!-- Load css assets without injection from webpack html plugin -->
-  <!-- <link rel="stylesheet" href="/css/main.css" preload> -->
+  <!-- Assets declaration -->
+  <link rel="stylesheet" href="/css/main.css" preload>
 
   <!-- Inlined critical css -->
+  <style>
+
+
+  </style>
 </head>
 
 <body>
-  <div>
+  <div id="#app">
     <div class="logo"></div>
     <section class="section">
       <div class="container">
@@ -83,7 +85,7 @@
             <p>
               If that's the case for any of it, <strong>Welcome !</strong>
             </p>
-            <a href="https://github.com/16Pixels/Valisette"  class="button is-info">Github</a>
+            <a href="https://github.com/Thibzzz/Valisette"  class="button is-info">Github</a>
             <a href="#docs" class="button is-success">Documentation</a>
             <a href="/test.html" class="button is-success">Test service worker</a>
           </div>
@@ -101,9 +103,8 @@
     </section>
   </div>
   <div id="app"></div>
-  <!-- Load js assets without injection from webpack html plugin -->
-  <!-- <script src="/javascript/main.js" async defer></script> -->
-  <!-- <script>
+  <script src="/javascript/main.js" async ></script>
+  <script>
     /**
      * You can call your private methods declared in main.js from the front-end too with the app's launcher just like below.
      */
@@ -123,7 +124,7 @@
     //   }
     // }]);
 
-  </script> -->
+  </script>
 </body>
 
 </html>
