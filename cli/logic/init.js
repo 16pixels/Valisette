@@ -7,7 +7,7 @@ const each = require("lodash/each");
 const shell = require("shelljs");
 
 const boilerplateConfigFilesToCopy = [
-  ".browserslistrc",
+  // ".browserslistrc", // file is obsolete need to update to v3
   ".babelrc",
   ".editorconfig",
   ".eslintrc.js",
@@ -39,34 +39,40 @@ const boilerplateFilesToRename = [
     after: "public/index-example.html"
   }
 ];
-const postBuildCommands = ["npm i"];
+const postBuildCommands = ["npm i", "npm run watch"];
 const cliPath = path.resolve(__dirname, "../../");
 
-const runShellCommands = newProjectPath => {
-  each(postBuildCommands, async command => {
+const runShellCommands = async newProjectPath => {
+  for (let i = 0, len = postBuildCommands.length; i < len; i += 1) {
     await shell.cd(newProjectPath);
-    await shell.exec(command);
-  });
+    await shell.exec(postBuildCommands[i]);
+  }
 };
 
-const copySingleFolder = async (file, distPath) => {
+const copySingleFolder = (file, distPath) => {
   const src = path.resolve(`${cliPath}/${file}`);
   const dist = path.resolve(`${distPath}/${file}`);
-  await fse.copy(src, dist, err => {
-    if (err) {
-      abort(err);
-      return false;
-    }
-    print(`Recusive copy of ${dist} : done ...`);
-    return true;
+  const fileIsCopied = new Promise((resolve, reject) => {
+    fse.copy(src, dist, err => {
+      if (err) {
+        abort(err);
+        return reject();
+      }
+      return resolve();
+    });
   });
+  return fileIsCopied;
 };
 
 const copyBuildFiles = async (folders, distPath) => {
+  const promises = [];
   for (const folder of folders) { // eslint-disable-line no-restricted-syntax
     print(`Copying folder ${folder} @ ${distPath}`);
-    await copySingleFolder(folder, distPath); // eslint-disable-line no-await-in-loop
+    promises.push(copySingleFolder(folder, distPath));
   }
+  await Promise.all(promises).then(() => {
+    print(`Folders copy done`);
+  })
 };
 
 const prepareBuildFolders = (buildFolderArray, finalPath) => {
@@ -117,16 +123,21 @@ const buildBoilerplate = async (finalPath, folderExistsAlready = false) => {
   }
   prepareBuildFolders(boilerplateFoldersToCreate, finalPath);
   copyEnvAndConfigFiles(boilerplateConfigFilesToCopy, finalPath);
-  await copyBuildFiles(boilerplateFoldersToCopy, finalPath);
-  renameDefaultConfigFiles(boilerplateFilesToRename, finalPath);
+  await copyBuildFiles(boilerplateFoldersToCopy, finalPath).then(() => {
+    renameDefaultConfigFiles(boilerplateFilesToRename, finalPath);
+    print("Boilerplate build success");
+  })
 };
+
+const postInstallScripts = async (newProjectPath) => {
+  print("Run post-install scripts");
+  await runShellCommands(newProjectPath);
+  print("Build Completed")
+}
 
 const build = async (newProjectPath, folderExistsAlready = false) => {
   try {
-    buildBoilerplate(newProjectPath, folderExistsAlready).then(() => {
-      runShellCommands(newProjectPath);
-    })
-    print("Boilerplate build success");
+    await buildBoilerplate(newProjectPath, folderExistsAlready);
   } catch (e) {
     abort(`Boilerplate build failed @ ${e}`);
   }
@@ -143,7 +154,11 @@ const init = async folder => {
       if (answers.userinput) {
         const projectPathExistsAlready = fs.existsSync(newProjectPath);
         if (!projectPathExistsAlready) {
-          await build(newProjectPath);
+          build(newProjectPath, true).then(() => {
+            print("Files copied");
+            postInstallScripts(newProjectPath);
+            return true;
+          })
         } else {
           prompt({
             type: "confirm",
@@ -154,8 +169,11 @@ const init = async folder => {
               print("Operation cancelled");
               return false;
             }
-            await build(newProjectPath, true);
-            return true;
+            build(newProjectPath, true).then(() => {
+              print("Files copied");
+              postInstallScripts(newProjectPath);
+              return true;
+            })
           });
         }
       } else {
@@ -163,6 +181,7 @@ const init = async folder => {
         return false;
       }
       return true;
+    }).then(() => {
     })
     .catch(e => {
       abort(`Please report this error :`, `\n${e}`);

@@ -141,7 +141,7 @@
   "preferGlobal": true,
   "bin": "./cli/index.js",
   "description": "a webpack based boilerplate & multi tool build",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./webpack/bundler.js",
   "directories": {
     "test": "tests"
