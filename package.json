@@ -1,5 +1,4 @@
 {
-  "private": true,
   "scripts": {
     "build-debugger": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js --trace-deprecation",
     "build": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js",
@@ -141,7 +140,7 @@
   "preferGlobal": true,
   "bin": "./cli/index.js",
   "description": "a webpack based boilerplate & multi tool build",
-  "version": "1.0.1",
+  "version": "1.0.6",
   "main": "./webpack/bundler.js",
   "directories": {
     "test": "tests"
