@@ -109,7 +109,6 @@
     "resource-hints-webpack-plugin": "0.0.2",
     "rimraf": "^2.7.1",
     "sass-loader": "^7.3.1",
-    "shelljs": "^0.8.3",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.3.7",
     "typescript": "^2.5.2",
@@ -132,6 +131,7 @@
     "jest": "^24.9.0",
     "lazysizes": "^4.1.8",
     "lodash": "^4.17.15",
+    "shelljs": "^0.8.3",
     "vue": "^2.6.8",
     "vue-i18n": "^8.15.0",
     "vue-jest": "^3.0.5",
@@ -144,7 +144,7 @@
   "preferGlobal": true,
   "bin": "./cli/index.js",
   "description": "a webpack based boilerplate & multi tool build",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "main": "./webpack/bundler.js",
   "directories": {
     "test": "tests"
