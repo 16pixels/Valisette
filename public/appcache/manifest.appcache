@@ -1,28 +1,18 @@
 CACHE MANIFEST
-#ver:8/7/2019, 3:03:04 PM
-#plugin:5.0.6
+#ver:11/5/2019, 12:41:32 PM
+#plugin:5.0.7
 
 CACHE:
-/javascript/lang-en.js-f7e550f3.chunk.js
-/javascript/lang-fr.js-68984cfb.chunk.js
-/css/main-ee423291.chunk.css
-/javascript/main-a8a50ee4.chunk.js
-/javascript/runtime.js
-/javascript/vendors-5484151c.chunk.js
-/css/5-35b3b05b.chunk.css
-/javascript/5-dcbb5bda.chunk.js
-/
-/manifest-pwa.json
-/icon_1024x1024.png
-/icon_512x512.png
-/icon_384x384.png
-/icon_256x256.png
-/icon_192x192.png
-/icon_128x128.png
-/icon_96x96.png
+/public/css/0-265f0ce4.chunk.css
+/public/javascript/0-128a4c68.chunk.js
+/public/javascript/lang-en.js-c53de610.chunk.js
+/public/javascript/lang-fr.js-3da68ff0.chunk.js
+/public/css/main.css
+/public/javascript/main.js
+/public/
 
 NETWORK:
 *
 
 FALLBACK:
-/ index.html
+/public/ index.html

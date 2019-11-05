@@ -20,7 +20,7 @@ const boilerplateConfigFilesToCopy = [
   "public/valisette-logo.png"
 ];
 const boilerplateFoldersToCopy = ["resources/", "webpack/", "tests/"];
-const boilerplateFoldersToCreate = ["public", "resources/assets/"];
+const boilerplateFoldersToCreate = ["public", "public/images", "resources/assets/"];
 const boilerplateFilesToRename = [
   {
     before: "./cli/boilerplate/package-boilerplate.json",
