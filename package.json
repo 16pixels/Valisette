@@ -83,7 +83,6 @@
     "expect": "^24.9.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "fast-sass-loader": "^1.5.0",
-    "figlet": "^1.2.3",
     "file-loader": "^0.11.2",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^3.2.0",
@@ -125,6 +124,7 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "figlet": "^1.2.3",
     "fs-extra": "^4.0.3",
     "include-media": "^1.4.9",
     "inquirer": "^6.5.0",
@@ -144,7 +144,7 @@
   "preferGlobal": true,
   "bin": "./cli/index.js",
   "description": "a webpack based boilerplate & multi tool build",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "main": "./webpack/bundler.js",
   "directories": {
     "test": "tests"
