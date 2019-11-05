@@ -13,7 +13,6 @@ const boilerplateConfigFilesToCopy = [
   ".eslintrc.js",
   ".jshintrc",
   ".postcssrc.js",
-  ".gitignore",
   "tsconfig.json",
   "valisette.conf.js",
   "public/favicon.ico",
@@ -25,6 +24,10 @@ const boilerplateFilesToRename = [
   {
     before: "./cli/boilerplate/package-boilerplate.json",
     after: "package.json"
+  },
+  {
+    before: "./cli/boilerplate/.gitignore.boilerplate",
+    after: ".gitignore"
   },
   {
     before: "cli/boilerplate/.env.boilerplate",
