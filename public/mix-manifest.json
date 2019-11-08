@@ -5,7 +5,7 @@
   "/public/main.css": "/css/main-ee423291.chunk.css",
   "/public/main.js": "/javascript/main-a8a50ee4.chunk.js",
   "/public/runtime.js": "/javascript/runtime.js",
-  "/public/vendors.js": "/javascript/vendors-5484151c.chunk.js",
+  "/public/vendors.js": "/javascript/vendors-f8ddd626.chunk.js",
   "/public/css/5-35b3b05b.chunk.css": "/css/5-35b3b05b.chunk.css",
   "/public/javascript/5-dcbb5bda.chunk.js": "/javascript/5-dcbb5bda.chunk.js",
   "/public/appcache/manifest.appcache": "/appcache/manifest.appcache",
@@ -25,7 +25,7 @@
   "/public/javascript/lang-fr.js-68984cfb.chunk.js.gz": "/javascript/lang-fr.js-68984cfb.chunk.js.gz",
   "/public/javascript/main-a8a50ee4.chunk.js.gz": "/javascript/main-a8a50ee4.chunk.js.gz",
   "/public/javascript/runtime.js.gz": "/javascript/runtime.js.gz",
-  "/public/javascript/vendors-5484151c.chunk.js.gz": "/javascript/vendors-5484151c.chunk.js.gz",
+  "/public/javascript/vendors-f8ddd626.chunk.js.gz": "/javascript/vendors-f8ddd626.chunk.js.gz",
   "/public/manifest-pwa.json": "/manifest-pwa.json",
   "/public/sw.js": "/sw.js"
 }

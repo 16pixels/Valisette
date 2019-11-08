@@ -1,20 +1,8 @@
 {
-  "private": true,
   "scripts": {
-    "build-debugger": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js --trace-deprecation",
-    "build": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js",
-    "prod": "cross-env NODE_ENV=production babel-node ./webpack/bundler.js",
-    "watch": "cross-env NODE_ENV=development WATCH=true babel-node ./webpack/bundler.js",
-    "imgmin": "cross-env NODE_ENV=production babel-node ./webpack/imgmin.js",
-    "conf": "babel-node ./webpack/generate-conf.js",
-    "generate": "babel-node ./webpack/make-boilerplate.js",
-    "reset": "npm run conf && npm run generate && npm run imgmin",
-    "clean-node": "rm -rf node_modules && npm i",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:publish": "./deploy.sh",
-    "test": "cross-env NODE_ENV=none jest ./tests/ --notify --detectOpenHandles",
-    "wt": "cross-env NODE_ENV=none jest ./tests/ --notify --watchAll --detectOpenHandles"
+    "docs:publish": "./deploy.sh"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -64,7 +52,6 @@
     "chalk": "^2.1.0",
     "clean-webpack-plugin": "^0.1.16",
     "cli-progress": "^2.1.1",
-    "commander": "^2.20.0",
     "compression-webpack-plugin": "^1.0.0",
     "cross-env": "^3.2.4",
     "css-loader": "^2.1.1",
@@ -80,7 +67,6 @@
     "expect": "^24.8.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "fast-sass-loader": "^1.4.7",
-    "figlet": "^1.2.3",
     "file-loader": "^0.11.2",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "fs-extra": "^4.0.2",
@@ -90,13 +76,11 @@
     "imagemin-mozjpeg": "^8.0.0",
     "imagemin-optipng": "^6.0.0",
     "imagemin-svgo": "^7.0.0",
-    "inquirer": "^6.5.0",
     "isomorphic-style-loader": "^4.0.0",
     "jsdom": "^15.1.1",
     "jsdom-global": "^3.0.2",
     "mini-css-extract-plugin": "^0.5.0",
     "mozjpeg": "^6.0.1",
-    "ncp": "^2.0.0",
     "node-notifier": "^5.1.2",
     "node-sass": "^4.11.0",
     "offline-plugin": "^5.0.6",
@@ -107,7 +91,6 @@
     "resource-hints-webpack-plugin": "0.0.2",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.1.0",
-    "shelljs": "^0.8.3",
     "style-loader": "^0.18.2",
     "ts-loader": "^2.3.7",
     "typescript": "^2.5.2",
@@ -124,25 +107,20 @@
     "webpack-pwa-manifest": "^4.0.0"
   },
   "dependencies": {
-    "axios": "^0.19.0",
-    "include-media": "^1.4.9",
-    "jest": "^24.8.0",
-    "lazysizes": "^4.0.0-rc3",
+    "commander": "^2.20.0",
+    "inquirer": "^6.5.0",
     "lodash": "^4.17.15",
-    "vue": "^2.6.8",
-    "vue-i18n": "^8.10.0",
-    "vue-jest": "^3.0.4",
-    "vue-router": "^3.0.2",
-    "vue-router-middleware": "^0.2.1",
-    "vuex": "^3.1.0",
-    "webfontloader": "^1.6.28"
+    "shelljs": "^0.8.3",
+    "figlet": "^1.2.3",
+    "ncp": "^2.0.0"
   },
   "name": "valisette",
   "preferGlobal": true,
-  "bin": "./cli/index.js",
+  "bin": {
+    "valisette": "./cli/index.js"
+  },
   "description": "a webpack based boilerplate & multi tool build",
-  "version": "1.0.0",
-  "main": "./webpack/bundler.js",
+  "version": "1.0.5",
   "directories": {
     "test": "tests"
   },

@@ -8,10 +8,10 @@ Valisette is composed of 3 parts :
 * A Javascript application core written in [ES6](http://es6-features.org/) that enables your build & your [service worker](https://developers.google.com/web/fundamentals/primers/service-workers/) and serves as a performance-oriented platform to load javascript, css & web assets.
 * A [Vue.js](https://vuejs.org/v2/guide/) application written in ES6 with [vuex](https://vuex.vuejs.org/), [vue-router](https://router.vuejs.org/) and [vuei18n](https://kazupon.github.io/vue-i18n/introduction.html) configured out of the box for [asynchronous components](https://vuejs.org/v2/guide/components-dynamic-async.html#Async-Components) and [code splitting](https://webpack.js.org/guides/code-splitting/).
 
-## Why did we create it ? 
+## Why did we create it ?
 
 It was created to answer [16 Pixels](https://16pixels.fr/)'s need to :
-* Have a modular boilerplate 
+* Have a modular boilerplate
 * Make maintainable build system across many code bases.
 * Automate most its web performance related work.
 * Have new developers & contractors to start coding faster & learn web performance.
@@ -35,14 +35,9 @@ Valisette features :
 * Assets compressor
 * Eslint configuration
 * Vue.js template compilation
-* Typescript template compilation
 * SCSS compilation
 * CSS Prefixing
-* Documentation dev server
-* Documentation deployment script
-* Proxy Server
-* Custom boilerplate assets generator
-* Boilerplate configuration file generator
+* Development https proxy server
 
 
 ## How to use this documentation
@@ -55,12 +50,8 @@ Don't forget to use the search, the whole configuration is searchable.
 
 Valisette is still a work in progress. There are a few things that it currently does not support but are planned:
 
-* Existing project installation mode
-* Compiler only installation mode
-* Boilerplate only installation mode
-* Modular React support
-* Modular Typescript support
-* Modular Webpack devserver with HMR support
+* Existing project installation mode with soft copy
+* Existing project updater (mainly for webpack files)
 * [Advanced code splitting](https://hackernoon.com/the-100-correct-way-to-split-your-chunks-with-webpack-f8a9df5b7758) by making every chunk a bundle
 
 Contributions are welcome!
