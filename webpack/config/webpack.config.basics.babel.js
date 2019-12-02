@@ -144,6 +144,7 @@ const config = {
         test: /\.(sa|sc|c)ss$/,
         exclude: EXCLUDES,
         use: [
+          { loader: "cache-loader" },
           vueloaderConfig(),
           {
             loader: "css-loader",

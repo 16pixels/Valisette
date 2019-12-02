@@ -4,10 +4,13 @@ import utils from "./modules/utils";
 import { loadFonts, lazyLoader } from "./modules/performance";
 import swRuntime from "./sw-runtime";
 import VueApp from "./vue-app";
+import buildConfig from "../../../webpack/config/build-config.js";
 
 // Add offline mode
-OfflinePluginRuntime.install();
-swRuntime.init();
+if (buildConfig.productionMode) {
+  OfflinePluginRuntime.install();
+  swRuntime.init();
+}
 
 // Don't remove this line, it imports css & scss into webpack
 require("main_css"); // eslint-disable-line import/no-unresolved

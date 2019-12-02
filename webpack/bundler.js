@@ -156,7 +156,7 @@ const endFilePlugins = () => {
     }
   }).apply(COMPILER);
   // add offline mode
-  if (buildConfig.OFFLINE_MODE) {
+  if (buildConfig.OFFLINE_MODE && buildConfig.productionMode) {
     new OfflinePlugin({
       appShell: buildConfig.GENERATE_HTML
         ? buildConfig.HTML_OUTPUT_NAME
