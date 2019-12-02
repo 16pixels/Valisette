@@ -118,8 +118,8 @@ const config = {
   },
   performance: {
     hints: buildConfig.logLevel,
-    maxEntrypointSize: 400000,
-    maxAssetSize: 400000
+    maxEntrypointSize: buildConfig.performance.compressionTreshold,
+    maxAssetSize: buildConfig.performance.compressionTreshold
   },
   devtool: buildConfig.devtool,
   target: "web",
@@ -132,7 +132,7 @@ const config = {
     chunkFilename: buildConfig.jsPath + buildConfig.jsChunkOutput,
     hashDigestLength: 8,
     pathinfo: true,
-    publicPath: buildConfig.publicPath
+    publicPath: buildConfig.ASSETS_PUBLIC_PATH
   },
   resolve: {
     extensions: [".js", ".ts", ".json", ".vue", ".scss"],

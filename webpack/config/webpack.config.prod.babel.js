@@ -128,6 +128,8 @@ const prodConfig = {
   },
   performance: {
     hints: buildConfig.logLevel,
+    maxEntrypointSize: buildConfig.performance.compressionTreshold,
+    maxAssetSize: buildConfig.performance.compressionTreshold
   },
   devtool: buildConfig.devtool,
   target: "web",
