@@ -127,7 +127,7 @@ const prodConfig = {
     concatenateModules: true // ModuleConcatenationPlugin
   },
   performance: {
-    hints: "error"
+    hints: buildConfig.logLevel,
   },
   devtool: buildConfig.devtool,
   target: "web",

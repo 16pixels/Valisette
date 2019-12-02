@@ -51,7 +51,7 @@ If you want to use [hashing](https://survivejs.com/webpack/optimizing/adding-has
 
 Webpack doesn't parse your scss into css files if you don't call it from your app.
 
-To ease things up, you can just declare your scss files for each app in entries. By doing so, Valisette will generate an alias for each file that you can call from your corresponding javascript entry. 
+To ease things up, you can just declare your scss files for each app in entries. By doing so, Valisette will generate an alias for each file that you can call from your corresponding javascript entry.
 
 The file being directly called is turned into a module by Webpack and it applies compilers (called loaders) to it to produce a css output.
 
@@ -124,17 +124,23 @@ This proxy has a few features :
 * Record your test URLs so you can push them back out to all devices with a single click.
 * Toggle individual sync settings to create your preferred test environment.
 
-Access it by running : 
+Access it by running :
 
 ```bash{4}
-yarn run watch
+npm run watch
 ```
 
 ## Devtools
 
 ### VERBOSE
 
-Turns on/off the boilerplate debug mode and prints log messages in the browser and in the terminal.
+Turns on/off the boilerplate debug mode to print detailed log messages in your terminal. It will print :
+
+* Fully merged webpack config
+* Compiler run steps
+* List of generated aliases
+* List of service work cached files
+* Any dedicated verbose logger
 
 ### DESKTOP_NOTIFICATIONS
 
@@ -206,6 +212,12 @@ This section is performance-oriented and controls performance tools.
 ### AUDIT
 
 Turns on/off a Bundle Analyzer, it gives a visualization of your bundle's composition. It's useful to detect unwanted imports and bulky dependencies.
+
+::: tip AUDITING
+This is super handy if you have a problem while scaling an application architecture as you can dive into your modules and look for optimizations.
+
+You can dig further on how to use this tool, [here](https://digitalfortress.tech/debug/how-to-use-webpack-analyzer-bundle/)'s a good start. You can edit ``./webpack/bundler.js`` directly if you need to custom your build towards your use case.
+:::
 
 ### PERFORMANCE_LOG_LEVEL
 
@@ -286,7 +298,7 @@ This section explains how you can customize your [Progressive Web Application's 
 
 ### APP_URL
 
-Sets the base URL of your application (use the production one when you're ready). 
+Sets the base URL of your application (use the production one when you're ready).
 
 ### APP_NAME
 

@@ -1,19 +1,9 @@
 {
+  "version": "1.0.17",
   "scripts": {
-    "build-debugger": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js --trace-deprecation",
-    "build": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js",
-    "prod": "cross-env NODE_ENV=production babel-node ./webpack/bundler.js",
-    "watch": "cross-env NODE_ENV=development WATCH=true babel-node ./webpack/bundler.js",
-    "imgmin": "cross-env NODE_ENV=production babel-node ./webpack/imgmin.js",
-    "conf": "babel-node ./webpack/generate-conf.js",
-    "generate": "babel-node ./webpack/make-boilerplate.js",
-    "reset": "npm run conf && npm run generate && npm run imgmin",
-    "clean-node": "rm -rf node_modules && npm i",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:publish": "./deploy.sh",
-    "test": "cross-env NODE_ENV=none jest ./tests/ --notify --detectOpenHandles",
-    "wt": "cross-env NODE_ENV=none jest ./tests/ --notify --watchAll --detectOpenHandles"
+    "docs:publish": "./deploy.sh"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -142,9 +132,10 @@
   },
   "name": "valisette",
   "preferGlobal": true,
-  "bin": "./cli/index.js",
+  "bin": {
+    "valisette": "./cli/index.js"
+  },
   "description": "a webpack based boilerplate & multi tool build",
-  "version": "1.0.16",
   "main": "./webpack/bundler.js",
   "directories": {
     "test": "tests"

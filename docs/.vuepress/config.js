@@ -11,7 +11,7 @@ module.exports = {
       ['/guide/REQUIREMENTS.md', 'Requirements'],
       ['/guide/START.md', 'Getting Started'],
       ['/guide/CONFIGURATION.md', 'Configuration File'],
-      ['/guide/COMMANDS.md', 'Build Commands'],
+      ['/guide/COMMANDS.md', 'Boilerplate commands'],
       ['/guide/ASSETS.md', 'Handling Assets'],
     ],
     nav: [

@@ -40,20 +40,17 @@ const makeCompiler = async () => {
     );
     prodConfig = require('./config/webpack.config.prod.babel').default;
     COMPILER = webpack(prodConfig);
+    utils.printObject(prodConfig);
   } else {
-    config = require('./config/webpack.config.basics.babel').default;
     utils.print(
       `> ${chalk.magenta.bold('Assembling compiler with dev config\n')}`
     );
+    config = require('./config/webpack.config.basics.babel').default;
     if (process.env.WATCH) {
       utils.print(`> ${chalk.magenta.bold('Injecting watch flag\n')}`);
       config.watch = true;
     }
     COMPILER = webpack(config);
-  }
-  if (buildConfig.productionMode) {
-    utils.printObject(prodConfig);
-  } else {
     utils.printObject(config);
   }
 };
@@ -97,8 +94,8 @@ const basics = () => {
       }
       if (severity === 'error') {
         each(errors, (key, index) => {
-          console.log(errors[index]);
-          console.log(chalk.bold.redBright(`ERROR ${index} \n`));
+          // console.log(errors[index]);
+          console.log(chalk.bold.redBright(`ERROR ${index+1} \n`));
           console.log(chalk.bold.redBright(`Type : ${errors[index].name}`));
           console.log(`${chalk.bold.redBright(`@ File : `)}${chalk.bold.greenBright(`${errors[index].file}`)}`);
           console.log(chalk.bold.redBright(`\nOriginal Message : \n`));
