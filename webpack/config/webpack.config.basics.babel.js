@@ -158,7 +158,6 @@ const config = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          { loader: "cache-loader" },
           vueloaderConfig(),
           {
             loader: "css-loader",

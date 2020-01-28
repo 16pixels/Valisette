@@ -42,7 +42,7 @@ const boilerplateFilesToRename = [
     after: "public/index-example.html"
   }
 ];
-const postBuildCommands = ["npm i", "npm run watch"];
+const postBuildCommands = ["npm run start", "yarn run build"];
 const cliPath = path.resolve(__dirname, "../../");
 
 const runShellCommands = async newProjectPath => {
