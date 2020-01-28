@@ -159,6 +159,7 @@ const prodConfig = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
+          { loader: "cache-loader" },
           "style-loader",
           vueloaderConfig(),
           {

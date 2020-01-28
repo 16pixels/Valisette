@@ -21,16 +21,17 @@ import WebpackDevServer from "./../node_modules/webpack-dev-server/lib/Server";
 import buildConfig from "./config/build-config";
 import utils from "./config/build-utils";
 
-let config = {};
-let prodConfig = {};
-
 /**
  * Compiler object that initialize webpack's as an object
  * @constant
  */
 let COMPILER = {};
-const makeCompiler = async () => {
-  utils.printLogo();
+utils.print(
+  `\n> ${chalk.magenta.bold("Build mode")} : ${chalk.yellow.bold(
+    process.env.NODE_ENV
+  )}\n`
+);
+if (buildConfig.productionMode) {
   utils.print(
     `\n> ${chalk.magenta.bold("Build mode")} : ${chalk.yellow.bold(
       process.env.NODE_ENV
@@ -55,7 +56,13 @@ const makeCompiler = async () => {
     COMPILER = webpack(config);
     utils.printObject(config);
   }
-};
+  COMPILER = webpack(config);
+}
+if (buildConfig.productionMode) {
+  utils.printObject(prodConfig);
+} else {
+  utils.printObject(config);
+}
 
 /**
  * basics function
@@ -121,7 +128,7 @@ const basics = () => {
       title: buildConfig.pwa.appName,
       templateParameters: {
         theme_color: buildConfig.pwa.THEME_COLOR,
-        public_path: buildConfig.ASSETS_PUBLIC_PATH
+        public_path: `${buildConfig.ASSETS_PUBLIC_PATH}`
       },
       prefetch: ["**/*.*"],
       // preload: ['**/*.*'],
@@ -163,7 +170,7 @@ const endFilePlugins = () => {
   if (buildConfig.OFFLINE_MODE && buildConfig.productionMode) {
     new OfflinePlugin({
       appShell: buildConfig.GENERATE_HTML
-        ? buildConfig.HTML_OUTPUT_NAME
+        ? `${buildConfig.ASSETS_PUBLIC_PATH}${buildConfig.HTML_OUTPUT_NAME}`
         : false,
       responseStrategy: "cache-first",
       safeToUseOptionalCaches: true,
@@ -172,9 +179,6 @@ const endFilePlugins = () => {
         externals: [":externals:"]
       },
       ServiceWorker: {
-        events: true
-      },
-      AppCache: {
         events: true
       }
     }).apply(COMPILER);
@@ -195,7 +199,7 @@ const run = compilerObject => {
       )
     );
     console.error(
-      chalk.bold.redBright(
+      chalk.red.bold(
         ` ! Your config is invalid as it has not inherited from webpack methods and it can't run, make sure ./webpack/config/build-config.js is well written ! `
       )
     );
@@ -357,7 +361,7 @@ const watch = () => {
 };
 
 // Run pre-build tasks to get file system ready and put thread on hold while its not done
-const runPreBuildSteps = async () => {
+const runPreBuildSteps = new Promise(resolve => {
   // Cleans file system synchronously through callbacks
   if (buildConfig.verbose) {
     utils.print(`> ${chalk.magenta.bold("Cleaning assets")}\n`);
@@ -410,6 +414,25 @@ const main = async () => {
         chalk.yellow.bold(buildConfig.watch)
       );
     }
+    // Clean css folder
+    return utils.clean(
+      `${buildConfig.publicPath + buildConfig.cssPath}/*`,
+      () => {
+        utils.clean(`${buildConfig.publicPath}/*.chunk.*`, () => {
+          // Clean js folder
+          utils.clean(
+            `${buildConfig.publicPath + buildConfig.jsPath}/*`,
+            () => {
+              utils.print(`\n> ${chalk.magenta.bold("Assets cleaned")}`);
+              return resolve();
+            }
+          );
+        });
+      }
+    );
+  };
+  return cleaner();
+});
 
     if (buildConfig.audit) {
       utils.print(
