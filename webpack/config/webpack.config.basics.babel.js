@@ -1,10 +1,11 @@
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import UglifyJsPlugin from "uglifyjs-webpack-plugin";
+import TerserPlugin from 'terser-webpack-plugin';
 
 /**
  * Import modules
  * @type {[type]}
  */
+import path from "path";
 import { each } from "lodash";
 import chalk from "chalk";
 import buildConfig from "./build-config";
@@ -30,7 +31,10 @@ const EXCLUDES = /node_modules|bower_components/;
  * Aliases base config
  */
 const baseAliasConfig = {
-  "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
+  "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`),
+  "node_modules": path.join(__dirname, '/node_modules'),
+  "uuid": utils.base('node_modules/uuid'),
+
 };
 if (buildConfig.vueRuntime) {
   Object.assign(baseAliasConfig, { vue$: "vue/dist/vue.esm.js" });
@@ -101,25 +105,23 @@ const config = {
   entry: utils.jsEntries(buildConfig.JS_ENTRIES),
   optimization: {
     namedModules: true, // NamedModulesPlugin()
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-      }),
-    ],
+    minimizer: [new TerserPlugin()],
     splitChunks: {
-      // CommonsChunkPlugin()
-      name: "vendor",
-      chunks: "all",
-      minChunks: 2
+      maxSize: buildConfig.DEV_PACKAGES_MAX_SIZE,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all'
+        }
+      }
     },
     noEmitOnErrors: true, // NoEmitOnErrorsPlugin
     concatenateModules: true // ModuleConcatenationPlugin
   },
   performance: {
     hints: buildConfig.logLevel,
-    maxEntrypointSize: 400000,
-    maxAssetSize: 400000
+    maxEntrypointSize: buildConfig.DEV_APP_MAX_SIZE_WARNING,
+    maxAssetSize: buildConfig.DEV_PACKAGES_MAX_SIZE
   },
   devtool: buildConfig.devtool,
   target: "web",
@@ -132,17 +134,29 @@ const config = {
     chunkFilename: buildConfig.jsPath + buildConfig.jsChunkOutput,
     hashDigestLength: 8,
     pathinfo: true,
-    publicPath: buildConfig.publicPath
+    publicPath: buildConfig.ASSETS_PUBLIC_PATH
   },
   resolve: {
-    extensions: [".js", ".ts", ".json", ".vue", ".scss"],
+    extensions: [".js", ".ts", ".json", ".vue", ".scss", '.gql', '.graphql', '*', '.mjs'],
     alias: mergeAliases(aliasesList)
+  },
+  devServer: {
+    contentBase: utils.base('public/'), // boolean | string | array, static file location
+    compress: true, // enable gzip compression
+    historyApiFallback: true, // true for index.html upon 404, object for multiple paths
+    hot: true, // hot module replacement. Depends on HotModuleReplacementPlugin
+    https: true, // true for self-signed, object for cert authority
+    noInfo: true, // only errors & warns on hot reload
   },
   module: {
     rules: [
       {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
+      },
+      {
         test: /\.(sa|sc|c)ss$/,
-        exclude: EXCLUDES,
         use: [
           vueloaderConfig(),
           {
@@ -167,18 +181,6 @@ const config = {
         ]
       },
       {
-        test: /\.ts$/,
-        exclude: EXCLUDES,
-        include: [
-          utils.assets(`${buildConfig.assetsPath + buildConfig.tsPath}`)
-        ],
-        use: [
-          {
-            loader: "ts-loader"
-          }
-        ]
-      },
-      {
         test: /\.js$/,
         exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file),
         include: [
@@ -187,7 +189,10 @@ const config = {
         use: [
           { loader: "cache-loader" },
           {
-            loader: "babel-loader"
+            loader: "babel-loader",
+            options: {
+              'plugins': ['lodash'],
+            }
           }
         ]
       },

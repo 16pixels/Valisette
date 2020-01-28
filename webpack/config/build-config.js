@@ -32,12 +32,17 @@ const buildConfig = {
   fontsPath: ValisetteConf.FONTS_PATH,
   assetsPath: ValisetteConf.ASSETS_PATH, // source assets files location
   watch: env.WATCH ? env.WATCH : false, // grab watch mode from node (cli)
+  runServer: env.DEV_SERVER ? env.DEV_SERVER : false, // grab watch mode from node (cli)
   jsMainOutput: ValisetteConf.JS_MAIN_OUTPUT, // js file output name pattern
   jsChunkOutput: ValisetteConf.JS_CHUNK_OUTPUT,
   cssChunkOutput: ValisetteConf.CSS_CHUNK_OUTPUT,
   scssPath: ValisetteConf.SCSS_PATH, // scss source folder
   cssMainOutput: ValisetteConf.CSS_MAIN_OUTPUT, // css file output name pattern (used in production mode)
   ASSETS_PUBLIC_PATH: ValisetteConf.ASSETS_PUBLIC_PATH,
+  PROD_PACKAGES_MAX_SIZE: ValisetteConf.PROD_PACKAGES_MAX_SIZE,
+  DEV_PACKAGES_MAX_SIZE: ValisetteConf.DEV_PACKAGES_MAX_SIZE,
+  DEV_APP_MAX_SIZE_WARNING: ValisetteConf.DEV_APP_MAX_SIZE_WARNING,
+  PROD_APP_MAX_SIZE_WARNING: ValisetteConf.PROD_APP_MAX_SIZE_WARNING,
   devtool: productionMode ? '(none)' : 'eval-source-map ', // Sourcemap type declaration
   pwa: {
     appName: ValisetteConf.APP_NAME,
@@ -49,6 +54,9 @@ const buildConfig = {
   },
   browserSync: { // This implies that you are hosting your code on your machine but you can always set browserSync options -> https://github.com/Va1/browser-sync-webpack-plugin
     target: ValisetteConf.PROXY_TARGET
+  },
+  devServer: {
+    DEV_SERVER_PORT: ValisetteConf.DEV_SERVER_PORT,
   },
   performance: {
     compressionTreshold: ValisetteConf.COMPRESSION_THRESHOLD // Minimum chunk size to set compression flag (performs better at 10240 on mobile in our experience)

@@ -82,15 +82,6 @@ const progressHandler = (percentage, message = 'Nothing') => {
   if (Math.round(percentage * 100) === 100) {
     printMsg += '\n\n';
   }
-  if (valisetteConf.VERBOSE) {
-    return printInStream(
-      `> ${chalk.magenta.bold('Compilation at : ')}${chalk.yellow.bold(
-        Math.round(percentage * 100, 2)
-      )} ${chalk.yellow.bold('%')} ${chalk.magenta.bold(
-        '|'
-      )} ${chalk.magenta.bold('Compiler says :')} ${chalk.yellow.bold(printMsg)}\n`
-    );
-  }
   return printInStream(
     `> ${chalk.magenta.bold('Compilation at : ')}${chalk.yellow.bold(
       Math.round(percentage * 100, 2)

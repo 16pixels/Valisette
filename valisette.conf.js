@@ -11,6 +11,11 @@ export default {
   PROXY_TARGET: "https://valisette.app", // The URL that broadcasts your app on your machine which is the name of the root `https://${base_folder}.app` by default
 
   /**
+   * DEV SERVER CONFIGURATION
+   */
+  DEV_SERVER_PORT: 1337,
+
+  /**
    * DEVTOOLS
    * */
   VERBOSE: false, // Allows compiler to log debug messages during build
@@ -25,6 +30,10 @@ export default {
   GENERATE_HTML: true, // Make compiler generate an index.html file in public folder
   EXTRACT_CSS: true, // Extract css/scss from vuejs components
   COMPRESSION_TRESHOLD: 10240, // Treshold in bytes from which you bundles will be compressed if they are above this size
+  PROD_APP_MAX_SIZE_WARNING : 380000, // entry points max size that will trigger a flag in build stats
+  PROD_PACKAGES_MAX_SIZE: 150000, // max size you want your modules to be split into (if file can be split) in production
+  DEV_APP_MAX_SIZE_WARNING : 1500000000, // entry points max size that will trigger a flag in build stats
+  DEV_PACKAGES_MAX_SIZE: 1500000000, // max size you want your modules to be split into (if file can be split) in development
 
   /**
    * VUE JS
@@ -35,7 +44,7 @@ export default {
    * PERFORMANCE
    * */
   AUDIT: false, // enable bundle analyzer to audit your code
-  PERFORMANCE_LOG_LEVEL: false, // set performance hints log importance level
+  PERFORMANCE_LOG_LEVEL: "warning", // set performance hints log importance level
 
   /**
    * FILE SYSTEM

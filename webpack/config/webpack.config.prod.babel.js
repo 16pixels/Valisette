@@ -1,11 +1,13 @@
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import UglifyJsPlugin from "uglifyjs-webpack-plugin";
+import TerserPlugin from 'terser-webpack-plugin';
+
 
 /**
  * Import modules
  * @type {[type]}
  */
 import { each } from "lodash";
+import path from 'path';
 import chalk from "chalk";
 import buildConfig from "./build-config";
 import utils from "./build-utils";
@@ -28,7 +30,9 @@ const EXCLUDES = /node_modules|bower_components/;
  * Aliases base config
  */
 const baseAliasConfig = {
-  "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`)
+  "@": utils.assets(`${buildConfig.assetsPath + buildConfig.jsPath}`),
+  "node_modules": path.join(__dirname, '/node_modules'),
+  "uuid": utils.base('node_modules/uuid'),
 };
 if (buildConfig.vueRuntime) {
   Object.assign(baseAliasConfig, { vue$: "vue/dist/vue.esm.js" });
@@ -87,6 +91,7 @@ const mergeAliases = aliasArray => {
       );
     });
   }
+
   return allAliases;
 };
 
@@ -107,18 +112,17 @@ const prodConfig = {
     runtimeChunk: 'single',
     moduleIds: 'hashed',
     namedModules: true, // NamedModulesPlugin()
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        extractComments: false,
-        parallel: true,
-      }),
-    ],
+    minimizer: [new TerserPlugin({
+      exclude:EXCLUDES,
+      cache: true,
+      parallel:true,
+      extractComments: false,
+    })],
     splitChunks: {
+      maxSize: buildConfig.PROD_PACKAGES_MAX_SIZE,
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
           chunks: 'all'
         }
       }
@@ -128,6 +132,8 @@ const prodConfig = {
   },
   performance: {
     hints: buildConfig.logLevel,
+    maxEntrypointSize: buildConfig.PROD_APP_MAX_SIZE_WARNING,
+    maxAssetSize: buildConfig.PROD_PACKAGES_MAX_SIZE
   },
   devtool: buildConfig.devtool,
   target: "web",
@@ -136,15 +142,20 @@ const prodConfig = {
     path: utils.base(buildConfig.publicPath),
     chunkFilename: buildConfig.jsPath + buildConfig.jsChunkOutput,
     hashDigestLength: 8,
-    pathinfo: true,
+    pathinfo: false,
     publicPath: buildConfig.ASSETS_PUBLIC_PATH
   },
   resolve: {
-    extensions: [".js", ".ts", ".vue", ".json", ".scss", ".sass"],
+    extensions: [".js", ".ts", ".json", ".vue", ".scss", '.gql', '.graphql', '*', '.mjs'],
     alias: mergeAliases(aliasesList)
   },
   module: {
     rules: [
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
+      },
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
@@ -172,18 +183,6 @@ const prodConfig = {
         ]
       },
       {
-        test: /\.ts$/,
-        exclude: EXCLUDES,
-        include: [
-          utils.assets(`${buildConfig.assetsPath + buildConfig.tsPath}`)
-        ],
-        use: [
-          {
-            loader: "ts-loader"
-          }
-        ]
-      },
-      {
         test: /\.js$/,
         exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file),
         include: [
@@ -197,13 +196,14 @@ const prodConfig = {
             loader: "babel-loader",
             options: {
               presets: ["@babel/preset-env", "minify"],
-              plugins: ["@babel/plugin-transform-runtime"]
+              plugins: ["@babel/plugin-transform-runtime", "lodash"]
             }
           }
         ]
       },
       {
         test: /\.vue$/,
+        exclude: EXCLUDES,
         use: [
           { loader: "cache-loader" },
           {
@@ -230,7 +230,7 @@ const prodConfig = {
       },
       {
         test: /\.svg$/,
-        loader: "url-loader?mimetype=iamge/svg"
+        loader: "url-loader?mimetype=image/svg"
       },
       {
         test: /\.png$/,
