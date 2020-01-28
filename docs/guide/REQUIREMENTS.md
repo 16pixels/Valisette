@@ -5,12 +5,14 @@ title: Requirements
 
 Valisette is meant to be accessible for beginners too. So this page will run you through for a full system installation from scratch.
 
+Valisette only needs nodejs to run but you might need other pieces of technology to enhance your developper experience. The requirements listed here are meant to give you the full experience.
+
 ## Get a machine that runs a UNIX system
 
 We developed Valisette for UNIX based OS (so MacOS and Linux) therefore we do not officially support a Windows environment though it can work on Windows 10.
 
 ::: tip
-If you still want to use Win10, we've made it work with a [ubuntu shell](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) and [Laravel Valet's](https://github.com/cretueusebiu/valet-windows) win10 fork to have a DNS Mask.
+If you still want to use Win10, we've made it work with a [ubuntu shell](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/).
 :::
 
 ## Install Homebrew
@@ -32,8 +34,8 @@ If you're on Linux, don't use a fork. There is also an official [installation gu
 
 If you don't use a webserver on your machine, we expect you to use it in development alongside a [DNS mask](https://en.m.wikipedia.org/wiki/Domain_masking) to simplify our workflow.
 
-We officially use [Laravel Valet](https://laravel.com/docs/5.8/valet) to serve our apps locally in HTTPS, 
-It's simple to use and you should follow it's documentation to install it. 
+We officially use [Laravel Valet](https://laravel.com/docs/5.8/valet) to serve our apps locally in HTTPS,
+It's simple to use and you should follow it's documentation to install it.
 
 If you're on linux you can use its [Linux fork](https://github.com/cpriego/valet-linux).
 
@@ -71,7 +73,7 @@ The main reason which brought us to explain this approach, is that the default N
 Valisette is built on top of [Node.js](https://nodejs.org/en/) so you will also have to install it, you can follow the official site's documentation to install it.
 
 ::: warning
-If you are installing NodeJS via the installer from [https://nodejs.org/](https://nodejs.org/) then you have to use sudo to make sure that it installs correctly. After that you have to make changes in your system ``$PATH`` by adding the path of the node executable. And if you want to uninstall node then you have track all the files that were created and get rid of them. In short its a long process. 
+If you are installing NodeJS via the installer from [https://nodejs.org/](https://nodejs.org/) then you have to use sudo to make sure that it installs correctly. After that you have to make changes in your system ``$PATH`` by adding the path of the node executable. And if you want to uninstall node then you have track all the files that were created and get rid of them. In short its a long process.
 :::
 
 ## Troubleshooting

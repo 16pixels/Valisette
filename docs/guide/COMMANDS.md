@@ -8,7 +8,7 @@ Valisette relies on npm scripts contained in ``package.json`` to run.
 Each command can be run by ``npm`` or ``yarn``
 
 ```bash{2}
-yarn run <your-command>
+yarn <your-command>
 # OR
 npm run <your-command>
 ```
@@ -45,6 +45,12 @@ Depending on your ``./valisette.conf.js``, it will :
 This command runs the compiler in ``development`` mode. Then it :
 * watches for changes in your file system to recompile.
 * start a Browsersync proxy.
+
+## ``dev``
+
+This command runs the compiler in ``development`` mode. Then it :
+* watches for changes in your file system to recompile.
+* starts a development server at ``http://localhost:8080`` to serve your code.
 
 ## ``imgmin``
 

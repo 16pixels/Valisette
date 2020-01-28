@@ -17,10 +17,11 @@ It was created to answer [16 Pixels](https://16pixels.fr/)'s need to :
 * Have new developers & contractors to start coding faster & learn web performance.
 * Empower developers to maintain and extend their own build system by having on open webpack config and a strong tool set.
 * Open its ideas and knowledge to the outside and make a great open source tool.
+* Demistify front-end build systems through a simpler approach.
 
 ## How it works
 
-The boilerplate default configuration is designed to build you an SPA with zero config that hits 100 on all of [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) performance indicators. As you carry on it means to teach by doing all the aspects of web performance on the client side. Ultimately it expects that you will need it for other purposes and becomes a modular tool that can match a different set of expectations out of the box. Therefore all of it's features, it's file system and the way it's build is managed from a single configuration file. It can then rebuild itself from your new configuration in command line.
+The boilerplate default configuration is designed to build you an SPA with zero config that hits 100 on all of [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) performance indicators. As you carry on it is designed to teach by doing all the aspects of web performance on the client side. Ultimately it expects that you will need it for other purposes and becomes a modular tool that can match a different set of expectations out of the box. It is managed from a single configuration file. You can tweak the bundler and compiler yourself as you level up and get a grasp of how systems work. It is meant to be a progressive learning / building tool.
 
 ## Features
 
@@ -37,7 +38,7 @@ Valisette features :
 * Vue.js template compilation
 * SCSS compilation
 * CSS Prefixing
-* Development https proxy server
+* Development HTTP proxy server
 
 
 ## How to use this documentation
@@ -50,8 +51,8 @@ Don't forget to use the search, the whole configuration is searchable.
 
 Valisette is still a work in progress. There are a few things that it currently does not support but are planned:
 
-* Existing project installation mode with soft copy
-* Existing project updater (mainly for webpack files)
+* CLI for Installation over existing project
+* CLI for project upgrade (mainly for package.json and webpack files)
 * [Advanced code splitting](https://hackernoon.com/the-100-correct-way-to-split-your-chunks-with-webpack-f8a9df5b7758) by making every chunk a bundle
 
 Contributions are welcome!

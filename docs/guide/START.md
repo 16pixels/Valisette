@@ -8,11 +8,13 @@ title: Getting Started
 Valisette requires the latest stable node version (a.k.a "Active LTS").
 :::
 
-This the standard way to install the project on your machine via npm and serve it from localhost with a self-signed SSL certificate.
+This the standard way to install the project on your machine via npm and serve it from localhost with a self-signed SSL certificate. However you can just run it from "locahost" with ``yarn dev`` if you don't want to use a DNS Mask.
 
 ## Install cli from npm
 
 Run this command from any folder, it will pull the cli from npm and install it globally.
+
+Valisette avoids using [Node's package manager](https://npmjs.org) to install the project's dependencies. We use [Yarn](https://yarnpkg.com/) because it is simpler & built better. So as you run this command valisette installs yarn globally and install your project's dependencies (if you want to re-run install, run ``npm run start``)
 
 ```bash{4}
 # install cli
@@ -41,38 +43,27 @@ valet link
 valet secure
 ```
 
-## Install project dependencies with npm
+## Re-install project dependencies with Yarn
 
-Now we will use [Node's package manager](https://npmjs.org) to install the project's dependencies.
 
 Just run those basic commands :
 ```bash{4}
-npm i
-# OR
-npm install
+cd <project-folder-name>
+# installs yarn globally and installs project dependencies
+npm run start
 ```
 
-::: tip YARN USAGE
-[Yarn](https://yarnpkg.com/) performs better than npm but works just the same. However we will stick to npm support.
-
-```bash{4}
-npm i yarn -g
-yarn i
-# OR
-yarn install
-```
-:::
 
 ## Run your first build
 
 Ok it's time run your first build and see the app !
 
-We use [scripts commands](https://yarnpkg.com/lang/en/docs/package-json/#toc-scripts) to command the boilerplate. All the commands are container in ``./package.json`` but we'll look at those in detail later on.
+We use [scripts commands](https://docs.npmjs.com/files/package.json#scripts) to command the boilerplate. All the commands are container in ``./package.json`` but we'll look at those in detail later on.
 
 Let's run your first compilation with :
 
 ```bash{4}
-npm run prod
+yarn prod
 ```
 
 When the compilation is complete, you should open your browser at ``https://<project-directory-name>.app/`` and add a security exception to validate your SSL certificate (this is normal since we have made a self-signed certificate that we can trust when we installed a DNS Mask).

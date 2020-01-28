@@ -54,7 +54,6 @@ export default {
   PUBLIC_PATH: "/public/", // Public assets folder path
   PUBLIC_MANIFEST_PATH: "/", // Public assets manifest location
   JS_PATH: "javascript/", // Javascript folder name
-  TS_PATH: "typescript/", // Typescript folder name
   CSS_PATH: "css/", // Css folder name
   IMAGES_PATH: "images/", // Images folder name
   FONTS_PATH: "fonts/", // Fonts folder name

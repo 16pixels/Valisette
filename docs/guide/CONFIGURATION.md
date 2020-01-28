@@ -130,6 +130,12 @@ Access it by running :
 npm run watch
 ```
 
+## Dev server configuration
+
+### DEV_SERVER_PORT
+
+The dev server port on which your code will be served. (Default to ``1337``).
+
 ## Devtools
 
 ### VERBOSE
@@ -198,12 +204,33 @@ This feature will break your build if you turn it off, make sure you know your w
 
 Default size in Bytes from which Valisette will start compressing your assets into gzip format. This is intended for production use only.
 
+### PROD_APP_MAX_SIZE_WARNING
+
+Defines your max app size on which your build will give you a warning in production mode.
+
+### PROD_PACKAGES_MAX_SIZE
+
+Defines your max bundle size on which your build will give you a warning in production mode. Also defines the treshold on which webpack will split your code into bundles in production mode.
+
+### DEV_APP_MAX_SIZE_WARNING
+
+Defines your max app size on which your build will give you a warning in development mode.
+
+### DEV_PACKAGES_MAX_SIZE
+
+Defines your max bundle size on which your build will give you a warning in production mode. Also defines the treshold on which webpack will split your code into bundles in development mode.
 
 ## Vue.js Features
 
 ### VUE_RUNTIME
 
 Adds/Removes [vue runtime](https://vuejs.org/v2/guide/installation.html#Explanation-of-Different-Builds) to your bundle. This allows you to use vue markup inside HTML files. Defaults to false and uses ``vue.esm.js`` to mount your app.
+
+::: warning
+
+This is an advance feature make sure you know what it implies. Please refer to [vuejs documentation](https://vuejs.org/v2/guide/installation.html#Explanation-of-Different-Builds).
+
+:::
 
 ## Performance
 
@@ -250,10 +277,6 @@ Sets PWA manifest location relative to ``PUBLIC_PATH``.
 
 Sets Javascript assets path relative to ``ASSETS_PATH``. Replicates it for production assets inside ``PUBLIC_PATH``.
 
-### TS_PATH
-
-Sets Typescript assets path relative to ``ASSETS_PATH``. Replicates it for production assets inside ``PUBLIC_PATH``.
-
 ### CSS_PATH
 
 Sets CSS assets path relative to ``ASSETS_PATH``. Replicates it for production assets inside ``PUBLIC_PATH``.
@@ -289,8 +312,15 @@ Defines how your Javascript's *entries* in ``JS_ENTRIES`` will be named. You can
 
 ### JS_CHUNK_OUTPUT
 
-Defines how your Javascript's *chunks* in ``CSS_MAIN_OUTPUT`` will be named. You can pass all of Webpack's [naming options](https://webpack.js.org/configuration/output/#outputchunkfilename) to it.
+Defines how your Javascript's *chunks* in ``JS_MAIN_OUTPUT`` will be named. You can pass all of Webpack's [naming options](https://webpack.js.org/configuration/output/#outputchunkfilename) to it.
 
+### CSS_MAIN_OUTPUT
+
+Defines how your SCSS's *entries* in ``SCSS_ENTRIES`` will be named when compiled to CSS. You can pass all of Webpack's [naming options](https://webpack.js.org/configuration/output/#outputfilename) to it.
+
+### CSS_CHUNK_OUTPUT
+
+Defines how your CSS's *chunks* in ``CSS_MAIN_OUTPUT`` will be named. You can pass all of Webpack's [naming options](https://webpack.js.org/configuration/output/#outputchunkfilename) to it.
 
 ## PWA Manifest
 
@@ -353,6 +383,10 @@ Sets output name for your Generated HTML. By default, output will be located in 
 | **GENERATE_HTML** | *Boolean* | true |
 | **EXTRACT_CSS** | *Boolean* | true |
 | **COMPRESSION_TRESHOLD** | *Number* | 10240 |
+| **PROD_APP_MAX_SIZE_WARNING** | *Number* | 380000 |
+| **PROD_PACKAGES_MAX_SIZE** | *Number* | 150000 |
+| **DEV_APP_MAX_SIZE_WARNING** | *Number* | 1500000000 |
+| **DEV_PACKAGES_MAX_SIZE** | *Number* | 1500000000 |
 | **VUE_RUNTIME** | *Boolean* | false |
 | **AUDIT** | *Boolean* | false |
 | **PERFORMANCE_LOG_LEVEL** | *String* | "warning" |
