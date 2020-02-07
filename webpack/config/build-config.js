@@ -3,7 +3,7 @@ import ValisetteConf from "./../../valisette.conf";
 require('dotenv').config()
 
 const { env } = process;
-const productionMode = env.NODE_ENV === 'production'; // grab production mode from node envirionnement (cli)
+const productionMode = process.env.NODE_ENV === 'production'; // grab production mode from node envirionnement (cli)
 
 // console.table(env);
 

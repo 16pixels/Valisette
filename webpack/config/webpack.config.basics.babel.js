@@ -134,7 +134,7 @@ const config = {
     chunkFilename: buildConfig.jsPath + buildConfig.jsChunkOutput,
     hashDigestLength: 8,
     pathinfo: true,
-    publicPath: buildConfig.ASSETS_PUBLIC_PATH
+    publicPath: "/" // TODO : différencier les param ASSETS_PUBLIC_PATH entre prod & dev
   },
   resolve: {
     extensions: [".js", ".ts", ".json", ".vue", ".scss", '.gql', '.graphql', '*', '.mjs'],

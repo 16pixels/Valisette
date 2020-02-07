@@ -3,11 +3,11 @@
   "scripts": {
     "start": "npm i -g yarn && yarn install",
     "build-debugger": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js --trace-deprecation",
-    "build": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js",
-    "prod": "cross-env NODE_ENV=production babel-node ./webpack/bundler.js",
-    "watch": "cross-env NODE_ENV=development  WATCH=true babel-node ./webpack/bundler.js",
-    "dev": "cross-env NODE_ENV=development  DEV_SERVER=true babel-node ./webpack/bundler.js",
-    "imgmin": "cross-env NODE_ENV=production babel-node ./webpack/imgmin.js",
+    "build": "cross-env NODE_ENV=development babel-node ./webpack/bundler.js --env.NODE_ENV=development",
+    "prod": "cross-env NODE_ENV=production babel-node ./webpack/bundler.js --env.NODE_ENV=production",
+    "watch": "cross-env NODE_ENV=development  WATCH=true babel-node ./webpack/bundler.js --env.NODE_ENV=development",
+    "dev": "cross-env NODE_ENV=development  DEV_SERVER=true babel-node ./webpack/bundler.js --env.NODE_ENV=development",
+    "imgmin": "cross-env NODE_ENV=production babel-node ./webpack/imgmin.js --env.NODE_ENV=production",
     "clean-node": "rm -rf node_modules && npm i",
     "test": "cross-env NODE_ENV=none jest ./tests/ --notify --detectOpenHandles",
     "wt": "cross-env NODE_ENV=none jest ./tests/ --notify --watchAll --detectOpenHandles"
