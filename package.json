@@ -119,7 +119,7 @@
     "include-media": "^1.4.9",
     "inquirer": "^6.5.0",
     "jest": "^24.9.0",
-    "lazysizes": "^4.1.8",
+    "lazysizes": "^5.2.1",
     "lodash": "^4.17.15",
     "shelljs": "^0.8.3",
     "vue": "^2.6.8",
