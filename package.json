@@ -112,7 +112,7 @@
     "webpack-pwa-manifest": "^4.1.1"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "chalk": "^2.1.0",
     "figlet": "^1.2.3",
     "fs-extra": "^4.0.3",
